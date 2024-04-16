@@ -2,6 +2,14 @@ Minishell:
 
 	✔ Press Alt+D to mark a todo as done
 	☐ Press Cmd/Ctrl+Enter to add a new todo
+	  Bold:
+    ☐ Use asterisks for *bold*
+  Italic:
+    ☐ Use underscores for _italic_
+  Strikethrough:
+    ☐ Use tildes for ~strikethrough~
+  Code:
+    ☐ Use backticks for `code`
 
 Preparation:
 ☐ install readline
