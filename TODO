@@ -1,0 +1,11 @@
+Minishell:
+
+	✔ Press Alt+D to mark a todo as done
+	☐ Press Cmd/Ctrl+Enter to add a new todo
+
+Preparation:
+☐ install readline
+☐ make vector library 
+
+Parsing:
+	☐ select parsing style
