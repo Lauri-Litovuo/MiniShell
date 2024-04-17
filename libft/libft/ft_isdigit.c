@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/16 16:49:10 by aneitenb         ###   ########.fr       */
+/*   Created: 2023/10/24 16:21:40 by aneitenb          #+#    #+#             */
+/*   Updated: 2024/04/16 15:52:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
-
-int	main()		//this is just to check that Makefile and libft work
+/*	DESCRIPTION
+    isdigit()
+        checks for a digit (0 through 9).
+	RETURN VALUE
+       The values returned are nonzero if the character c falls into the
+       tested class, and zero if not.	*/
+int	ft_isdigit(int c)
 {
-	char	*str = NULL;
-	int		res;		
-	
-	res = ft_strlen(str);
-	ft_printf("%d\n", res);
-	return (1);
+	if (c > 47 && c < 58)
+		return (1);
+	else
+		return (0);
 }

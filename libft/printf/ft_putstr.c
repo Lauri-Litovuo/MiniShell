@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/16 16:49:10 by aneitenb         ###   ########.fr       */
+/*   Created: 2023/11/22 15:37:45 by aneitenb          #+#    #+#             */
+/*   Updated: 2024/04/16 14:36:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../includes/libft.h"
 
-int	main()		//this is just to check that Makefile and libft work
+int	ft_putstr(char *str, int *check)
 {
-	char	*str = NULL;
-	int		res;		
-	
-	res = ft_strlen(str);
-	ft_printf("%d\n", res);
-	return (1);
+	int	count;
+	int	i;
+
+	i = 0;
+	count = 0;
+	if (!str)
+		return (ft_putstr("(null)", check));
+	while (str[i])
+	{
+		count += ft_putchar(str[i], check);
+		i++;
+	}
+	return (count);
 }

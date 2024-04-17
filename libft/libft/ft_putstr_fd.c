@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/16 16:49:10 by aneitenb         ###   ########.fr       */
+/*   Created: 2023/11/07 14:30:00 by aneitenb          #+#    #+#             */
+/*   Updated: 2024/04/16 16:51:11 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../includes/libft.h"
 
-int	main()		//this is just to check that Makefile and libft work
+/*	Function name ft_putstr_fd
+	Parameters s: The string to output.
+	fd: The file descriptor on which to write.
+	Return value: None
+	External functs. write
+	Description: Outputs the string ’s’ to the given file
+	descriptor.	*/
+void	ft_putstr_fd(char *s, int fd)
 {
-	char	*str = NULL;
-	int		res;		
-	
-	res = ft_strlen(str);
-	ft_printf("%d\n", res);
-	return (1);
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }

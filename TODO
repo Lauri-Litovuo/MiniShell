@@ -12,8 +12,14 @@ Minishell:
     ☐ Use backticks for `code`
 
 Preparation:
+☐ get familiar with bash
 ☐ install readline
+☐ set up "raw mode"
+✔ libft and make sure we have NULL checks @done(24-04-16 17:05)
+☐ ask someone how branching & issues on github work -->tomorrow
+✔ research if vectors are worthwhile: they are! @done(24-04-16 17:22)
 ☐ make vector library 
+☐ implement builtins
 
 Parsing:
 	☐ select parsing style

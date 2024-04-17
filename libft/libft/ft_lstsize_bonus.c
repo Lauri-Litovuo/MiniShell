@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/16 16:49:10 by aneitenb         ###   ########.fr       */
+/*   Created: 2023/11/14 17:20:52 by aneitenb          #+#    #+#             */
+/*   Updated: 2024/04/16 15:53:59 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "libft.h"
 
-int	main()		//this is just to check that Makefile and libft work
+/*	Function name: ft_lstsize
+	Prototype int ft_lstsize(t_list *lst);
+	Parameters lst: The beginning of the list.
+	Return value: The length of the list
+	External functs. None
+	Description: Counts the number of nodes in a list.*/
+int	ft_lstsize(t_list *lst)
 {
-	char	*str = NULL;
-	int		res;		
-	
-	res = ft_strlen(str);
-	ft_printf("%d\n", res);
-	return (1);
+	int	length;
+
+	length = 0;
+	while (lst != NULL)
+	{
+		length++;
+		lst = lst->next;
+	}
+	return (length);
 }

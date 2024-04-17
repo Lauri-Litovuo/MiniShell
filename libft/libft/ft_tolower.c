@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/16 16:49:10 by aneitenb         ###   ########.fr       */
+/*   Created: 2023/10/25 15:53:48 by aneitenb          #+#    #+#             */
+/*   Updated: 2024/04/16 16:10:04 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
-
-int	main()		//this is just to check that Makefile and libft work
+/*	DESCRIPTION
+       These functions convert lowercase letters to uppercase, and vice
+       versa.
+	RETURN VALUE
+       The value returned is that of the converted letter, or c if the
+       conversion was not possible.	*/
+int	ft_tolower(int c)
 {
-	char	*str = NULL;
-	int		res;		
-	
-	res = ft_strlen(str);
-	ft_printf("%d\n", res);
-	return (1);
+	if (c >= 97 && c <= 122)
+		return (c);
+	if (c >= 65 && c <= 90)
+		return (c + 32);
+	return (c);
 }

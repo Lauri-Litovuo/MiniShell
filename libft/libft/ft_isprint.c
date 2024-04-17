@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/16 16:49:10 by aneitenb         ###   ########.fr       */
+/*   Created: 2023/10/24 17:16:17 by aneitenb          #+#    #+#             */
+/*   Updated: 2024/04/16 15:52:22 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
-
-int	main()		//this is just to check that Makefile and libft work
+/*	DESCRIPTION
+       isprint()
+    	checks for any printable character including space.
+	RETURN VALUE
+       The values returned are nonzero if the character c falls into the
+       tested class, and zero if not.	*/
+int	ft_isprint(int c)
 {
-	char	*str = NULL;
-	int		res;		
-	
-	res = ft_strlen(str);
-	ft_printf("%d\n", res);
-	return (1);
+	if (c >= 32 && c <= 126)
+		return (1);
+	else
+		return (0);
 }
