@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
+#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/04/17 12:09:08 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/04/17 12:19:42 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,16 @@ LIBFT_DIR = ./libft
 
 LIBFT = ./libft/libft.a
 
-#RLHEAD = /Users/${USER}/.brew/Cellar/readline/8.2.10/include
-#RLLIB = /Users/${USER}/.brew/Cellar/readline/8.2.10/lib
+RLHEAD = /Users/${USER}/.brew/Cellar/readline/8.2.10/include
+RLLIB = /Users/${USER}/.brew/Cellar/readline/8.2.10/lib
 
 SOURCES = srcs/main.c \
 			srcs/parsing.c
 			
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror #-I$(RLHEAD) -L$(RLLIB)
-
+CFLAGS = -Wall -Wextra -Werror -I$(RLHEAD)
+RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 
 all: $(LIBFT) $(NAME) 
@@ -34,7 +34,7 @@ all: $(LIBFT) $(NAME)
 	@$(CC) $(CFLAGS) -o $@ -c $< 
 
 $(NAME): $(OBJECTS)
-	@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME) $(RLFLAGS)
 	@echo "\033[32;1mCompilation successful!\033[0m"
 
 $(LIBFT): $(LIBFT_DIR)
