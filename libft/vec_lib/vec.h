@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:05:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/19 12:31:46 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:01:27 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int		vec_resize(t_vec *src, size_t target_len);
 int		vec_push(t_vec *src, void *elem);
 int		vec_pop(void *dst, t_vec *src);
 int		vec_copy(t_vec *dst, t_vec *src);
-// void	*vec_get(t_vec *src, size_t index);
+void	*vec_get(t_vec *src, size_t index);
 // int		vec_insert(t_vec *dst, void *elem, size_t index);
-// int		vec_remove(t_vec *src, size_t index);
-// int		vec_append(t_vec *dst, t_vec *src);
+int		vec_remove(t_vec *src, size_t index);
+int		vec_append(t_vec *dst, t_vec *src);
 // int		vec_prepend(t_vec *dst, t_vec *src);
 // void	vec_iter(t_vec *src, void (*f) (void *));
 // void	*vec_find(t_vec *src, bool (*f) (void *));
