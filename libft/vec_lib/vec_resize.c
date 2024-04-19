@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_resize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:43:01 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/19 12:30:45 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:45:30 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,18 @@
 *	copying the old contents over to the new allocation.	*
 *	RETURNS: 1 upon success, and -1 on error.				*
 *************************************************************/
-static int vec_resize(t_vec *src, size_t target_size)
+int	vec_resize(t_vec *src, size_t target_size)
 {
 	t_vec	dst;
-	
+
 	if (!src)
 		return (-1);
 	else if (!src->memory)
 		return (vec_new(src, target_size, src->elem_size));
 	else if (vec_new(&dst, target_size, src->elem_size) < 0)
 		return (-1);
-	ft_memcpy(dst.memory, src->memory, target_size);
+	ft_memcpy(dst.memory, src->memory, src->len * src->elem_size);
+	dst.len = src->len;
 	vec_free(src);
 	*src = dst;
 	return (1);

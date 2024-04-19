@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_copy.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:53:49 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/19 11:33:23 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:47:10 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 *	The copy function is very simple and will only copy at most			*
 *	as many bytes as are available in the dst vector-- not true?		*
 *************************************************************************/
-int vec_copy(t_vec *dst, t_vec *src)
+int	vec_copy(t_vec *dst, t_vec *src)
 {
 	size_t	copy_size;
 
@@ -34,7 +34,7 @@ int vec_copy(t_vec *dst, t_vec *src)
 }
 //	how come the function copies more than is available in the dst? 
 //	dst memory literally gets overwritten by how much is in the src vector. 
-int main(void)
+/*int main(void)
 {
     t_vec   t1;
     t_vec   t2;
@@ -54,4 +54,4 @@ int main(void)
     vec_free(&t1);
     vec_free(&t2);
     printf("test_vec_copy successful!\n");
-}
+}*/
