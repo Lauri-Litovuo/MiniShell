@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vec_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:13:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/17 13:59:31 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/19 14:03:36 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vec.h>
+#include "vec.h"
 /**
  * @brief Creates a new vector which memory size is init_len*elem_size. 
  * Does not allocate memory for the t_vec
