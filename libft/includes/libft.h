@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:52:13 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/16 14:39:05 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:47:51 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,19 @@ typedef struct s_split
 }			t_split;
 
 /*******************************/
+/*     vec_lib struct      */
+/*******************************/
+typedef struct s_vec
+{
+	unsigned char	*memory;
+	size_t			elem_size;
+	size_t			alloc_size;
+	size_t			len;
+}		t_vec;
+
+/*******************************/
 /*       libft functions       */
 /*******************************/
-
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -96,7 +106,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 /*******************************/
 /*       printf functions      */
 /*******************************/
-
 int		ft_printf(const char *format, ...);
 int		ft_putchar(char c, int *check);
 int		ft_putstr(char *str, int *check);
@@ -108,9 +117,25 @@ int		ft_putptr(void *ptr, int *check);
 /*******************************/
 /*   get_next_line functions   */
 /*******************************/
-
 char	*get_next_line(int fd);
 char	*ft_strjoin_gnl(char *string, char *buffer);
 char	*ft_free_gnl(char *string);
+
+/*******************************/
+/*   	vec_lib functions 	   */
+/*******************************/
+int		vec_new(t_vec *dst, size_t init_len, size_t elem_size);
+void	vec_free(t_vec *src);
+int		vec_from(t_vec *dst, void *src, size_t len, size_t elem_size);
+int		vec_resize(t_vec *src, size_t target_len);
+int		vec_push(t_vec *src, void *elem);
+int		vec_pop(void *dst, t_vec *src);
+int		vec_copy(t_vec *dst, t_vec *src);
+void	*vec_get(t_vec *src, size_t index);
+int		vec_insert(t_vec *dst, void *elem, size_t index);
+int		vec_remove(t_vec *src, size_t index);
+int		vec_append(t_vec *dst, t_vec *src);
+int		vec_prepend(t_vec *dst, t_vec *src);
+void	vec_iter(t_vec *src, void (*f) (void *));
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/17 12:25:00 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:40:21 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ Command-line editing: readline, rl_clear_history, rl_on_new_line,
 rl_replace_line, rl_redisplay, add_history */
 # include "readline/readline.h"
 # include "readline/history.h"
-
-
 
 /*stdlib:
 Dynamic memory allocation and deallocation: malloc, free

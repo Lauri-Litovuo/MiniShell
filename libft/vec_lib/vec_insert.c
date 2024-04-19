@@ -6,11 +6,11 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:34:36 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/19 14:13:45 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:21:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vec.h"
+#include "../includes/libft.h"
 
 /********************************************************************
 *	Inserts a new element at any position in the vector without		*
@@ -33,19 +33,3 @@ int	vec_insert(t_vec *dst, void *src, size_t index)
 	dst->len++;
 	return (1);
 }
-
-// int main(void)
-// {
-//     t_vec   t1;
-//     int     base[] = {1, 2, 3, 4, 5};
-//     int     insert[] = {42, 666, 7};
-//     int     expect[] = {1, 42, 2, 3, 666, 4, 5, 7};
-
-//     assert(vec_from(&t1, base, 5, sizeof(int)) > 0);
-//     vec_insert(&t1, &insert[0], 1);
-//     vec_insert(&t1, &insert[1], 4);
-//     vec_insert(&t1, &insert[2], 7);
-//     assert(memcmp(t1.memory, expect, sizeof(expect)) == 0);
-//     vec_free(&t1);
-//     printf("test_vec_insert successful!\n");
-// }

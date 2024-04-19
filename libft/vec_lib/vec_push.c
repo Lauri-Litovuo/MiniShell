@@ -3,23 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   vec_push.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:55:25 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/19 12:45:53 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:37:29 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vec.h"
+#include "../includes/libft.h"
 
-/**
- * @brief Function takes in a vector and a pointer to an element
- *  to be pushed to the end of the vector
- * 
- * @param dst t_vec destination
- * @param src void *source added end of the destination vector
- * @return int returns -1 if failed, returns 1 if successful. 
- */
+/********************************************************************
+*	Takes in a vector and a pointer to an element to be pushed to	*
+*	the end of the vector.											*
+*	Returns: 1 on success, -1 on failure.							*
+*********************************************************************/
 
 int	vec_push(t_vec *dst, void *src)
 {
@@ -38,18 +35,3 @@ int	vec_push(t_vec *dst, void *src)
 	dst->len++;
 	return (1);
 }
-
-/*int main(void)
-{
-    t_vec   t1;
-    int     base[] = {1, 2, 3, 4, 5};
-    int     expect[] = {2, 4};
-
-    assert(vec_new(&t1, 1, sizeof(int)) > 0);
-    vec_push(&t1, &base[1]);
-    vec_push(&t1, &base[3]);
-	printf("t1.mem: %d\n", (int)t1.memory[0]);
-    assert(memcmp(t1.memory, expect, sizeof(expect)) == 0);
-    vec_free(&t1);
-    printf("test_vec_push successful!\n");
-}*/

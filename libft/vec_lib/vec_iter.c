@@ -6,11 +6,11 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:21:33 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/19 15:33:22 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:21:51 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vec.h"
+#include "../includes/libft.h"
 
 /****************************************************************************
 *	Takes as an argument a function f applied to each element in the vector	*
@@ -27,21 +27,3 @@ void	vec_iter(t_vec *src, void (*f) (void *))
 		i++;
 	}
 }
-
-// void iter_tester(void *src)
-// {
-//     *(int *)src += 1;
-// }
-
-// int main(void)
-// {
-//     t_vec   t1;
-//     int     base[] = {1, 2, 3, 4, 5};
-//     int     expect[] = {2, 3, 4, 5, 6};
-
-//     assert(vec_from(&t1, base, 5, sizeof(int)) > 0);
-//     vec_iter(&t1, iter_tester);
-//     assert(memcmp(t1.memory, expect, sizeof(expect)) == 0);
-//     vec_free(&t1);
-//     printf("test_vec_iter successful!\n");
-// }

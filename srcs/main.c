@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/17 12:18:10 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:48:39 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int	main()		//this is just to check that Makefile and libft work
+int main(void)
 {
-	char	*str = NULL;
-	int		res;
-	
-	res = ft_strlen(str);
-	ft_printf("%d\n", res);
-	return (1);
+   ft_printf("hello there! let's get to work:)\n");
+   return (1);
 }

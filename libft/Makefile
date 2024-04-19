@@ -45,7 +45,20 @@ SOURCES =  libft/ft_isdigit.c \
 		   printf/ft_putun.c \
 		   printf/ft_putptr.c \
 		   gnl/get_next_line.c \
-		   gnl/get_next_line_utils.c
+		   gnl/get_next_line_utils.c \
+		   vec_lib/vec_append.c \
+		   vec_lib/vec_copy.c \
+		   vec_lib/vec_free.c \
+		   vec_lib/vec_from.c \
+		   vec_lib/vec_get.c \
+		   vec_lib/vec_insert.c \
+		   vec_lib/vec_iter.c \
+		   vec_lib/vec_new.c \
+		   vec_lib/vec_pop.c \
+		   vec_lib/vec_prepend.c \
+		   vec_lib/vec_push.c \
+		   vec_lib/vec_remove.c \
+		   vec_lib/vec_resize.c
 		  	 
 OBJECTS = $(SOURCES:.c=.o)
 
