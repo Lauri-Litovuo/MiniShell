@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_new.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 13:13:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/19 17:33:06 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:19:22 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	vec_new(t_vec *dst, size_t init_len, size_t elem_size)
 		dst->memory = NULL;
 	else
 	{
-		dst->memory = (unsigned char *) malloc(init_len * elem_size);
+		dst->memory = ft_calloc(elem_size, init_len);
 		if (!dst->memory)
 			return (-1);
 	}
