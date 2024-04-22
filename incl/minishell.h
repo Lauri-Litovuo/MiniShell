@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/22 13:48:58 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:18:45 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs*/
 
 /* Builtins*/
 int		launch_builtin(char *args, t_vec *env);
-void	ft_env(t_vec *env);
+int		ft_env(t_vec *env);
+int		ft_pwd(void);
 
 #endif
