@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/22 09:22:51 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/22 09:50:43 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,20 @@ int	main(int argc, char **argv)
 	(void)argv;
 	while (1)
 	{
-		printf("TheShell$");
-		nread = getline(&buf, &count, stdin);
-		if (nread == -1)
+		if (isatty(STDIN_FILENO) == 1)
 		{
-			free(buf);
-			perror ("Exiting shell");
-			exit (1);
+			printf("TheShell$");
+			nread = getline(&buf, &count, stdin);
+			if (nread == -1)
+			{
+				free(buf);
+				perror ("Exiting shell");
+				exit (1);
+			}
+			printf("User input is: %s", buf);
 		}
-		printf("User input is: %s", buf);
+		else
+			printf ("is not interactive with terminal\n");
 	}
 	free(buf);
 	return (0);
