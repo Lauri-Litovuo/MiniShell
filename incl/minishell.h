@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/19 17:40:21 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/22 13:48:58 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,12 @@ Terminal control: tcsetattr, tcgetattr*/
 Terminal handling, cursor movement, and output: 
 tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs*/
 # include <curses.h>
+
+# include <limits.h>
+
+
+/* Builtins*/
+int		launch_builtin(char *args, t_vec *env);
+void	ft_env(t_vec *env);
 
 #endif

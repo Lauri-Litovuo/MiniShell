@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/04/17 12:19:42 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/04/22 13:50:36 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,11 @@ LIBFT = ./libft/libft.a
 RLHEAD = /Users/${USER}/.brew/Cellar/readline/8.2.10/include
 RLLIB = /Users/${USER}/.brew/Cellar/readline/8.2.10/lib
 
-SOURCES = srcs/main.c \
-			srcs/parsing.c
+SOURCES = \
+			srcs/main.c \
+			srcs/parsing.c \
+			srcs/builtins/builtin_functions.c \
+			srcs/builtins/builtins.c \
 			
 OBJECTS = $(SOURCES:.c=.o)
 
