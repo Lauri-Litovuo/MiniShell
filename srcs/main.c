@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/22 14:16:52 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:58:03 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ int	main(int argc, char **argv, char **envp)
 			buf = readline("Shell> ");
 			if (!buf)
 			{
-				perror ("Exiting shell");
 				exit (1);
 			}
 			launch_builtin(buf, &env);
-			printf("User input is: %s\n", buf);
+			//printf("User input is: %s\n", buf);
 			if (buf && *buf)
 				add_history(buf);
 			free(buf);
@@ -64,7 +63,6 @@ static int	copy_env(t_vec *env, char **envp)
 			return (-1);
 		}
 		printf("env: %s\n", *(char **)vec_get(env, i));
-		free(temp);
 		i++;
 	}
 	return (0);
