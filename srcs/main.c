@@ -3,17 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/19 17:48:39 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/22 09:22:51 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
 
-int main(void)
+int	main(int argc, char **argv)
 {
-   ft_printf("hello there! let's get to work:)\n");
-   return (1);
+	char	*buf;
+	size_t	count;
+	ssize_t	nread;
+
+	(void)argc;
+	(void)argv;
+	while (1)
+	{
+		printf("TheShell$");
+		nread = getline(&buf, &count, stdin);
+		if (nread == -1)
+		{
+			free(buf);
+			perror ("Exiting shell");
+			exit (1);
+		}
+		printf("User input is: %s", buf);
+	}
+	free(buf);
+	return (0);
 }
