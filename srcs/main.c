@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/22 12:30:41 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:53:59 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	main(int argc, char **argv, char **envp)
 				exit (1);
 			}
 			printf("User input is: %s\n", buf);
+			if (buf && *buf)
+				add_history(buf);
 			free(buf);
 		}
 		else
