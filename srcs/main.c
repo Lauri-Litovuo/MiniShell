@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/22 12:53:59 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/22 14:16:52 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **envp)
 				perror ("Exiting shell");
 				exit (1);
 			}
+			launch_builtin(buf, &env);
 			printf("User input is: %s\n", buf);
 			if (buf && *buf)
 				add_history(buf);
@@ -52,15 +53,11 @@ static int	copy_env(t_vec *env, char **envp)
 	i = 0;
 	if (vec_new(env, 50, sizeof(char *)) < 0)
 		return (-1);
-	printf("alloc_size: %zu\n", env->alloc_size);
-	printf("element size: %zu\n", env->elem_size);
-	printf("sizeof: %lu\n", sizeof(char *));
 	if (!envp)
 		return (-1);
 	while (envp[i])
 	{
 		temp = ft_strdup(envp[i]);
-		printf("temp:%s\n", temp);
 		if (vec_push(env, &temp) < 0)
 		{
 			vec_free(env);
