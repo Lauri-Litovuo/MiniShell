@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/23 16:04:57 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:55:33 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_export(t_vec *env, t_vec *args)
 
 	i = 0;
 	j = 0;
+	printf("EXPORTING\n");
+	printf("len: %zu\n", args->len);
 	arg_strs = (char **)args->memory;
 	if (args->len == 1)
 	{
@@ -42,9 +44,9 @@ int	ft_export(t_vec *env, t_vec *args)
 			i++;
 		}
 	}
-	while (args->memory[++i])
+	while ((size_t)i < args->len)
 	{
-		if (export_variable(env, arg_strs[i]))
+		if (export_variable(env, arg_strs[++i]) < 0)
 			printf("error in export2"); //change to error mngmt
 	}
 	return (0);
@@ -55,16 +57,18 @@ static int	export_variable(t_vec *env, char *arg)
 	char	*env_var;
 
 	env_var = NULL;
+	printf("EXPORT VAR\n");
 	if (ft_strchr(arg, '=') != NULL)
 	{
 		env_var = extract_env_var(arg);
+		printf("env_var: %s\n", env_var);
 		if (env_var == NULL)
 			return (-1);
 		if (check_export_syntax(env_var) < 0)
 		{
-			return (printf("bash: export: `L+OL=hello.world': not a valid identifier"), -1); //exitcode 1;
+			printf("bash: export: `L+OL=hello.world': not a valid identifier\n"); //exitcode 1;
 		}
-		else
+		else if (check_export_syntax(env_var) >= 0)
 		{
 			if (export_env_var(env_var, arg, env) < 0)
 				return (-1);
@@ -82,7 +86,7 @@ static int	check_export_syntax(char *arg)
 	i = 0;
 	while (arg[i])
 	{
-		if (ft_isalnum(arg[i]) == 0 || arg[i] != '_')
+		if (ft_isalnum(arg[i]) == 0 && arg[i] != '_')
 			return (-1);
 		i++;
 	}
@@ -99,8 +103,8 @@ static char	*extract_env_var(char *arg)
 	len = 0;
 	env = ft_strchr(arg, '=');
 	len = ft_strlen(arg) - ft_strlen(env);
-	//free (env);
 	env = ft_substr(arg, 0, len);
+	printf("env: %s\n", env);
 	if (env == NULL)
 		return (NULL);
 	return (env);
@@ -108,12 +112,15 @@ static char	*extract_env_var(char *arg)
 
 static int	export_env_var(char *env_var, char *arg, t_vec *env)
 {
-	int	index;
+	int		index;
+	char	*temp;
 
 	index = 0;
+	printf("here\n");
 	if (getenv(env_var) == NULL)
 	{
-		if (vec_push(env, arg) < 0)
+		temp = ft_strdup(arg);
+		if (vec_push(env, &temp) < 0)
 			return (-1);
 		return (0);
 	}
