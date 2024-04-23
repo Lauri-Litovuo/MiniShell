@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/23 16:55:33 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/23 18:24:13 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_export(t_vec *env, t_vec *args)
 		{
 			if (vec_get(env, j) == NULL)
 			{
-				printf("error in export1"); //change to error mngmt
+				printf("error in export1\n"); //change to error mngmt
 				return (1);
 			}
 			printf("%s\n", *(char **)vec_get(env, j));
@@ -47,7 +47,12 @@ int	ft_export(t_vec *env, t_vec *args)
 	while ((size_t)i < args->len)
 	{
 		if (export_variable(env, arg_strs[++i]) < 0)
-			printf("error in export2"); //change to error mngmt
+			printf("error in export2\n"); //change to error mngmt
+	}
+	for (size_t k = 0; k < env->len; k++)
+	{
+		printf("env: %s\n", *(char **)vec_get(env, k));
+		printf("%zu\n", k);
 	}
 	return (0);
 }
@@ -57,11 +62,9 @@ static int	export_variable(t_vec *env, char *arg)
 	char	*env_var;
 
 	env_var = NULL;
-	printf("EXPORT VAR\n");
 	if (ft_strchr(arg, '=') != NULL)
 	{
 		env_var = extract_env_var(arg);
-		printf("env_var: %s\n", env_var);
 		if (env_var == NULL)
 			return (-1);
 		if (check_export_syntax(env_var) < 0)
@@ -104,7 +107,6 @@ static char	*extract_env_var(char *arg)
 	env = ft_strchr(arg, '=');
 	len = ft_strlen(arg) - ft_strlen(env);
 	env = ft_substr(arg, 0, len);
-	printf("env: %s\n", env);
 	if (env == NULL)
 		return (NULL);
 	return (env);
@@ -112,12 +114,11 @@ static char	*extract_env_var(char *arg)
 
 static int	export_env_var(char *env_var, char *arg, t_vec *env)
 {
-	int		index;
-	char	*temp;
+	int			index;
+	char		*temp;
 
 	index = 0;
-	printf("here\n");
-	if (getenv(env_var) == NULL)
+	if (getenv(env_var) == 0 && find_index_of_env(env, env_var) < 0)
 	{
 		temp = ft_strdup(arg);
 		if (vec_push(env, &temp) < 0)
@@ -129,8 +130,13 @@ static int	export_env_var(char *env_var, char *arg, t_vec *env)
 		index = find_index_of_env(env, env_var);
 		if (index < 0)
 			return (-1);
-		else if (vec_remove(env, index) < 0 || vec_insert(env, arg, index) < 0)
+		temp = ft_strdup(arg);
+		printf("temp: %s\n", temp);
+		vec_push(env, &temp);
+		printf("2\n");
+		if (vec_remove(env, (size_t)index) < 0)
 			return (-1);
+		printf("3\n");
 	}
 	return (0);
 }
