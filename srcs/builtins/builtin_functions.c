@@ -6,22 +6,27 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/22 16:17:37 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:00:30 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_env(t_vec *env)
+int	ft_env(t_vec *env, t_vec *args)
 {
 	int	i;
 
 	i = 0;
+	if (args->len > 1)
+	{
+		printf("env: No options or arguments possible"); //change to error mngmt
+		return (-1);
+	}
 	while ((size_t)i < env->len)
 	{
 		if (vec_get(env, i) == NULL)
 		{
-			//builtin_error(ENV);
+			printf("vec_get failed"); //change this to error mngmt
 			return (1);
 		}
 		printf("%s\n", *(char **)vec_get(env, i));
@@ -44,34 +49,27 @@ int	ft_pwd(void)
 	return (0);
 }
 
-static int	find_index_of_env(t_vec *src, char *str)
-{
-	void	*ptr;
-	int		i;
 
-	i = 0;
-	if (!src || !src->memory || !str)
-		return (-1);
-	while ((size_t)i < src->len)
+int	ft_unset(t_vec *env, t_vec *args)
+{
+	int				index;
+	int				i;
+	char			**env_arg;
+
+	index = 0;
+	i = 1;
+	while (args->memory[i])
 	{
-		ptr = vec_get(src, i);
-		if (!ptr)
-			return (-1);
-		if (ft_strncmp(*(char **)ptr, str, ft_strlen(str)) == 0)
-			return (ptr);
+		env_arg = (char **)args->memory;
+		if (getenv((char *)env_arg) != 0)
+		{
+			index = find_index_of_env(env, (char *)env_arg);
+			if (index == -1)
+				return (-1);
+			if (vec_remove(env, index) < 0)
+				return (-1);
+		}
 		i++;
 	}
-	return (-1);
-}
-
-int	ft_unset(t_vec *env, char **args)
-{
-	int	index;
-
-	index = find_index_of_env(env, args[1]);
-	if (index == -1)
-		return (-1);
-	if (vec_remove(env, index) < 0)
-		return (-1);
 	return (0);
 }

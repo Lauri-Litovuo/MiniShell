@@ -6,25 +6,47 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/22 15:43:10 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:06:06 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	launch_builtin(char *args, t_vec *env)
+//change the prototyping and delete test vector function when parsing is feeding some stuff
+
+void	create_test_vector(t_vec *args)
 {
-	if (ft_strncmp(args, "env", ft_strlen(args)) == 0)
-		ft_env(env);
-	else if (ft_strncmp(args, "pwd", ft_strlen(args)) == 0)
+	char	*temp;
+
+	vec_new(args, 10, sizeof(char *));
+	temp = ft_strdup("export");
+	vec_push(args, &temp);
+	temp = ft_strdup("HELLO=HEY");
+	vec_push(args, &temp);
+	temp = ft_strdup("HELLOO=HEY");
+	vec_push(args, &temp);
+}
+
+int	launch_builtin(t_vec *env, char *buf)
+{
+	char	**arg_strs;
+	t_vec	args; //del when parsing is ready
+
+	create_test_vector(&args); //del when parsing is ready
+	arg_strs = (char **)args.memory;
+	for(size_t i = 0; i < args.len; i++)
+		printf("args are: %s\n", arg_strs[i]);
+	if (ft_strncmp(arg_strs[0], "env", ft_strlen(arg_strs[0])) == 0 || )
+		ft_env(env, &args);
+	else if (ft_strncmp(arg_strs[0], "pwd", ft_strlen(arg_strs[0])) == 0)
 		ft_pwd();
-	else if (ft_strncmp(args, "unset", ft_strlen(args)) == 0)
-		ft_unset();
+	else if (ft_strncmp(arg_strs[0], "unset", ft_strlen(arg_strs[0])) == 0)
+		ft_unset(env, &args);
+	else if (ft_strncmp(arg_strs[0], "export", ft_strlen(arg_strs[0])) == 0)
+		ft_export(env, &args);
 	// else if (ft_strncmp(args, "exit", ft_strlen(args)) == 0)
 	// 	ft_exit();
 	// else if (ft_strncmp(args, "echo", ft_strlen(args)) == 0)
 	// 	ft_echo();
-	// else if (ft_strncmp(args, "export", ft_strlen(args)) == 0)
-	// 	ft_export();
 	return (0);
 }
