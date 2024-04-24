@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/24 14:23:49 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:58:32 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ int	init_vectors(t_vec *larg, t_shell *sh, char *buf)
 		sh->j = sh->i;
 		while (buf[sh->i] && buf[sh->i] != '|')
 			sh->i++;
+		printf("j: %zu, i: %zu\n", sh->j , sh->i);
 		sh->temp = ft_substr(buf, sh->j, sh->i - sh->j);
 		if (sh->temp == NULL)
 			return(error_msg_free(1, SUBSTR, NULL, larg));
 		if (vec_push(larg, &sh->temp) < 0)
 			return (error_msg_free(1, VECPUSH, NULL, larg));
-		sh->i++;
+		if (buf[sh->i])
+			sh->i++;
 	}
 	init_index(sh);
 	return (1);
