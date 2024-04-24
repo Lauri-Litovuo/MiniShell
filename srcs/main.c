@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/22 14:58:03 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:06:28 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				exit (1);
 			}
-			launch_builtin(buf, &env);
+			launch_builtin(&env, buf);
 			//printf("User input is: %s\n", buf);
 			if (buf && *buf)
 				add_history(buf);
@@ -62,7 +62,7 @@ static int	copy_env(t_vec *env, char **envp)
 			vec_free(env);
 			return (-1);
 		}
-		printf("env: %s\n", *(char **)vec_get(env, i));
+		// printf("env: %s\n", *(char **)vec_get(env, i));
 		i++;
 	}
 	return (0);
