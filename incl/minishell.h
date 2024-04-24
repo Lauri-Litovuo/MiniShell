@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/24 09:15:15 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:33:16 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int		ft_export(t_vec *env, t_vec *args);
 
 int		find_index_of_env(t_vec *src, char *str);
 char	*extract_env_var(char *arg);
+int		ft_echo(t_vec *args);
 
 
 #endif

@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/04/23 15:19:36 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/04/24 10:32:52 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SOURCES = \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
 			srcs/builtins/builtin_utils.c \
+			srcs/builtins/ft_echo.c \
 			
 OBJECTS = $(SOURCES:.c=.o)
 
