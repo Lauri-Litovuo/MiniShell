@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/23 18:24:13 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:21:39 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 static int	check_export_syntax(char *arg);
 static int	export_variable(t_vec *env, char *arg);
-static char	*extract_env_var(char *arg);
 static int	export_env_var(char *env_var, char *arg, t_vec *env);
 
 int	ft_export(t_vec *env, t_vec *args)
@@ -28,8 +27,6 @@ int	ft_export(t_vec *env, t_vec *args)
 
 	i = 0;
 	j = 0;
-	printf("EXPORTING\n");
-	printf("len: %zu\n", args->len);
 	arg_strs = (char **)args->memory;
 	if (args->len == 1)
 	{
@@ -48,11 +45,6 @@ int	ft_export(t_vec *env, t_vec *args)
 	{
 		if (export_variable(env, arg_strs[++i]) < 0)
 			printf("error in export2\n"); //change to error mngmt
-	}
-	for (size_t k = 0; k < env->len; k++)
-	{
-		printf("env: %s\n", *(char **)vec_get(env, k));
-		printf("%zu\n", k);
 	}
 	return (0);
 }
@@ -96,21 +88,7 @@ static int	check_export_syntax(char *arg)
 	return (0);
 }
 
-static char	*extract_env_var(char *arg)
-{
-	char	*env;
-	size_t	len;
-	int		i;
 
-	i = 0;
-	len = 0;
-	env = ft_strchr(arg, '=');
-	len = ft_strlen(arg) - ft_strlen(env);
-	env = ft_substr(arg, 0, len);
-	if (env == NULL)
-		return (NULL);
-	return (env);
-}
 
 static int	export_env_var(char *env_var, char *arg, t_vec *env)
 {
@@ -131,12 +109,10 @@ static int	export_env_var(char *env_var, char *arg, t_vec *env)
 		if (index < 0)
 			return (-1);
 		temp = ft_strdup(arg);
-		printf("temp: %s\n", temp);
-		vec_push(env, &temp);
-		printf("2\n");
+		if (vec_push(env, &temp) < 0)
+			return (printf("free_temp_and_error"), -1); //error mngmt
 		if (vec_remove(env, (size_t)index) < 0)
-			return (-1);
-		printf("3\n");
+			return (printf("free temp and error"), -1); //error mngmnt
 	}
 	return (0);
 }

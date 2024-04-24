@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/23 17:45:44 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:56:07 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,20 @@ int	find_index_of_env(t_vec *src, char *str)
 		i++;
 	}
 	return (-1);
+}
+
+char	*extract_env_var(char *arg)
+{
+	char	*env;
+	size_t	len;
+	int		i;
+
+	i = 0;
+	len = 0;
+	env = ft_strchr(arg, '=');
+	len = ft_strlen(arg) - ft_strlen(env);
+	env = ft_substr(arg, 0, len);
+	if (env == NULL)
+		return (NULL);
+	return (env);
 }

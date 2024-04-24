@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/23 16:00:30 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:56:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	ft_env(t_vec *env, t_vec *args)
 	i = 0;
 	if (args->len > 1)
 	{
-		printf("env: No options or arguments possible"); //change to error mngmt
+		printf("env: No options or arguments possible\n"); //change to error mngmt
 		return (-1);
 	}
 	while ((size_t)i < env->len)
 	{
 		if (vec_get(env, i) == NULL)
 		{
-			printf("vec_get failed"); //change this to error mngmt
+			printf("vec_get failed\n"); //change this to error mngmt
 			return (1);
 		}
 		printf("%s\n", *(char **)vec_get(env, i));
@@ -54,20 +54,24 @@ int	ft_unset(t_vec *env, t_vec *args)
 {
 	int				index;
 	int				i;
-	char			**env_arg;
+	char			**env_args;
+	char			*env_var;
 
 	index = 0;
 	i = 1;
-	while (args->memory[i])
+	env_args = (char **)args->memory;
+	while ((size_t)i < args->len)
 	{
-		env_arg = (char **)args->memory;
-		if (getenv((char *)env_arg) != 0)
+		env_var = extract_env_var(env_args[i]);
+		if (getenv(env_var) != 0 || find_index_of_env(args, env_var) >= 0)
 		{
-			index = find_index_of_env(env, (char *)env_arg);
+			index = find_index_of_env(env, env_var);
 			if (index == -1)
-				return (-1);
+				return (printf("free env_var and errmsg\n"), -1); // err_mngmt
+			free (env_var);
+			env_var = vec_get(env, index);
 			if (vec_remove(env, index) < 0)
-				return (-1);
+				return (printf("free env_var and errmsg\n"), -1); //err_mngmnt
 		}
 		i++;
 	}
