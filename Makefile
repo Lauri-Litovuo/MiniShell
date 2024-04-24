@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/04/22 13:50:36 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/04/23 15:19:36 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,12 @@ SOURCES = \
 			srcs/parsing.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
+			srcs/builtins/ft_export.c \
+			srcs/builtins/builtin_utils.c \
 			
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -I$(RLHEAD)
+CFLAGS =  -g -Wall -Wextra -Werror -I$(RLHEAD)
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 
