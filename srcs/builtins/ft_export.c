@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/24 09:21:39 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:40:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // Should be tested if export works otherwise than as a first argument in bash.
 // Should test whether "export" should work solely without arguments, if so original t_vec env should be saved somewhere
-
+// should be added to include += which appends the string to the end of the env_val
 static int	check_export_syntax(char *arg);
 static int	export_variable(t_vec *env, char *arg);
 static int	export_env_var(char *env_var, char *arg, t_vec *env);
@@ -109,9 +109,9 @@ static int	export_env_var(char *env_var, char *arg, t_vec *env)
 		if (index < 0)
 			return (-1);
 		temp = ft_strdup(arg);
-		if (vec_push(env, &temp) < 0)
+		if (vec_insert(env, &temp, index) < 0)
 			return (printf("free_temp_and_error"), -1); //error mngmt
-		if (vec_remove(env, (size_t)index) < 0)
+		if (vec_remove(env, (size_t)index - 1) < 0)
 			return (printf("free temp and error"), -1); //error mngmnt
 	}
 	return (0);

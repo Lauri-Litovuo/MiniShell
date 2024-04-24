@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/24 09:56:07 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:35:49 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	find_index_of_env(t_vec *src, char *str)
 		if (!ptr)
 			return (-1);
 		if (ft_strncmp(*(char **)ptr, str, ft_strlen(str)) == 0)
-			return (i);
+			return (i + 1);
 		i++;
 	}
 	return (-1);
