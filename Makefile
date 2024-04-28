@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/04/24 10:32:52 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/04/26 14:44:30 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,13 @@ SOURCES = \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
+			srcs/builtins/ft_export_utils.c \
 			srcs/builtins/builtin_utils.c \
-			srcs/builtins/ft_echo.c \
+			srcs/builtins/ft_echo.c 
 			
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS =  -g -Wall -Wextra -Werror -I$(RLHEAD)
+CFLAGS =  -g  -fsanitize=address -Wall -Wextra -Werror -I$(RLHEAD)
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 
