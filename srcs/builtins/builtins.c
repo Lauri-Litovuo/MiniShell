@@ -6,27 +6,11 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/24 12:45:24 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/28 15:02:38 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-//change the prototyping and delete test vector function when parsing is feeding some stuff
-
-// static void	create_test_vector(t_vec *args)
-// {
-// 	char	*temp;
-
-// 	vec_new(args, 10, sizeof(char *));
-// 	temp = ft_strdup("export");
-// 	vec_push(args, &temp);
-// 	temp = ft_strdup("HELLO=HEY");
-// 	vec_push(args, &temp);
-// 	temp = ft_strdup("HELLOO=HEY");
-// 	vec_push(args, &temp);
-// }
-
 
 static void	create_test_vector(t_vec *args, char *buf)
 {
@@ -34,6 +18,11 @@ static void	create_test_vector(t_vec *args, char *buf)
 	int		i;
 
 	i = 0;
+	if (buf[i] == '\0')
+	{
+		args->memory = NULL;
+		return ;
+	}
 	temp = ft_split(buf, ' ');
 	vec_new(args, 10, sizeof(char *));
 	while (temp[i])
@@ -62,6 +51,8 @@ int	launch_builtin(t_vec *env, char *buf)
 	t_vec	args; //del when parsing is ready
 
 	create_test_vector(&args, buf); //del when parsing is ready
+	if (!args.memory)
+		return (1);
 	arg_strs = (char **)args.memory;
 	// for(size_t i = 0; i < args.len; i++)
 	// 	printf("args are: %s\n", arg_strs[i]);
