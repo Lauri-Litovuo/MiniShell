@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:52:13 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/25 16:22:44 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:08:09 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,7 @@ void	vec_iter(t_vec *src, void (*f) (void *));
 void	vec_free_str(t_vec *src);
 int		vec_remove_str(t_vec *src, size_t index);
 int		vec_replace_str(t_vec *dst, void *src, size_t index);
+void	vec_sort_alpha(t_vec *src);
+int		vec_copy_len(t_vec *dst, t_vec *src);
 
 #endif
