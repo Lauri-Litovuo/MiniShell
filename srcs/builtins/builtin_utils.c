@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/24 16:35:49 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:58:10 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	find_index_of_env(t_vec *src, char *str)
 		if (!ptr)
 			return (-1);
 		if (ft_strncmp(*(char **)ptr, str, ft_strlen(str)) == 0)
-			return (i + 1);
+			return (i);
 		i++;
 	}
 	return (-1);
@@ -40,10 +40,21 @@ char	*extract_env_var(char *arg)
 
 	i = 0;
 	len = 0;
-	env = ft_strchr(arg, '=');
-	len = ft_strlen(arg) - ft_strlen(env);
-	env = ft_substr(arg, 0, len);
-	if (env == NULL)
-		return (NULL);
+	if (ft_strchr(arg, '+') + 1 == ft_strchr(arg, '='))
+	{
+		env = ft_strchr(arg, '+');
+		len = ft_strlen(arg) - ft_strlen(env);
+		env = ft_substr(arg, 0, len);
+		if (env == NULL)
+			return (NULL);
+	}
+	else
+	{
+		env = ft_strchr(arg, '=');
+		len = ft_strlen(arg) - ft_strlen(env);
+		env = ft_substr(arg, 0, len);
+		if (env == NULL)
+			return (NULL);
+	}
 	return (env);
 }

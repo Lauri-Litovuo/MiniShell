@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/24 09:56:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:59:05 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_unset(t_vec *env, t_vec *args)
 				return (printf("free env_var and errmsg\n"), -1); // err_mngmt
 			free (env_var);
 			env_var = vec_get(env, index);
-			if (vec_remove(env, index) < 0)
+			if (vec_remove_str(env, index) < 0)
 				return (printf("free env_var and errmsg\n"), -1); //err_mngmnt
 		}
 		i++;
