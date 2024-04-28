@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/04/17 12:19:42 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/04/28 17:26:34 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,10 @@ RLHEAD = /Users/${USER}/.brew/Cellar/readline/8.2.10/include
 RLLIB = /Users/${USER}/.brew/Cellar/readline/8.2.10/lib
 
 SOURCES = srcs/main.c \
-			srcs/parsing.c
+			srcs/parsing/parse.c \
+			srcs/parsing/scan_utils.c \
+			srcs/parsing/scan_utils2.c \
+			srcs/errors.c
 			
 OBJECTS = $(SOURCES:.c=.o)
 

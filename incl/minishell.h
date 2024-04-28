@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/24 14:18:10 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/28 17:44:51 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,32 @@
 # define SUBSTR "minishell: substr error\n"
 # define VECPUSH "minishell: vec_push error\n"
 # define VECNEW "minishell: vec_new error\n"
+# define UNMATCH "minishell: unexpected EOF while looking for matching "
 
 /************************************
 *			SHELL STRUCT			*
 *************************************/
 typedef struct s_shell
 {
+	t_vec	cmd;
+	t_vec	rdrct;
+	int		in_len;
+	size_t	count;
+	size_t	pipe_count;
+	size_t	gl_count;
 	size_t	i;
-	size_t	j;
-	size_t	k;
-	char	*temp;
 }	t_shell;
 
-int		parse_input(t_vec *arg, t_shell *sh, char *buf);
+int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
-void	init_index(t_shell *sh);
+/*		scan_utils		*/
+int		handle_start(t_vec *input, t_shell *arg, int i);
+int		handle_q(t_vec *input, t_shell *arg, int i);
+int		handle_qq(t_vec *input, t_shell *arg, int i);
+int		handle_pipe(t_vec *input, t_shell *arg, int i);
+int		handle_lessgreat(t_vec *input, t_shell *arg, int i);
+int		skip_spaces(t_vec *input, t_shell *arg, int i, int count);
+
 
 #endif
