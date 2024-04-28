@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_copy.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 12:53:49 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/19 17:28:08 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:06:21 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	vec_copy(t_vec *dst, t_vec *src)
 	if (!dst || !src || !src->memory)
 		return (-1);
 	else if (!dst->memory)
-		vec_new(dst, src->len, dst->elem_size);
+		vec_new(dst, src->len, src->elem_size);
 	if (src->len * src->elem_size < dst->alloc_size)
 		copy_size = src->len * src->elem_size;
 	else
