@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/28 17:44:51 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 09:22:38 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ typedef struct s_shell
 {
 	t_vec	cmd;
 	t_vec	rdrct;
-	int		in_len;
 	size_t	count;
 	size_t	pipe_count;
 	size_t	gl_count;
@@ -107,12 +106,15 @@ int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
 /*		scan_utils		*/
-int		handle_start(t_vec *input, t_shell *arg, int i);
-int		handle_q(t_vec *input, t_shell *arg, int i);
-int		handle_qq(t_vec *input, t_shell *arg, int i);
-int		handle_pipe(t_vec *input, t_shell *arg, int i);
-int		handle_lessgreat(t_vec *input, t_shell *arg, int i);
-int		skip_spaces(t_vec *input, t_shell *arg, int i, int count);
+int		handle_start(char *buf, int i);
+int		handle_q(char *buf, int i);
+int		handle_qq(char *buf, int i);
+int		handle_pipe(char *buf, int i);
+int		handle_lessgreat(char *buf, int i);
+int		skip_spaces(char *buf, int i);
+/*		split utils		*/
+t_shell	split_regular(char *buf, t_shell *arg, size_t pos);
+t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);
 
 
 #endif

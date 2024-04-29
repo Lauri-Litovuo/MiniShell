@@ -6,111 +6,98 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 21:00:48 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/28 17:47:45 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 08:19:46 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	skip_spaces(t_vec *input, t_shell *arg, int i, int count)
+int	skip_spaces(char *buf, int i)
 {
-	while (i < arg->in_len && (input->memory[i] == ' '
-		|| input->memory[i] == '\t' || input->memory[i] == '\n'))
+	while (buf[i] && (buf[i] == ' '
+		|| buf[i] == '\t' || buf[i] == '\n'))
 		i++;
-	return (i - count);
+	return (i);
 }
 
-int	handle_start(t_vec *input, t_shell *arg,  int i)
+int	handle_start(char *buf,  int i)
 {
-	int	count;
-
-	count = i;
-	i += skip_spaces(input, arg, i, count);
-	if (input->memory[i] == '|')
+	i = skip_spaces(buf, i);
+	if (buf[i] == '|')
 	{
-		vec_free(input);
+		free(buf);
 		error_msg(2, SYNTX, "`|'\n");
 		return (-2000);
 	}
-	return (i - count);
+	return (i);
 }
 
-int	handle_q(t_vec *input, t_shell *arg,  int i)
+int	handle_q(char *buf,  int i)
 {
-	int	count;
-
-	count = i;
 	i++;
-	if (input->memory[i] == '\'')
+	if (buf[i] == '\'')
 	{
 		i++;
-		return (i - count);
+		return (i);
 	}
 	else
 	{
-		while ((size_t)i < input->len && input->memory[i] != '\'')
+		while (buf[i] && (buf[i] != '\''))
 			i++;
-		if (input->memory[i] != '\'')
+		if (buf[i] != '\'')
 		{
-			vec_free(input);
+			free(buf);
 			error_msg(2, UNMATCH, "`''\n");
 			return (-2000);
 		}
-		return (skip_spaces(input, arg, i, count));
+		return (skip_spaces(buf, i));
 	}
 }
 
-int	handle_qq(t_vec *input, t_shell *arg,  int i)
+int	handle_qq(char *buf,  int i)
 {
-	int	count;
-
-	count = i;
 	i++;
-	if (input->memory[i] == '\"')
+	if (buf[i] == '\"')
 	{
 		i++;
-		return (i - count);
+		return (i);
 	}
 	else
 	{
-		while (i < arg->in_len && input->memory[i] != '\"')
+		while (buf[i] && buf[i] != '\"')
 			i++;
-		if (input->memory[i] != '\"')
+		if (buf[i] != '\"')
 		{
-			vec_free(input);
+			free(buf);
 			error_msg(2, UNMATCH, "`\"'\n");
 			return (-2000);
 		}
 		i++;
-		return (skip_spaces(input, arg, i, count));
+		return (skip_spaces(buf, i));
 	}
 }
 
-int	handle_pipe(t_vec *input, t_shell *arg, int i)
+int	handle_pipe(char *buf, int i)
 {
-	int	count;
-
-	count = i;
-	if (input->memory[i + 1])
-		i++;
-	if (input->memory[i] == '|')
+	i++;
+	if (buf[i] == '|')
 	{
-		vec_free(input);
+		free(buf);
 		error_msg(2, SYNTX, "`|'\n");
 		return (-2000);
 	}
-	i += skip_spaces(input, arg, i, count);
-	if (!input->memory[i])
+	i = skip_spaces(buf, i);
+	if (buf[i] == '\0')
 	{
-		vec_free(input);
+		free(buf);
 		error_msg(2, SYNTX, "`newline'\n");
 		return (-2000);
 	}
-	if (input->memory[i] == '|')
+	if (buf[i] == '|')
 	{
-		vec_free(input);
+		free(buf);
 		error_msg(2, SYNTX, "`|'\n");
 		return (-2000);
 	}
-	return (i - count);
+	return (i);
 }

@@ -6,65 +6,67 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/28 18:25:55 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:24:11 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-void	init_count(t_vec *input, t_shell *arg, int i)
+void	set_count(t_shell *arg)
 {
-	printf("arg->in_len:%d\n", arg->in_len);
-	while (i < arg->in_len)
+	if (arg->pipe_count == 0 && arg->gl_count == 0)
+		arg->count = 1;
+	else if (arg->gl_count > 0 && arg->pipe_count > 0)
+		arg->count = arg->pipe_count + 1;
+	else if (arg->gl_count > 0 && arg->pipe_count == 0)
+		arg->count = 1;
+	else
+		arg->count = arg->pipe_count + 1;
+}
+
+void	init_count(char *buf, t_shell *arg, int i)
+{
+	while (buf[i])
 	{
-		if (input->memory[i] == '\'')
-			i += handle_q(input, arg, i);
-		else if (input->memory[i] == '\"')
-			i += handle_qq(input, arg, i);
-		else if (input->memory[i] == '|')
+		if (buf[i] == '\'')
+			i = handle_q(buf, i);
+		else if (buf[i] == '\"')
+			i = handle_qq(buf, i);
+		else if (buf[i] == '|')
 		{
 			arg->pipe_count = arg->pipe_count + 1;
-			i += handle_pipe(input, arg, i);
+			i = handle_pipe(buf, i);
 		}
-		else if (input->memory[i] == '>' || input->memory[i] == '<')
+		else if (buf[i] == '>' || buf[i] == '<')
 		{
 			arg->gl_count = arg->gl_count + 1;
-			i += handle_lessgreat(input, arg, i);
+			i = handle_lessgreat(buf, i);
 		}
 		else
 			i++;
 	}
-	if (arg->pipe_count == 0 && arg->gl_count == 0)
-		arg->count = 1;
-	else if (arg->gl_count > 0)
-		arg->count = arg->gl_count;
-	else
-		arg->count = arg->pipe_count + 1;
-	printf("arg count:%zu\n", arg->count);
-	printf("redirections count:%zu\n", arg->gl_count);
-	printf("pipe count:%zu\n", arg->pipe_count);
+	set_count(arg);
 }
 
-int	scan_input(t_vec *input, t_shell *arg)
+int	scan_input(char *buf)
 {
 	int	i;
 
 	i = 0;
-	i += handle_start(input, arg, i);
+	i = handle_start(buf, i);
 	if (i < 0)
 		return (-1);
-	while ((size_t)i < input->len)
+	while (buf[i])
 	{
 		if (i < 0)
 			return (-1);
-		if (input->memory[i] == '\'')
-			i += handle_q(input, arg, i);
-		else if (input->memory[i] == '\"')
-			i += handle_qq(input, arg, i);
-		else if (input->memory[i] == '|')
-			i += handle_pipe(input, arg, i);
-		else if (input->memory[i] == '>' || input->memory[i] == '<')	
-			i += handle_lessgreat(input, arg, i);
+		if (buf[i] == '\'')
+			i = handle_q(buf, i);
+		else if (buf[i] == '\"')
+			i = handle_qq(buf, i);
+		else if (buf[i] == '|')
+			i = handle_pipe(buf, i);
+		else if (buf[i] == '>' || buf[i] == '<')	
+			i = handle_lessgreat(buf, i);
 		else
 			i++;
 	}
@@ -73,49 +75,31 @@ int	scan_input(t_vec *input, t_shell *arg)
 	return (0);
 }
 
-// t_shell	split_input(t_vec *input, t_shell *arg)
-// {
+void	split_input(char *buf, t_shell *arg)
+{
+	char	*temp;
+
+	temp = ft_substr(buf, 0, 3);
+	vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
+	vec_push(&arg[arg->i].cmd, &temp);
 	
-// }
+	arg->i++;
+	temp = ft_substr(buf, 3, 4);
+	vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
+	vec_push(&arg[arg->i].cmd, &temp);
+	
+}
 
 int	parse_input(t_shell *arg, char *buf)
 {
-	t_vec	input;
 	int		i;
 	
 	i = 0;
-	arg->in_len = ft_strlen(buf);
-	if (vec_new(&input, 1, sizeof(char *)) < 0)
-		return (error_msg(1, VECNEW, NULL));
-	if (vec_push(&input, &buf) < 0)
-		return (error_msg_free(1, VECPUSH, NULL, &input));
-	if (!input.memory)
-		return (1);
-	if (scan_input(&input, arg) == -1)		//checks for syntax errors
+	if (scan_input(buf) == -1)		//checks for syntax errors
 		return (-1);
-	while (i < arg->in_len)
-	{
-		printf("WHAT?\n");
-		printf("input memory: %c", input.memory[i]);
-		i++;
-	}
-	printf("\n");
-	i = 0;
-	init_count(&input, arg, i);			//  stores count of args && count of pipes
-	// printf("arg count:%zu\n", arg->count);
-	// printf("pipe count:%zu\n", arg->pipe_count);
-	// printf("redirections count:%zu\n", arg->gl_count);
-	// while (arg->i < arg->count)
-	// {
-	// 	arg[arg->i] = split_input(&input, arg);
-	// 	arg->i++;
-	// }
-	
-	// size_t	i = 0;
-	// while (i < input.len)	//printing vector larg
-	// {
-	// 	printf("larg[%zu]: %s\n", i, *(char **)vec_get(&input, i));
-	// 	i++;
-	// }
+	init_count(buf, arg, i);			//  stores count of args && count of pipes/redirections
+	split_input(buf, arg);
+	printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
+	printf("arg[1].cmd: %s\n", *(char **)vec_get(&arg[1].cmd, 0));
 	return (1);
 }

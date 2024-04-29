@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/28 17:30:24 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 09:41:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ static int	copy_env(t_vec *env, char **envp);
 // 	free(buf);
 // 	return (0);
 // }
+void	init_index(t_shell *arg)
+{
+	arg->count = 0;
+	arg->pipe_count = 0;
+	arg->gl_count = 0;
+	arg->i = 0;
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -64,13 +71,11 @@ int	main(int argc, char **argv, char **envp)
 	argc = 0;
 	argv = NULL;
 	ft_memset(&arg, 0 , sizeof(t_shell));
-	arg.count = 0;
-	arg.pipe_count = 0;
-	arg.gl_count = 0;
-	arg.i = 0;
+	init_index(&arg);
 	copy_env(&env, envp);
 	while (1)
 	{
+		init_index(&arg);
 		if (isatty(STDIN_FILENO) == 1)
 		{
 			buf = readline("minishell> ");
@@ -81,6 +86,9 @@ int	main(int argc, char **argv, char **envp)
 			}
 			if (parse_input(&arg, buf) == -1)
 				return (-1);
+			printf("arg count:%zu\n", arg.count);
+			printf("redirections count:%zu\n", arg.gl_count);
+			printf("pipe count:%zu\n", arg.pipe_count);
 			// while (i < arg.len)	//printing vectors of struct arg
 			// {
 			// 	printf("arg[%zu], cmd: %s\n", i, *(char **)vec_get(&arg.cmd, i));
