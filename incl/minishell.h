@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/29 09:22:38 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 16:56:15 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,8 @@ int		handle_pipe(char *buf, int i);
 int		handle_lessgreat(char *buf, int i);
 int		skip_spaces(char *buf, int i);
 /*		split utils		*/
-t_shell	split_regular(char *buf, t_shell *arg, size_t pos);
-t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);
-
-
-
+int		split_input(char *buf, t_shell *arg, size_t pos, int i);
+int		split_rest(char *buf, t_shell *arg, size_t pos);
 /* Builtins*/
 int		launch_builtin(t_vec *env, char *buf);
 int		ft_env(t_vec *env, t_vec *args);

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/29 09:41:24 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:32:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init_index(t_shell *arg)
 	arg->pipe_count = 0;
 	arg->gl_count = 0;
 	arg->i = 0;
+	arg->flag = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:39:34 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/29 12:53:51 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:59:38 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	redirect_error(char *buf, int i)
 		return (-2000);
 	}
 }
+
 int	check_endofinput(char *buf, int i)
 {
 	int	ret;

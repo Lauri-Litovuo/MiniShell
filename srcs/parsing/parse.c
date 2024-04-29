@@ -6,11 +6,12 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/29 12:47:59 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:24:56 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
 void	set_count(t_shell *arg)
 {
 	if (arg->pipe_count == 0 && arg->gl_count == 0)
@@ -75,27 +76,36 @@ int	scan_input(char *buf)
 	return (0);
 }
 
-void	split_input(char *buf, t_shell *arg)
+int	split(char *buf, t_shell *arg)
 {
-	char	*temp;
+	// char	*temp;
+	int		ret;
 
+	ret = 0;
 	while (arg->i < arg->count)
 	{
 		if (arg->i == 0)
-			split_start(buf, arg);
+		{
+			if (split_input(buf, arg, 0, 0) <  0)
+				return (-1);
+		}
 		else
-			split_
-		
+		{
+			if (split_rest(buf, arg, arg->i) < 0)
+			return (-1);
+		}
+		arg->i++;
 	}
-	temp = ft_substr(buf, 0, 3);
-	vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
-	vec_push(&arg[arg->i].cmd, &temp);
+	return (0);
 	
-	arg->i++;
-	temp = ft_substr(buf, 3, 4);
-	vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
-	vec_push(&arg[arg->i].cmd, &temp);
+	// temp = ft_substr(buf, 0, 3);
+	// vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
+	// vec_push(&arg[arg->i].cmd, &temp);
 	
+	// arg->i++;
+	// temp = ft_substr(buf, 3, 4);
+	// vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
+	// vec_push(&arg[arg->i].cmd, &temp);
 }
 
 int	parse_input(t_shell *arg, char *buf)
@@ -106,7 +116,8 @@ int	parse_input(t_shell *arg, char *buf)
 	if (scan_input(buf) == -1)		//checks for syntax errors
 		return (-1);
 	init_count(buf, arg, i);			//  stores count of args && count of pipes/redirections
-	split_input(buf, arg);
+	if (split(buf, arg) == -1)
+		return (-1);
 	printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
 	printf("arg[1].cmd: %s\n", *(char **)vec_get(&arg[1].cmd, 0));
 	return (1);
