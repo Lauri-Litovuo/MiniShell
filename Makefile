@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/04/26 14:44:30 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/04/29 08:54:25 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,18 @@ RLLIB = /Users/${USER}/.brew/Cellar/readline/8.2.10/lib
 
 SOURCES = \
 			srcs/main.c \
-			srcs/parsing.c \
+      srcs/parsing/parse.c \
+			srcs/parsing/scan_utils.c \
+			srcs/parsing/scan_utils2.c \
+			srcs/parsing/split_utils.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
 			srcs/builtins/ft_export_utils.c \
 			srcs/builtins/builtin_utils.c \
-			srcs/builtins/ft_echo.c 
+			srcs/builtins/ft_echo.c \
+      srcs/errors.c
+
 			
 OBJECTS = $(SOURCES:.c=.o)
 
