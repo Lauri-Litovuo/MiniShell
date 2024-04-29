@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
 /*   Updated: 2024/04/29 09:22:38 by aneitenb         ###   ########.fr       */
@@ -80,6 +80,8 @@
 *********************************************************/
 # include <curses.h>
 
+# include <limits.h>
+
 /****************************
 *			MACROS			*
 *****************************/
@@ -116,5 +118,18 @@ int		skip_spaces(char *buf, int i);
 t_shell	split_regular(char *buf, t_shell *arg, size_t pos);
 t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);
 
+
+
+/* Builtins*/
+int		launch_builtin(t_vec *env, char *buf);
+int		ft_env(t_vec *env, t_vec *args);
+int		ft_pwd(void);
+int		ft_unset(t_vec *env, t_vec *args);
+int		ft_export(t_vec *env, t_vec *args);
+void	print_exports(t_vec *env);
+
+int		find_index_of_env(t_vec *src, char *str);
+char	*extract_env_var(char *arg);
+int		ft_echo(t_vec *args);
 
 #endif

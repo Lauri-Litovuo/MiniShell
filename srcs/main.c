@@ -14,45 +14,6 @@
 
 static int	copy_env(t_vec *env, char **envp);
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	char	*buf;
-// 	t_vec	env;
-// 	t_vec	larg;
-// 	t_shell	sh;
-
-// 	argc = 0;
-// 	argv = NULL;
-// 	init_index(&sh);
-// 	copy_env(&env, envp);
-// 	// printf("env: %s\n", *(char **)vec_get(&env, 9));
-// 	while (1)
-// 	{
-// 		if (isatty(STDIN_FILENO) == 1)
-// 		{
-// 			buf = readline("minishell> ");
-// 			if (!buf)
-// 			{ 
-// 				perror ("Exiting shell");
-// 				exit (1);
-// 			}
-// 			if (parse_input(&larg, &sh, buf) == -1)
-// 				return (-1);
-// 			while (sh.k < larg.len)	//printing vector larg
-// 			{
-// 				printf("larg[%zu]: %s\n", sh.k, *(char **)vec_get(&larg, sh.k));
-// 				sh.k++;
-// 			}
-// 			if (buf && *buf)
-// 				add_history(buf);
-// 			free(buf);
-// 		}
-// 		else
-// 			printf ("is not interactive with terminal\n");
-// 	}
-// 	free(buf);
-// 	return (0);
-// }
 void	init_index(t_shell *arg)
 {
 	arg->count = 0;
@@ -80,6 +41,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			buf = readline("minishell> ");
 			if (!buf)
+			{
+				exit (1);
+			}
+			launch_builtin(&env, buf);
+			//printf("User input is: %s\n", buf);
 			{ 
 				perror ("Exiting shell");
 				exit (1);
@@ -122,6 +88,12 @@ static int	copy_env(t_vec *env, char **envp)
 	while (envp[i])
 	{
 		temp = ft_strdup(envp[i]);
+		if (vec_push(env, &temp) < 0)
+		{
+			vec_free(env);
+			return (-1);
+		}
+		// printf("env: %s\n", *(char **)vec_get(env, i));
 		// printf("temp:%s\n", temp);
 		if (vec_push(env, &temp) < 0)
 			return (error_msg_free(1, VECPUSH, NULL, env));

@@ -58,7 +58,12 @@ SOURCES =  libft/ft_isdigit.c \
 		   vec_lib/vec_prepend.c \
 		   vec_lib/vec_push.c \
 		   vec_lib/vec_remove.c \
-		   vec_lib/vec_resize.c
+		   vec_lib/vec_resize.c \
+		   vec_lib/vec_free_str.c \
+		   vec_lib/vec_replace_str.c \
+		   vec_lib/vec_remove_str.c \
+		   vec_lib/vec_alpha_sort.c \
+		   vec_lib/vec_copy_len.c
 		  	 
 OBJECTS = $(SOURCES:.c=.o)
 

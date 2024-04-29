@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   vec_free_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 13:33:52 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/25 15:28:13 by llitovuo         ###   ########.fr       */
+/*   Created: 2024/04/25 16:03:24 by llitovuo          #+#    #+#             */
+/*   Updated: 2024/04/25 16:22:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-/*	Function name: ft_lstiter
-	Parameters lst: The address of a pointer to a node.
-	f: The address of the function used to iterate on
-	the list.
-	Return value: None
-	External functs. None
-	Description: Iterates the list ’lst’ and applies the function
-	’f’ on the content of each node.	*/
-void	ft_lstiter(t_list *lst, void (*f)(void *))
-{
-	t_list	*current;
+/************************************************
+ *  Frees strings and zeroes vector fields.    	*
+ ************************************************/
 
-	current = lst;
-	while (current)
+void	vec_free_str(t_vec *src)
+{
+	char	*str_ptr;
+	size_t	i;
+
+	i = 0;
+	while (i < src->len)
 	{
-		f(current->content);
-		current = current->next;
+		str_ptr = *(char **)vec_get(src, i);
+		free(str_ptr);
+		i++;
 	}
+	src->memory = NULL;
+	src->len = 0;
+	src->elem_size = 0;
+	src->alloc_size = 0;
 }

@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 16:48:32 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/25 15:28:08 by llitovuo         ###   ########.fr       */
+/*   Created: 2024/04/28 16:16:15 by llitovuo          #+#    #+#             */
+/*   Updated: 2024/04/28 16:19:25 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../../incl/minishell.h"
 
-/*	Function name ft_lstadd_front
-	Parameters lst: The address of a pointer to the first link of
-	a list.
-	new: The address of a pointer to the node to be
-	added to the list.
-	Return value: None
-	External functs. None
-	Description: Adds the node ’new’ at the beginning of the list.*/
-void	ft_lstadd_front(t_list **lst, t_list *new)
+int	goto_home(t_vec *env, char *home)
 {
-	new->next = *lst;
-	*lst = new;
+	
+}
+
+int	goto_root(void)
+{
+	
+}
+
+int	goto_parent(t_vec *env)
+{
+	
+}
+
+int	goto_grandparent(t_vec *env)
+{
+	
+}
+
+int	goto_dir(char	*path)
+{
+	
 }
