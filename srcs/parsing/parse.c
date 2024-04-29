@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/29 11:24:11 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/29 12:47:59 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,14 @@ void	split_input(char *buf, t_shell *arg)
 {
 	char	*temp;
 
+	while (arg->i < arg->count)
+	{
+		if (arg->i == 0)
+			split_start(buf, arg);
+		else
+			split_
+		
+	}
 	temp = ft_substr(buf, 0, 3);
 	vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
 	vec_push(&arg[arg->i].cmd, &temp);
