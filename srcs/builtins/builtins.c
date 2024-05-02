@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/28 15:02:38 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/02 15:19:36 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	launch_builtin(t_vec *env, char *buf)
 		ft_export(env, &args);
 	else if (ft_strncmp(arg_strs[0], "echo", ft_strlen(arg_strs[0]) + 1) == 0)
 		ft_echo(&args);
-	// else if (ft_strncmp(arg_strs[0], "cd", ft_strlen(arg_strs[0]) + 1) == 0)
-	// 	ft_cd(env, &args);
+	else if (ft_strncmp(arg_strs[0], "cd", ft_strlen(arg_strs[0]) + 1) == 0)
+	 	ft_cd(env, &args);
 	// else if (ft_strncmp(args, "exit", ft_strlen(args)) == 0)
 	// 	ft_exit();
 	free_2d_array(arg_strs);
