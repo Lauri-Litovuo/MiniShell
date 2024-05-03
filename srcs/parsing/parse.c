@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/29 15:24:56 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:55:01 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ int	split(char *buf, t_shell *arg)
 	{
 		if (arg->i == 0)
 		{
-			if (split_input(buf, arg, 0, 0) <  0)
+			if (split_input(buf, arg, 0, 0) < 0)
 				return (-1);
 		}
 		else
 		{
 			if (split_rest(buf, arg, arg->i) < 0)
-			return (-1);
+				return (-1);
 		}
 		arg->i++;
 	}
@@ -118,7 +118,11 @@ int	parse_input(t_shell *arg, char *buf)
 	init_count(buf, arg, i);			//  stores count of args && count of pipes/redirections
 	if (split(buf, arg) == -1)
 		return (-1);
+	// printf("arg[0].cmd: %s\n", &arg[0].cmd.memory[0]);
+	// printf("arg[0].cmd: %s\n", &arg[0].cmd.memory[1]);
+	printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
 	printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
 	printf("arg[1].cmd: %s\n", *(char **)vec_get(&arg[1].cmd, 0));
+	printf("arg[2].cmd: %s\n", *(char **)vec_get(&arg[2].cmd, 0));
 	return (1);
 }

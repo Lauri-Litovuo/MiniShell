@@ -6,60 +6,106 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/29 16:47:23 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/03 15:56:41 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
-{
+
 	//create temp substr 
 	// store temp to vector : arg[pos].cmd
 	//skip space and end if <  or |
 	//otherwise store next str
 	//return -2000 on error
+int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
+{
+	int		j;
+	
+	j = i;
+	i++;
+	printf("here\n");
+	while (buf[i] /*&& buf[i] != ' '*/ && buf[i] != '$' && buf[i] != '<'
+		&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' && buf[i] != '\"'
+		&& buf[i] != '\t' && buf[i] != '\n')
+		i++;
+	arg->temp = ft_substr(buf, j, (i - j));
+	if (arg->temp == NULL)
+	{
+		error_msg(1, SUBSTR, NULL);
+		return (-2000);
+	}
+	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
+		return (-2000);
 	return (i);
 }
 
-int	store_great(char *buf, t_shell *arg, size_t pos, int i)
-{
-	// store > or >> to vector : arg[pos].rdrct
-	//skip whitespace
-	//store following str to vector : arg[pos].rdrct
-	//i++; or i += 2;
-	// set flag to 1
-	//return -2000 on error
-	return (i);
-}
+// int	store_great(char *buf, t_shell *arg, size_t pos, int i)
+// {
+// 	// store > or >> to vector : arg[pos].rdrct
+// 	//skip whitespace
+// 	//store following str to vector : arg[pos].rdrct
+// 	//i++; or i += 2;
+// 	// set flag to 1
+// 	//return -2000 on error
+// 	return (i);
+// }
 
-int	store_less(char *buf, t_shell *arg, size_t pos, int i)
-{
-	// store < or << to vector : arg[pos].rdrct
-	//i++; or i += 2;
-	// set flag to 1
-	//return -2000 on error
-	return (i);
-}
+// int	store_less(char *buf, t_shell *arg, size_t pos, int i)
+// {
+// 	// store < or << to vector : arg[pos].rdrct
+// 	//i++; or i += 2;
+// 	// set flag to 1
+// 	//return -2000 on error
+// 	return (i);
+// }
 
-int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
-{
-	// check_qq("check if operator in between, then we'll either include q or not");
-	// skip empty quotes;
-	// save any str between quotes into vector: arg[pos].cmd/rdrct depending on flag
-	//return -2000 on error
-	return (i);
-}
+// int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
+// {
+// 	// check_qq("check if operator in between, then we'll either include q or not");
+// 	// skip empty quotes;
+// 	// save any str between quotes into vector: arg[pos].cmd/rdrct depending on flag
+// 	//return -2000 on error
+// 	return (i);
+// }
 
 int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 {
 	// check_q("check if operator in between, then we'll either include q or not");
 	// skip empty quotes;
-	// save any str between quotes into vector: arg[pos].cmd/rdrct depending on flag
+	// save any str between quotes into vector: arg[pos].cmd
 	//return -2000 on error
+	int	j;
+	int	flag;
+
+	flag = 0;
+	j = i;
+	i++;
+	while (buf[i] && buf[i] != '\'')
+	{
+		if (buf[i] == '>' || buf[i] == '<' || buf[i] == '$')
+			flag = 1;
+		i++;
+	}
+	if (flag == 1)
+	{
+		arg->temp = ft_substr(buf, j, (i - j + 1));
+		if (arg->temp == NULL)
+		{
+			error_msg(1, SUBSTR, NULL);
+			return (-2000);
+		}
+		if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
+			return (-2000);
+	}
+	else
+	{
+		arg->temp = ft_substr(buf, j + 1, i - j);
+	}
+	i++;
 	return (i);
 }
 
-int	init_vectors(char *buf, t_shell *arg, size_t pos, int i, int j)
+int	init_vectors(char *buf, t_shell *arg, size_t pos, int i)
 {
 	while (buf[i])
 	{
@@ -67,15 +113,15 @@ int	init_vectors(char *buf, t_shell *arg, size_t pos, int i, int j)
 		if (buf[i] == '|')
 			return (0);
 		else if (buf[i] == '\'')
-			i = store_q(buf, arg, arg->i, i);
-		else if (buf[i] == '\"')
-			i = store_qq(buf, arg, arg->i, i);
-		else if (buf[i] == '<')
-			i = store_less(buf, arg, arg->i, i);
-		else if (buf[i] == '>')
-			i = store_great(buf, arg, arg->i, i);
+			i = store_q(buf, arg, pos, i);
+		// else if (buf[i] == '\"')
+		// 	i = store_qq(buf, arg, pos, i);
+		// else if (buf[i] == '<')
+		// 	i = store_less(buf, arg, pos, i);
+		// else if (buf[i] == '>')
+		// 	i = store_great(buf, arg, pos, i);
 		else 
-			i = store_norm(buf, arg, arg->i, i);
+			i = store_norm(buf, arg, pos, i);
 		if (i < 0)
 			return (-1);
 	}
@@ -89,12 +135,11 @@ int	split_input(char *buf, t_shell *arg, size_t pos, int i)
 	int		j;
 	
 	j = 0;
-	arg->i = pos;
-	if (vec_new(&arg[arg->i].cmd, 1, sizeof(char *)) < 0)
+	if (vec_new(&arg[pos].cmd, 1, sizeof(char *)) < 0)
 		return (-1);
-	if (vec_new(&arg[arg->i].rdrct, 1, sizeof(char *)) < 0)
+	if (vec_new(&arg[pos].rdrct, 1, sizeof(char *)) < 0)
 		return (-1);
-	if (init_vectors(buf, arg, arg->i, i , j) == -1)
+	if (init_vectors(buf, arg, pos, i) == -1)
 		return (-1);
 	return (0);
 }
