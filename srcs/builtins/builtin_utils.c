@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/02 15:51:31 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:08:37 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,14 @@ int	update_pwd_env(t_vec *env, char *dir)
 {
 	char	*temp;
 	int		index;
-	char	cur_dir[PATH_MAX]; //check if path_max (1024) is enough or should we use 4096
 
-	if (getcwd(cur_dir, PATH_MAX) == NULL)
-		return (perror("pwd: "), -1); // err_mngmt
 	index = find_index_of_env(env, "PWD");
 	if (index < 0)
 		return (-1);// err_mngmt
 	temp = ft_strdup(dir);
 	if (temp == NULL)
 		return (-1);// err_mngmt
-	vec_replace_str(env, temp, index);
+	if (vec_replace_str(env, temp, index) < -1)
 		return (-1);// err_mngmt
 	return (0);
 }

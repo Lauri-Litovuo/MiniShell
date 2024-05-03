@@ -6,130 +6,115 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:27:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/02 16:06:04 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:16:28 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-// make function that checks if path is accessible
-// take path to change pwd
-// 
-
-
 int	ft_cd(t_vec *env, t_vec *args)
 {
-	char	*ptr;
-	char	*home;
+	t_cd	*data;
 
-	ptr = vec_get(args, 1);
-	home = copy_homedir(env);
-	if (!home)
+	init_struct(data);
+	data->ptr = vec_get(args, 1);
+	copy_homedir(env, &data);
+	if (!data->home)
 	{
 		printf("cd failed"); //err_mngmt
 		return (-1);
 	}
-	if (args->len == 1 || ft_strncmp(*(char **)ptr, "/", 2)
-		|| ft_strncmp(*(char **)ptr, "~", 2))
+	printf("args->len %zu\n", args->len);
+	if (args->len == 1 || ft_strncmp(*(char **)data->ptr, "/", 2) == 0
+		|| ft_strncmp(*(char **)data->ptr, "~", 2) == 0)
 	{
-		if (args->len == 1 || ft_strncmp(*(char **)ptr, "~", 2))
-			goto_home(env, home);
+		if (args->len == 1 || ft_strncmp(*(char **)data->ptr, "~", 2) == 0)
+			goto_home(env, data->home);
 		else
 			goto_root(env);
-		free (home);
+		free_cd_struct(data);
 		return (0);
 	}
-	if (goto_path(env, args, home) < 0)
+	if (goto_path(env, args, data->home) < 0)
 		return (-1);
-	free (home);
+	free_cd_struct(data);
 	return (0);
 }
 
-int	goto_path(t_vec *env, t_vec *args, char *home)
+int	goto_path(t_vec *env, t_vec *args, t_cd *data)
 {
-	char	*cur_dir;
-	char	*target;
 
-	cur_dir = NULL;
-	get_cur_dir(env, cur_dir);
-	if (!cur_dir)
+	printf("going to path\n");
+	get_cur_dir(env, data);
+	printf("dir: %s\n", data->cur_dir);
+	if (!data->cur_dir)
 		return (-1);
-	target = get_target_path(args, cur_dir, home);
-	if (!target)
-	{
-		free(cur_dir);
+	get_target_path(args, data);
+	printf("target path: %s\n", data->target);
+	if (!data->target)
 		return (-1);
-	}
-	else if (access(target, F_OK) == 0 && goto_dir(target, env) == 0)
-	{
-		free(target);
-		free(cur_dir);
+	else if (access(data->target, F_OK) == 0 && goto_dir(data, env) == 0)
 		return (0);
-	}
 	else
-	{
-		free(target);
-		free(cur_dir);
 		return (-1);
-	}
 	return (0);
 }
 
-void	get_cur_dir(t_vec *env, char *cur_dir)
+char	*get_cur_dir(t_vec *env, t_cd *data)
 {
-	int	index;
-
-	index = find_index_of_env(env, "PWD");
-	if (index < 0)
-		return ;
-	cur_dir = ft_strdup(*(char **)vec_get(env, index) + 5);
-	if (!cur_dir)
-		return ;
-}
-
-char	*get_target_path(t_vec *args, char *cur_dir, char *home)
-{
-	char	**split_path;
+	int		index;
+	char	*cur_dir;
 	char	*ptr;
-	char	*target;
 
-	ptr = vec_get(args, 1);
-	if (ft_strchr((*(char **)ptr), '/') == *(char **)ptr)
-		return (*(char **)ptr);
-	split_path = ft_split(cur_dir, '/');
-	if (!split_path)
+	index = 0;
+	index = find_index_of_env(env, "PWD");
+	ptr = vec_get(env, index);
+	if (index < 0)
 		return (NULL);
-	target = expand_relative_paths(split_path, cur_dir, home);
-	free_2d_array(split_path);
-	return (target);
+	cur_dir = ft_substr(*(char **)ptr, 4, ft_strlen(*(char **)ptr));
+	if (!cur_dir)
+		return (NULL);
+	return (cur_dir);
 }
 
-
-char	*expand_relative_paths(char **split_path, char	*cur_dir, char *home)
+int	get_target_path(t_vec *args, t_cd *data)
 {
-	int		i;
-	char	*target;
 	char	*temp;
 
-	i = 0;
-	target = ft_strdup(cur_dir);
-	if (!target)
+	temp = vec_get(args, 1);
+	if (ft_strchr((*(char **)temp), '/') == *(char **)temp)
+		return (*(char **)temp);
+	data->split_path = ft_split(*(char **)temp, '/');
+	if (!data->split_path)
 		return (NULL);
-	while (split_path[0][i])
+	if (expand_relative_paths(data) < 0)
+		return (-1);
+	return (0);
+}
+
+
+int	expand_relative_paths(t_cd *data)
+{
+	int		i;
+
+	i = 0;
+	ft_strlcpy(data->target, data->cur_dir, PATH_MAX);
+	ft_strlcat(data->target, "/", PATH_MAX);
+	if (!data->target)
+		return (-1);
+	while (data->split_path[i])
 	{
-		if (ft_strncmp(&split_path[0][i], "..", 3))
-			get_parent(target);
-		else if (ft_strncmp(&split_path[0][i], "~", 2))
-			expand_home(target, home);
+		printf("yoyoyo%s\n", data->split_path[i]); //
+		if (ft_strncmp(data->split_path[i], "..", 3) == 0)
+			get_parent(data);
+		else if (ft_strncmp(data->split_path[i], "~", 2) == 0)
+			expand_home(data);
 		else
 		{
-			temp = ft_strjoin(target, &split_path[0][i]);
-			free (target);
-			target = temp;
+			ft_strlcat(data->target, data->split_path[i], PATH_MAX);
+			if (!data->target)
+				return (-1);
 		}
-		temp = target;
-		target = ft_strjoin(target, "/");
-		free (temp);
 		i++;
 	}
 	return (0);
