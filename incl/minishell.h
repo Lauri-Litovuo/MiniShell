@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/02 16:06:58 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:06:43 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/includes/libft.h"
+# include "builtins.h"
 
 /****************************************
 *	Standard output formatting: printf	*
@@ -118,32 +119,5 @@ int		skip_spaces(char *buf, int i);*/
 /*t_shell	split_regular(char *buf, t_shell *arg, size_t pos);
 t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);*/
 
-
-
-/* Builtins*/
-int		launch_builtin(t_vec *env, char *buf);
-int		ft_env(t_vec *env, t_vec *args);
-int		ft_pwd(void);
-int		ft_unset(t_vec *env, t_vec *args);
-int		ft_export(t_vec *env, t_vec *args);
-void	print_exports(t_vec *env);
-
-int		find_index_of_env(t_vec *src, char *str);
-char	*extract_env_var(char *arg);
-int		ft_echo(t_vec *args);
-
-int		ft_cd(t_vec *env, t_vec *args);
-int		goto_path(t_vec *env, t_vec *args, char *home);
-void	get_cur_dir(t_vec *env, char *cur_dir);
-char	*get_target_path(t_vec *args, char *cur_dir, char *home);
-char	*expand_relative_paths(char **split_path, char	*cur_dir, char *home);
-char	*copy_homedir(t_vec *env);
-int		goto_home(t_vec *env, char *home);
-int		goto_root(t_vec *env);
-char	*get_parent(char *target);
-void	expand_home(char *target, char *home);
-int		goto_dir(char *target, t_vec *env);
-void	free_2d_array(char **arr);
-int		update_pwd_env(t_vec *env, char *dir);
 
 #endif
