@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/03 13:08:35 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:21:29 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	ft_env(t_vec *env, t_vec *args)
 	i = 0;
 	if (args->len > 1)
 	{
-		printf("env: No options or arguments possible\n"); //change to error mngmt
+		printf("env: No options or arguments possible\n"); //errmngm
 		return (-1);
 	}
 	while ((size_t)i < env->len)
 	{
 		if (vec_get(env, i) == NULL)
 		{
-			printf("vec_get failed\n"); //change this to error mngmt
+			printf("vec_get failed\n"); //errmng
 			return (1);
 		}
 		printf("%s\n", *(char **)vec_get(env, i));
@@ -37,8 +37,7 @@ int	ft_env(t_vec *env, t_vec *args)
 
 int	ft_pwd(void)
 {
-	char	cur_dir[PATH_MAX]; //check if path_max (1024) is enough or should we use 4096
-
+	char	cur_dir[PATH_MAX]; //check if path_max (1024) or should be 4096
 	if (getcwd(cur_dir, PATH_MAX) == NULL)
 	{
 		perror("pwd: ");
@@ -48,7 +47,6 @@ int	ft_pwd(void)
 		printf("%s\n", cur_dir);
 	return (0);
 }
-
 
 int	ft_unset(t_vec *env, t_vec *args)
 {
@@ -67,11 +65,11 @@ int	ft_unset(t_vec *env, t_vec *args)
 		{
 			index = find_index_of_env(env, env_var);
 			if (index == -1)
-				return (printf("free env_var and errmsg\n"), -1); // err_mngmt
+				return (-1); // err_mngmt
 			free (env_var);
 			env_var = vec_get(env, index);
 			if (vec_remove_str(env, index) < 0)
-				return (printf("free env_var and errmsg\n"), -1); //err_mngmnt
+				return (-1); //err_mngmnt
 		}
 		i++;
 	}

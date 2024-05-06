@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/03 13:08:39 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:22:33 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	launch_builtin(t_vec *env, char *buf)
 	if (!args.memory)
 		return (1);
 	arg_strs = (char **)args.memory;
-	// for(size_t i = 0; i < args.len; i++)
-	// 	printf("args are: %s\n", arg_strs[i]);
 	if (ft_strncmp(arg_strs[0], "env", ft_strlen(arg_strs[0]) + 1) == 0)
 		ft_env(env, &args);
 	else if (ft_strncmp(arg_strs[0], "pwd", ft_strlen(arg_strs[0]) + 1) == 0)
@@ -67,7 +65,7 @@ int	launch_builtin(t_vec *env, char *buf)
 	else if (ft_strncmp(arg_strs[0], "echo", ft_strlen(arg_strs[0]) + 1) == 0)
 		ft_echo(&args);
 	else if (ft_strncmp(arg_strs[0], "cd", ft_strlen(arg_strs[0]) + 1) == 0)
-	 	ft_cd(env, &args);
+		ft_cd(env, &args);
 	// else if (ft_strncmp(args, "exit", ft_strlen(args)) == 0)
 	// 	ft_exit();
 	free_2d_array(arg_strs);

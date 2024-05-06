@@ -6,14 +6,13 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/03 13:08:48 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:26:59 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 // Should be tested if export works otherwise than as a first argument in bash.
-// should be added to include += which appends the string to the end of the env_val
 //for some reason += is not working correctly but adds JEE+=SMTHN.
 static int	check_export_syntax(char *arg);
 static int	export_variable(t_vec *env, char *arg);
@@ -52,7 +51,7 @@ static int	export_variable(t_vec *env, char *arg)
 		if (env_var == NULL)
 			return (-1);
 		if (check_export_syntax(env_var) < 0)
-			printf("bash: export: `L+OL=hello.world': not a valid identifier\n") ; //exitcode 1;
+			printf("bash error\n"); //exitcode 1;
 		else
 		{
 			if (export_env_var(env_var, arg, env) < 0)
@@ -62,7 +61,6 @@ static int	export_variable(t_vec *env, char *arg)
 	}
 	return (0);
 }
-
 
 static int	check_export_syntax(char *arg)
 {
@@ -77,8 +75,6 @@ static int	check_export_syntax(char *arg)
 	}
 	return (0);
 }
-
-
 
 static int	export_env_var(char *env_var, char *arg, t_vec *env)
 {
@@ -100,7 +96,7 @@ static int	export_env_var(char *env_var, char *arg, t_vec *env)
 			return (-1);
 		temp = ft_strdup(arg);
 		if (vec_replace_str(env, temp, index) < -1)
-			return (printf("err with vec_replace\n"), -1);
+			return (-1); //errmngm
 	}
 	return (0);
 }
