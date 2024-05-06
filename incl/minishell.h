@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/03 15:59:29 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/03 16:11:30 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ typedef struct s_shell
 {
 	t_vec	cmd;
 	t_vec	rdrct;
-	size_t	ci;	//cmd index
-	size_t	ri; //rdrct index
 	char	*temp;
 	size_t	count;
 	size_t	pipe_count;

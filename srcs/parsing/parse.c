@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/03 15:55:01 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:49:43 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ void	set_count(t_shell *arg)
 		arg->count = arg->pipe_count + 1;
 }
 
-void	init_count(char *buf, t_shell *arg, int i)
+void	init_count(char *buf, t_shell *arg)
 {
+	int	i;
+
+	i = 0;
 	while (buf[i])
 	{
 		if (buf[i] == '\'')
@@ -110,19 +113,16 @@ int	split(char *buf, t_shell *arg)
 
 int	parse_input(t_shell *arg, char *buf)
 {
-	int		i;
-	
-	i = 0;
 	if (scan_input(buf) == -1)		//checks for syntax errors
 		return (-1);
-	init_count(buf, arg, i);			//  stores count of args && count of pipes/redirections
+	init_count(buf, arg);			//  stores count of args && count of pipes/redirections
 	if (split(buf, arg) == -1)
 		return (-1);
-	// printf("arg[0].cmd: %s\n", &arg[0].cmd.memory[0]);
-	// printf("arg[0].cmd: %s\n", &arg[0].cmd.memory[1]);
-	printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
-	printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
-	printf("arg[1].cmd: %s\n", *(char **)vec_get(&arg[1].cmd, 0));
-	printf("arg[2].cmd: %s\n", *(char **)vec_get(&arg[2].cmd, 0));
+	printf("arg[0].rdrct: %s\n", *(char **)vec_get(&arg[0].rdrct, 0));
+	printf("arg[0].rdrct: %s\n", *(char **)vec_get(&arg[0].rdrct, 1));
+	// printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
+	// printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 1));
+	// printf("arg[1].cmd: %s\n", *(char **)vec_get(&arg[1].cmd, 0));
+	// printf("arg[2].cmd: %s\n", *(char **)vec_get(&arg[2].cmd, 0));
 	return (1);
 }
