@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/06 12:22:33 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/06 14:29:58 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	launch_builtin(t_vec *env, char *buf)
 	if (ft_strncmp(arg_strs[0], "env", ft_strlen(arg_strs[0]) + 1) == 0)
 		ft_env(env, &args);
 	else if (ft_strncmp(arg_strs[0], "pwd", ft_strlen(arg_strs[0]) + 1) == 0)
-		ft_pwd();
+		ft_pwd(env);
 	else if (ft_strncmp(arg_strs[0], "unset", ft_strlen(arg_strs[0]) + 1) == 0)
 		ft_unset(env, &args);
 	else if (ft_strncmp(arg_strs[0], "export", ft_strlen(arg_strs[0]) + 1) == 0)
