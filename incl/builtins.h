@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:05:22 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/06 10:26:33 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:34:48 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_cd
 	char	target[PATH_MAX];
 	char	expand[PATH_MAX];
 	char	cur_dir[PATH_MAX];
+	char	old_pwd[PATH_MAX];
 	char	*ptr;
 	char	**split_path;
 }			t_cd;
@@ -28,7 +29,7 @@ typedef struct s_cd
 void		init_struct(t_cd *data);
 int			launch_builtin(t_vec *env, char *buf);
 int			ft_env(t_vec *env, t_vec *args);
-int			ft_pwd(void);
+int			ft_pwd(t_vec *env);
 int			ft_unset(t_vec *env, t_vec *args);
 int			ft_export(t_vec *env, t_vec *args);
 void		print_exports(t_vec *env);
@@ -52,5 +53,6 @@ void		free_2d_array(char **arr);
 void		free_cd_struct(t_cd *data);
 int			update_pwd_env(t_vec *env, char	*dir);
 int			update_pwd_cd(t_vec *env, t_cd *data);
+int			update_old_pwd(t_vec *env, t_cd *data);
 
 #endif
