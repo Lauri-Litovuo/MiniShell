@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:27:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/06 12:23:35 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:43:59 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,12 @@ int	ft_cd(t_vec *env, t_vec *args)
 
 	data = malloc (sizeof(t_cd));
 	init_struct(data);
-	if (copy_homedir(env, data) < 0)
+	if (copy_homedir(env, data) < 0 || get_cur_dir(env, data) < 0
+		|| update_old_pwd(env, data) < -1)
+	{
+		free_cd_struct(data);
 		return (-1);
+	}
 	if (args->len == 1)
 		goto_home(env, data);
 	if (args->len > 1 && (ft_strncmp(*(char **)vec_get(args, 1), "/", 2) == 0
@@ -40,8 +44,6 @@ int	ft_cd(t_vec *env, t_vec *args)
 
 int	goto_path(t_vec *env, t_vec *args, t_cd *data)
 {
-	if (get_cur_dir(env, data) < 0)
-		return (-1);
 	if (get_target_path(args, data) < 0)
 		return (-1);
 	if (access(data->target, F_OK) == 0 && goto_dir(data, env) == 0)
