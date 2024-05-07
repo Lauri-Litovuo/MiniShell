@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/06 23:08:45 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:59:25 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	store_great(char *buf, t_shell *arg, size_t pos, int i)
 		}
 		if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
 			return (-2000);
+		i++;
 	}
 	else
 	{
@@ -211,9 +212,11 @@ int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 	{
 		if (buf[i] == '>' || buf[i] == '<')
 			flag = 1;
+		if (buf[i + 1] == '>' || buf[i + 1] == '<')
+			flag = 2;
 		i++;
 	}
-	if (flag == 1)
+	if (flag == 1 || flag == 2)
 	{
 		arg->temp = ft_substr(buf, j, (i - j + 1));
 		if (arg->temp == NULL)
@@ -223,6 +226,8 @@ int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 		}
 		if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
 			return (-2000);
+		if (flag == 2)
+			i++;
 	}
 	else
 	{
