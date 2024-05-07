@@ -6,59 +6,113 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:27:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/28 16:16:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/07 09:22:40 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	update_pwd_env(t_vec *env);
-
 int	ft_cd(t_vec *env, t_vec *args)
 {
-	char	**strs;
-	char	*home;
+	t_cd	*data;
 
-	strs = (char **)args->memory;
-	copy_homedir(env, home);
-	if (!strs[0][1] ||
-	ft_strncmp(strs[0][1], "~", ft_strlen(strs[0][1]) + 1) ||
-	ft_strncmp(strs[0][1], home, ft_strlen(strs[0][1]) + 1))
-		goto_home(vec, home);
-	else if (ft_strncmp(strs[0][1], "/", ft_strlen(strs[0][1]) + 1))
-		goto_root();
-	else if (ft_strncmp(strs[0][1], "..", ft_strlen(strs[0][1]) + 1))
-		goto_parent();
-	else if (ft_strncmp(strs[0][1], "../..", ft_strlen(strs[0][1]) + 1))
-		goto_grandparent();
-	else if (access(strs[0][1], F_OK) == 0)
-		goto_dir();
+	data = malloc (sizeof(t_cd));
+	init_struct(data);
+	if (copy_homedir(env, data) < 0 || get_cur_dir(env, data) < 0
+		|| update_old_pwd(env, data) < -1)
+		return (free_cd_struct(data), -1);
+	if (args->len == 1)
+		goto_home(env, data);
+	if (args->len > 1 && (ft_strncmp(*(char **)vec_get(args, 1), "/", 2) == 0
+			|| ft_strncmp(*(char **)vec_get(args, 1), "~", 2) == 0))
+	{
+		if (ft_strncmp(*(char **)vec_get(args, 1), "~", 2) == 0)
+			goto_home(env, data);
+		else
+			goto_root(env);
+		free_cd_struct(data);
+		return (0);
+	}
+	if (args->len > 1 && goto_path(env, args, data) < 0)
+	{
+		free_2d_array(data->split_path);
+		free_cd_struct(data);
+		return (-1);
+	}
+	free_2d_array(data->split_path);
+	free_cd_struct(data);
+	return (0);
+}
+
+int	goto_path(t_vec *env, t_vec *args, t_cd *data)
+{
+	if (get_target_path(args, data) < 0)
+		return (-1);
+	if (access(data->target, F_OK) == 0 && goto_dir(data, env) == 0)
+		return (0);
 	else
-		return (-1); //err_mngmt
+		return (-1);
+	return (0);
 }
 
-char	*copy_homedir(t_vec *env, char *home)
+int	get_cur_dir(t_vec *env, t_cd *data)
 {
-	
-}
-
-
-
-static int	update_pwd_env(t_vec *env)
-{
-	char	*temp;
 	int		index;
-	char	cur_dir[PATH_MAX]; //check if path_max (1024) is enough or should we use 4096
+	char	*temp;
 
-	if (getcwd(cur_dir, PATH_MAX) == NULL)
-		return (perror("pwd: "), -1); // err_mngmt
+	index = 0;
 	index = find_index_of_env(env, "PWD");
 	if (index < 0)
-		return (printf("error in update_pwd_env1"), -1);// err_mngmt
-	temp = ft_strdup(cur_dir);
-	if (temp == NULL)
-		return (printf("error in update_pwd_env2"), -1);// err_mngmt
-	vec_replace_str(env, temp, index);
-		return (printf("error in update_pwd_env4"), -1);// err_mngmt
+		return (-1);
+	data->ptr = vec_get(env, index);
+	temp = ft_substr(*(char **)data->ptr, 4, ft_strlen(*(char **)data->ptr));
+	if (!temp)
+		return (-1);
+	ft_strlcpy(data->cur_dir, temp, PATH_MAX);
+	free (temp);
+	data->ptr = NULL;
+	return (0);
+}
+
+int	get_target_path(t_vec *args, t_cd *data)
+{
+	char	*temp;
+
+	temp = vec_get(args, 1);
+	if (ft_strchr((*(char **)temp), '/') == *(char **)temp)
+	{
+		ft_strlcpy (data->target, temp, PATH_MAX);
+		return (0);
+	}
+	data->split_path = ft_split(*(char **)temp, '/');
+	if (!data->split_path)
+		return (-1);
+	if (expand_relative_paths(data) < 0)
+		return (-1);
+	return (0);
+}
+
+int	expand_relative_paths(t_cd *data)
+{
+	int		i;
+
+	i = 0;
+	ft_strlcpy(data->target, data->cur_dir, PATH_MAX);
+	if (ft_strncmp(data->cur_dir, "/", 2))
+		ft_strlcat(data->target, "/", PATH_MAX);
+	while (data->split_path[i])
+	{
+		if (ft_strncmp(data->split_path[i], "..", 3) == 0)
+			get_parent(data);
+		else if (ft_strncmp(data->split_path[i], "~", 2) == 0)
+			expand_home(data);
+		else
+		{
+			if (ft_strlcat(data->target, data->split_path[i], PATH_MAX) < 0)
+				return (-1);
+			ft_strlcat(data->target, "/", PATH_MAX);
+		}
+		i++;
+	}
 	return (0);
 }

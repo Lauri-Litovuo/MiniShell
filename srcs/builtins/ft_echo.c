@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:05:18 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/24 10:55:29 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/06 12:25:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,14 @@ static int	print_strings(t_vec *args, size_t i, int op_n)
 	strs = (char **)args->memory;
 	while (i < args->len)
 	{
-		// printf("1\nstring%s\n", strs[i]);
 		ft_putstr(strs[i], &check);
 		if (check < 0)
-			return (printf("write errror\n"), -1);  //errmngmt
+			return (-1); //errmngmt
 		if (i < args->len - 1)
 		{
 			ft_putstr(" ", &check);
 			if (check < 0)
-				return (printf("write errror\n"), -1);  //errmngmt
+				return (-1); //errmngmt
 		}
 		i++;
 	}
@@ -63,7 +62,7 @@ static int	print_strings(t_vec *args, size_t i, int op_n)
 	{
 		ft_putstr("\n", &check);
 		if (check < 0)
-			return (printf("write errror\n"), -1);  //errmngmt
+			return (-1); //errmngmt
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/03 16:11:30 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/03 13:06:43 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/includes/libft.h"
+# include "builtins.h"
 
 /****************************************
 *	Standard output formatting: printf	*
@@ -109,13 +110,15 @@ int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
 /*		scan_utils		*/
-int		handle_start(char *buf, int i);
+/*int		handle_start(char *buf, int i);
 int		handle_q(char *buf, int i);
 int		handle_qq(char *buf, int i);
 int		handle_pipe(char *buf, int i);
 int		handle_lessgreat(char *buf, int i);
-int		skip_spaces(char *buf, int i);
+int		skip_spaces(char *buf, int i);*/
 /*		split utils		*/
+/*t_shell	split_regular(char *buf, t_shell *arg, size_t pos);
+t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);*/
 int		split_input(char *buf, t_shell *arg, size_t pos, int i);
 int		split_rest(char *buf, t_shell *arg, size_t pos);
 /* Builtins*/
@@ -125,7 +128,6 @@ int		ft_pwd(void);
 int		ft_unset(t_vec *env, t_vec *args);
 int		ft_export(t_vec *env, t_vec *args);
 void	print_exports(t_vec *env);
-
 int		find_index_of_env(t_vec *src, char *str);
 char	*extract_env_var(char *arg);
 int		ft_echo(t_vec *args);

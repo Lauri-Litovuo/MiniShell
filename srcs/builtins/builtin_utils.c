@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/25 15:58:10 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/07 09:21:47 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,35 @@ char	*extract_env_var(char *arg)
 			return (NULL);
 	}
 	return (env);
+}
+
+int	update_pwd_env(t_vec *env, char *dir)
+{
+	char	*temp;
+	int		index;
+
+	index = find_index_of_env(env, "PWD");
+	if (index < 0)
+		return (-1);// err_mngmt
+	temp = ft_strdup(dir);
+	if (temp == NULL)
+		return (-1);// err_mngmt
+	if (vec_replace_str(env, temp, index) < -1)
+		return (-1);// err_mngmt
+	return (0);
+}
+
+void	free_2d_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free (arr);
 }
