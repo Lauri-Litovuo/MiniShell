@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 15:18:38 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/16 14:33:52 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:33:40 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	scan_str(t_split *sp, char *str)
 	while (str[sp->i])
 	{
 		if ((str[sp->i] == ' ' || str[sp->i] == '\t' || str[sp->i] == '\n'))
-			str[sp->i] = '!';
+			str[sp->i] = 31;
 		if (str[sp->i] == 39 || str[sp->i] == 34
 			|| str[sp->i] == '{' || str[sp->i] == '}')
 		{
 			if (str[sp->i] == 39 || str[sp->i] == 34)
 			{
-				str[sp->i] = '!';
+				str[sp->i] = 31;
 				sp->i++;
 			}
 			if (str[sp->i] == '{' || str[sp->i] == '}')
@@ -84,7 +84,7 @@ void	scan_str(t_split *sp, char *str)
 			while (str[sp->i] && (str[sp->i] != 39 && str[sp->i] != 34))
 				sp->i++;
 			if (str[sp->i] == 39 || str[sp->i] == 34)
-				str[sp->i] = '!';
+				str[sp->i] = 31;
 		}
 		if (str[sp->i])
 			sp->i++;
@@ -103,10 +103,10 @@ char	**ft_split_quote(char *str)
 	scan_str(&sp, str);
 	while (ptr[sp.i])
 	{
-		while (ptr[sp.i] && (ptr[sp.i] == '!'))
+		while (ptr[sp.i] && (ptr[sp.i] == 31))
 			sp.i++;
 		sp.j = sp.i;
-		while (ptr[sp.i] && (ptr[sp.i] != '!'))
+		while (ptr[sp.i] && (ptr[sp.i] != 31))
 			sp.i++;
 		if (sp.i > sp.j)
 		{

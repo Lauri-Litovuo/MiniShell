@@ -19,7 +19,7 @@ int	error_msg(int flag, char *str, char *specifier)
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(specifier, 2);
 	}
-	if (flag == 1)
+	else
 	{
 		ft_putstr_fd(str, 2);
 	}
