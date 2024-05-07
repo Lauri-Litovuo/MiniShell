@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/07 14:59:25 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/07 16:53:18 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,17 +208,21 @@ int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 	flag = 0;
 	j = i;
 	i++;
-	while (buf[i] && buf[i] != '\'')
+	if (buf[i] == '\"')
+	{
+		i++;
+		return (i);
+	}
+	while (buf[i] && buf[i] != '\"')
 	{
 		if (buf[i] == '>' || buf[i] == '<')
 			flag = 1;
-		if (buf[i + 1] == '>' || buf[i + 1] == '<')
-			flag = 2;
 		i++;
 	}
-	if (flag == 1 || flag == 2)
+	if (flag == 1)
 	{
 		arg->temp = ft_substr(buf, j, (i - j + 1));
+		printf("temp: %s\n", arg->temp);
 		if (arg->temp == NULL)
 		{
 			error_msg(1, SUBSTR, NULL);
@@ -226,8 +230,6 @@ int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 		}
 		if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
 			return (-2000);
-		if (flag == 2)
-			i++;
 	}
 	else
 	{
@@ -256,6 +258,11 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 	flag = 0;
 	j = i;
 	i++;
+	if (buf[i] == '\'')
+	{
+		i++;
+		return (i);
+	}
 	while (buf[i] && buf[i] != '\'')
 	{
 		if (buf[i] == '>' || buf[i] == '<' || buf[i] == '$')
@@ -265,6 +272,7 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 	if (flag == 1)
 	{
 		arg->temp = ft_substr(buf, j, (i - j + 1));
+		printf("temp: %s\n", arg->temp);
 		if (arg->temp == NULL)
 		{
 			error_msg(1, SUBSTR, NULL);

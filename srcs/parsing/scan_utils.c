@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 21:00:48 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/06 22:48:40 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:50:13 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	handle_qq(char *buf,  int i)
 	{
 		while (buf[i] && buf[i] != '\"')
 			i++;
-		if (buf[i] != '\"')
+		if (!buf[i])
 		{
 			free(buf);
 			error_msg(2, UNMATCH, "`\"'\n");
