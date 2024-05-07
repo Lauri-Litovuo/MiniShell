@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/06 14:29:58 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/07 09:21:20 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,6 @@ static void	create_test_vector(t_vec *args, char *buf)
 		vec_push(args, &temp[i]);
 		i++;
 	}
-}
-
-void	free_2d_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free (arr);
 }
 
 int	launch_builtin(t_vec *env, char *buf)
