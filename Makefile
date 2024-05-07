@@ -19,16 +19,12 @@ LIBFT = ./libft/libft.a
 RLHEAD = /Users/${USER}/.brew/Cellar/readline/8.2.10/include
 RLLIB = /Users/${USER}/.brew/Cellar/readline/8.2.10/lib
 
-
-#    		srcs/parsing/parse.c \
-			srcs/parsing/scan_utils.c \
-			srcs/parsing/scan_utils2.c \
-			srcs/parsing/split_utils.c \
-			
-			
 SOURCES = \
 			srcs/main.c \
-			srcs/errors.c \
+      srcs/parsing/parse.c \
+			srcs/parsing/scan_utils.c \
+			srcs/parsing/scan_utils2.c \
+			srcs/parsing/split.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
@@ -38,11 +34,11 @@ SOURCES = \
 			srcs/builtins/ft_cd.c \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c
-
+      srcs/errors.c
 			
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS =  -g  -fsanitize=address -Wall -Wextra -Werror -I$(RLHEAD)
+CFLAGS =  -Wall -Wextra -Werror -I$(RLHEAD) #-g  -fsanitize=address
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 

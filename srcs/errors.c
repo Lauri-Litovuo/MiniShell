@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:59:39 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/24 13:53:06 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:02:03 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	error_msg(int flag, char *str, char *specifier)
 		ft_putstr_fd(str, 2);
 		ft_putstr_fd(specifier, 2);
 	}
-	if (flag == 1)
+	else
 	{
 		ft_putstr_fd(str, 2);
 	}

@@ -6,11 +6,12 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/29 11:24:11 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:05:10 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
 void	set_count(t_shell *arg)
 {
 	if (arg->pipe_count == 0 && arg->gl_count == 0)
@@ -23,8 +24,11 @@ void	set_count(t_shell *arg)
 		arg->count = arg->pipe_count + 1;
 }
 
-void	init_count(char *buf, t_shell *arg, int i)
+void	init_count(char *buf, t_shell *arg)
 {
+	int	i;
+
+	i = 0;
 	while (buf[i])
 	{
 		if (buf[i] == '\'')
@@ -75,31 +79,41 @@ int	scan_input(char *buf)
 	return (0);
 }
 
-void	split_input(char *buf, t_shell *arg)
+int	split(char *buf, t_shell *arg)
 {
-	char	*temp;
-
-	temp = ft_substr(buf, 0, 3);
-	vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
-	vec_push(&arg[arg->i].cmd, &temp);
-	
-	arg->i++;
-	temp = ft_substr(buf, 3, 4);
-	vec_new(&arg[arg->i].cmd, 1, sizeof(char *));
-	vec_push(&arg[arg->i].cmd, &temp);
-	
+	while (arg->i < arg->count)
+	{
+		if (arg->i == 0)
+		{
+			if (split_input(buf, arg, 0, 0) < 0)
+				return (-1);
+		}
+		else
+		{
+			if (split_rest(buf, arg, arg->i) < 0)
+				return (-1);
+		}
+		arg->i++;
+	}
+	return (0);
 }
 
 int	parse_input(t_shell *arg, char *buf)
 {
-	int		i;
-	
-	i = 0;
 	if (scan_input(buf) == -1)		//checks for syntax errors
 		return (-1);
-	init_count(buf, arg, i);			//  stores count of args && count of pipes/redirections
-	split_input(buf, arg);
-	printf("arg[0].cmd: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
-	printf("arg[1].cmd: %s\n", *(char **)vec_get(&arg[1].cmd, 0));
+	init_count(buf, arg);			//  stores count of args && count of pipes/redirections
+	if (split(buf, arg) == -1)
+		return (-1);
+	// printf("arg[0].rdrct: %s\n", *(char **)vec_get(&arg[0].rdrct, 0));
+	// printf("arg[0].rdrct: %s\n", *(char **)vec_get(&arg[0].rdrct, 1));
+	// printf("arg[0].cmd 0: %s\n", *(char **)vec_get(&arg[0].cmd, 0));
+	// printf("arg[0].cmd 1: %s\n", *(char **)vec_get(&arg[0].cmd, 1));
+	// printf("arg[0].cmd 2: %s\n", *(char **)vec_get(&arg[0].cmd, 2));
+	// printf("arg[1].cmd 0: %s\n", *(char **)vec_get(&arg[1].cmd, 0));
+	// printf("arg[1].cmd 1: %s\n", *(char **)vec_get(&arg[1].cmd, 1));
+	// printf("arg[2].cmd 0: %s\n", *(char **)vec_get(&arg[2].cmd, 0));
+	// printf("arg[2].rdrct: %s\n", *(char **)vec_get(&arg[2].rdrct, 0));
+	// printf("arg[2].rdrct: %s\n", *(char **)vec_get(&arg[2].rdrct, 1));
 	return (1);
 }
