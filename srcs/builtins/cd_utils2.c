@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:14:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/07 09:14:56 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:48:35 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	goto_dir(t_cd *data, t_vec *env)
 {
 	if (chdir(data->target) != 0)
 	{
-		perror ("cd to target failed");
+		perror ("no access:");
 		return (-1);
 	}
 	if (update_pwd_cd(env, data) < 0)

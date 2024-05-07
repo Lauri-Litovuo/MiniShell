@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:27:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/07 09:22:40 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:50:52 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ int	goto_path(t_vec *env, t_vec *args, t_cd *data)
 	if (access(data->target, F_OK) == 0 && goto_dir(data, env) == 0)
 		return (0);
 	else
+	{
+		error_triple_msg(3, "minishell: cd: ", data->target, \
+		": Permission denied\n");
 		return (-1);
+	}
 	return (0);
 }
 
