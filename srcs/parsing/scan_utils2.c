@@ -6,27 +6,53 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:39:34 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/29 12:53:51 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/06 22:54:26 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+int	last_red_error(char *buf, int i)
+{
+	if (buf[i + 1] == '<')
+	{
+		if (buf[i + 2] == '<')
+		{
+			free(buf);
+			error_msg(2, SYNTX, "`<<<'\n");
+			return (-2000);
+		}
+		free(buf);
+		error_msg(2, SYNTX, "`<<'\n");
+		return (-2000);
+	}
+	if (buf[i + 1] == '>')
+	{
+		free(buf);
+		error_msg(2, SYNTX, "`<>'\n");
+		return (-2000);
+	}
+	return (i);
+}
 
 int	redirect_error(char *buf, int i)
 {
 	if (buf[i] == '>')
 	{
+		if (buf[i + 1] == '>')
+		{
+			free(buf);
+			error_msg(2, SYNTX, "`>>'\n");
+			return (-2000);
+		}
 		free(buf);
 		error_msg(2, SYNTX, "`>'\n");
 		return (-2000);
 	}
 	if (buf[i] == '<')
-	{
-		free(buf);
-		error_msg(2, SYNTX, "`'\n");
-		return (-2000);
-	}
+		return(last_red_error(buf, i));
+	return (i);
 }
+
 int	check_endofinput(char *buf, int i)
 {
 	int	ret;
@@ -60,7 +86,7 @@ int	handle_great(char *buf,  int i)
 			i++;
 			if (buf[i] == '<' || buf[i] == '>')
 			{
-				error_msg(2, SYNTX, "`<'\n");
+				error_msg(2, SYNTX, "`>'\n");
 				return (-2000);
 			}
 		}
@@ -90,7 +116,12 @@ int	handle_lessgreat(char *buf,  int i)
 			i++;
 			if (buf[i] == '<' || buf[i] == '>')
 			{
-				error_msg(2, SYNTX, "`<'\n");
+				error_msg(2, SYNTX, "`newline'\n");
+				return (-2000);
+			}
+			if (buf[i] == '>')
+			{
+				error_msg(2, SYNTX, "`>'\n");
 				return (-2000);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/29 09:41:24 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/03 14:28:05 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	main(int argc, char **argv, char **envp)
 			{
 				exit (1);
 			}
-			launch_builtin(&env, buf);
+			// launch_builtin(&env, buf);
 			//printf("User input is: %s\n", buf);
-			{ 
-				perror ("Exiting shell");
-				exit (1);
-			}
+			// { 
+			// 	perror ("Exiting shell");
+			// 	exit (1);
+			// }
 			if (parse_input(&arg, buf) == -1)
 				return (-1);
 			printf("arg count:%zu\n", arg.count);
