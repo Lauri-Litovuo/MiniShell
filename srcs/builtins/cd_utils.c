@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:16:15 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/07 09:17:14 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:48:14 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	goto_root(t_vec *env)
 		if (update_pwd_env(env, "PWD=/") < 0)
 			return (-1);
 	}
+
 	return (0);
 }
 

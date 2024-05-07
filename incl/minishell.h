@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/03 13:06:43 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/07 10:03:56 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_shell
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
+int		error_triple_msg(int flag, char *first, char *sec, char *third)
 /*		scan_utils		*/
 /*int		handle_start(char *buf, int i);
 int		handle_q(char *buf, int i);
