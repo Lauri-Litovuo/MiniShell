@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/07 10:03:56 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/08 14:33:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,19 @@ typedef struct s_shell
 	size_t	i;
 }	t_shell;
 
+typedef struct s_expd
+{
+	char	*temp;
+	char	*str;
+	char	*expanded;
+	char	*env_var;
+	int		ret;
+	int		var_len;
+	int		exp_len;
+	size_t	index;
+	size_t	i;
+}	t_expd;
+
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
@@ -122,15 +135,5 @@ int		skip_spaces(char *buf, int i);*/
 t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);*/
 int		split_input(char *buf, t_shell *arg, size_t pos, int i);
 int		split_rest(char *buf, t_shell *arg, size_t pos);
-/* Builtins*/
-int		launch_builtin(t_vec *env, char *buf);
-int		ft_env(t_vec *env, t_vec *args);
-int		ft_pwd(void);
-int		ft_unset(t_vec *env, t_vec *args);
-int		ft_export(t_vec *env, t_vec *args);
-void	print_exports(t_vec *env);
-int		find_index_of_env(t_vec *src, char *str);
-char	*extract_env_var(char *arg);
-int		ft_echo(t_vec *args);
 
 #endif
