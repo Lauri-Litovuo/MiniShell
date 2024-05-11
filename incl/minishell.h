@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/07 10:03:56 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/11 18:57:43 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,23 +109,32 @@ typedef struct s_shell
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
-int		error_triple_msg(int flag, char *first, char *sec, char *third)
+int		error_triple_msg(int flag, char *first, char *sec, char *third);
 /*		scan_utils		*/
-/*int		handle_start(char *buf, int i);
+int		handle_start(char *buf, int i);
 int		handle_q(char *buf, int i);
 int		handle_qq(char *buf, int i);
 int		handle_pipe(char *buf, int i);
 int		handle_lessgreat(char *buf, int i);
-int		skip_spaces(char *buf, int i);*/
+int		skip_spaces(char *buf, int i);
 /*		split utils		*/
 /*t_shell	split_regular(char *buf, t_shell *arg, size_t pos);
 t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);*/
 int		split_input(char *buf, t_shell *arg, size_t pos, int i);
 int		split_rest(char *buf, t_shell *arg, size_t pos);
+int		store_q(char *buf, t_shell *arg, size_t pos, int i);
+int		store_qq(char *buf, t_shell *arg, size_t pos, int i);
+int		store_less(char *buf, t_shell *arg, size_t pos, int i);
+int		store_great(char *buf, t_shell *arg, size_t pos, int i);
+int		rdrct_file(char *buf, t_shell *arg, size_t pos, int i, int j);
+int		rdrct_q(char *buf, t_shell *arg, size_t pos, int i, int j);
+int		rdrct_qq(char *buf, t_shell *arg, size_t pos, int i, int j);
+int		store_double(char *buf, t_shell *arg, size_t pos, int i, int j);
+int		store_single(char *buf, t_shell *arg, size_t pos, int i, int j);
 /* Builtins*/
 int		launch_builtin(t_vec *env, char *buf);
 int		ft_env(t_vec *env, t_vec *args);
-int		ft_pwd(void);
+// int		ft_pwd(void);
 int		ft_unset(t_vec *env, t_vec *args);
 int		ft_export(t_vec *env, t_vec *args);
 void	print_exports(t_vec *env);
