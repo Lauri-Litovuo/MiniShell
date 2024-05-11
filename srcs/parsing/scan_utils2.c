@@ -6,11 +6,12 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:39:34 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/06 22:54:26 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:45:04 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
 int	last_red_error(char *buf, int i)
 {
 	if (buf[i + 1] == '<')

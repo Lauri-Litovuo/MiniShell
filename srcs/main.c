@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/03 14:28:05 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:28:35 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envp)
 	char	*buf;
 	t_vec	env;
 	t_shell	arg;
-	// size_t	i = 0;
 
 	argc = 0;
 	argv = NULL;
@@ -50,17 +49,7 @@ int	main(int argc, char **argv, char **envp)
 			// 	perror ("Exiting shell");
 			// 	exit (1);
 			// }
-			if (parse_input(&arg, buf) == -1)
-				return (-1);
-			printf("arg count:%zu\n", arg.count);
-			printf("redirections count:%zu\n", arg.gl_count);
-			printf("pipe count:%zu\n", arg.pipe_count);
-			// while (i < arg.len)	//printing vectors of struct arg
-			// {
-			// 	printf("arg[%zu], cmd: %s\n", i, *(char **)vec_get(&arg.cmd, i));
-			// 	printf("arg[%zu], rdrct: %s\n", i, *(char **)vec_get(&arg.rdrct, i));
-			// 	i++;
-			// }
+			parse_input(&arg, buf);
 			if (buf && *buf)
 				add_history(buf);
 			free(buf);
