@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/08 14:33:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:05:02 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,16 @@ typedef struct s_expd
 	char	*str;
 	char	*expanded;
 	char	*env_var;
+	char	*new;
 	int		ret;
-	int		var_len;
-	int		exp_len;
+	size_t	var_len;
+	size_t	exp_len;
+	size_t	pre_len;
+	size_t	total_len;
 	size_t	index;
+	size_t	ds;
 	size_t	i;
+	size_t	var_index;
 }	t_expd;
 
 int		parse_input(t_shell *arg, char *buf);
