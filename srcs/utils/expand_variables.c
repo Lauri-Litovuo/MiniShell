@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/08 14:37:42 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/12 16:20:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,25 @@ int	expand_cmd_and_rdrct(t_vec *env, t_vec *vec)
 	init_expd_struct(&s);
 	while (s.index < vec->len)
 	{
-		s.str = *(char **)vec_get(vec, s.i);
-		while (*s.str != '\0')
+		s.str = *(char **)vec_get(vec, s.index);
+		s.total_len = ft_strlen(s.str);
+		while (s.str[s.ds] != '\0')
 		{
-			if (s.str == '$' && *(s.str + 1) != '$')
-			{
-				check_if_exists(env, &s);
-				if (s.ret > 0)
-				{
-					if (expand_to_env_var(env, s.expanded, vec, s.ret) < 0)
-						return (-1);
-				}
-				else if (s.ret < 0)
-					return (-1);
-			}
-			else if (*s.str == '$' && *(s.str + 1) == '$')
-			{
-				if (get_pid(s.expanded) < 0)
-					return (-1);
-			}
-			s.str++;
+			if (s.str[s.ds] == '$')
+				s.pre_len = s.ds;
+			else if (s.str[s.ds] == '$' && s.str[s.ds + 1] == '$')
+				s.ret = get_pid(s.expanded);
+			else if (s.str[s.ds] == '$' && s.str[s.ds + 1] == '?')
+				s.ret = get_exit_status(s.expanded);
+			else if (s.str[s.ds] == '$')
+				s.ret = expand_string(env, &s, vec);
+			if (s.ret < 0)
+				return (-1);
+			s.ds++;
 		}
 		s.index++;
 	}
+	free_expd(&s);
 	return (0);
 }
 
@@ -71,55 +67,39 @@ static void	init_expd_struct(t_expd *s)
 	s->index = 0;
 }
 
+int	expand_string(t_vec *env, t_expd *s, t_vec *vec)
+{
+	s->ret = check_if_exists(env, &s);
+	if (s->ret > 0)
+	{
+		if (expand_to_env_var(env, s, vec) < 0)
+			return (-1);
+	}
+	else if (s->ret < 0)
+		return (-1);
+}
+
 int	check_if_exists(t_vec *env, t_expd *s)
 {
-	size_t	i;
-	char	*str; //change name
-	char	*env_var;
-
-	i = 1;
-	while (s->str[i] != '\0' && (ft_isalnum(s->str[i]) != 0 || s->str[i] == '_'))
-		i++;
-	str = ft_substr(s->str, 1, i);
-	if (!str)
+	s->i = s->ds + 1;
+	while (s->str[s->i] && \
+	(ft_isalnum(s->str[s->i]) != 0 || s->str[s->i] == '_'))
+		s->i++;
+	s->var_len = s->i - s->ds;
+	s->env_var = ft_substr(s->str, s->ds + 1, s->i);
+	if (!s->env_var)
 		return (-1);
-	i = 0;
-	while (i < env->len)
+	s->var_index = 0;
+	while (s->var_index < env->len)
 	{
-		env_var = extract_env_var(*(char **)vec_get(env, i));
-		if (env_var == NULL)
-			return (free (str), -1);
-		if (ft_strncmp(env_var, str, ft_strlen(str)) == 0
-			&& *(env_var + ft_strlen(str) + 1) == '=')
-		{
-			i = ft_strlen(str);
-			free(str);
-			free(env_var);
-			return (i);
-		}
-		free (env_var);
-		i++;
+		s->temp = extract_env_var(*(char **)vec_get(env, s->var_index));
+		if (s->temp == NULL)
+			return (-1);
+		if (ft_strncmp(s->temp, s->env_var, s->var_len) == 0
+			&& s->temp[s->var_len + 1] == '=')
+			return (1);
+		free (s->temp);
+		s->var_index++;
 	}
-	return (0);
-}
-
-
-int	expand_to_env_var(t_vec *env, char *expand, t_vec *vec, int len)
-{
-	char	*temp;
-	int		full_len;
-
-	//calculate needed space for prepart+expanded_variable+rest;
-	//malloc enough space
-	//take substring prepart
-	//strcat expanded_variable, rmbr to skip $
-	//strcat rest;
-	//replace to t_vec vec to right s.index;
-	ft_substr(s->str, )
-}
-
-int	get_pid(char *expand)
-{
-	expand = ft_strdup("12312"); //arb value, make better
 	return (0);
 }
