@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
 /*   Updated: 2024/05/13 11:43:11 by aneitenb         ###   ########.fr       */
@@ -15,6 +15,8 @@
 
 # include "../libft/includes/libft.h"
 # include "builtins.h"
+# include "utils.h"
+# define PATH_MAX 4096
 
 /****************************************
 *	Standard output formatting: printf	*
@@ -107,7 +109,7 @@ typedef struct s_shell
 	int		j;
 }	t_shell;
 
-int		parse_input(t_shell *arg, char *buf);
+//int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
 int		error_triple_msg(int flag, char *first, char *sec, char *third);

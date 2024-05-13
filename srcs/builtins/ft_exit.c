@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/07 10:10:27 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/13 10:24:09 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	ft_exit(t_vec *args)
 		error_msg(2, "minishell: exit: ", "too many arguments\n");
 		return (-1);
 	}
+	return (0);
 }
 
 int	check_if_numeric(t_vec *args)

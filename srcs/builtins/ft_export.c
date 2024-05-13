@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/06 12:26:59 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/08 10:07:39 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 // Should be tested if export works otherwise than as a first argument in bash.
 //for some reason += is not working correctly but adds JEE+=SMTHN.
+//add ft_isaldigit if expandable variable is used.
 static int	check_export_syntax(char *arg);
 static int	export_variable(t_vec *env, char *arg);
 static int	export_env_var(char *env_var, char *arg, t_vec *env);
