@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/11 18:57:11 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:08:32 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 {
 	int		j;
-	
+
 	j = i;
 	i++;
 	while (buf[i] && buf[i] != ' ' && buf[i] != '$' && buf[i] != '<'
@@ -52,7 +52,7 @@ int	init_vectors(char *buf, t_shell *arg, size_t pos, int i)
 			i = store_less(buf, arg, pos, i);
 		else if (buf[i] == '>')
 			i = store_great(buf, arg, pos, i);
-		else 
+		else
 			i = store_norm(buf, arg, pos, i);
 		if (i < 0)
 			return (-1);
@@ -65,7 +65,7 @@ int	init_vectors(char *buf, t_shell *arg, size_t pos, int i)
 int	split_input(char *buf, t_shell *arg, size_t pos, int i)
 {
 	int		j;
-	
+
 	j = 0;
 	if (vec_new(&arg[pos].cmd, 1, sizeof(char *)) < 0)
 		return (-1);
@@ -78,9 +78,9 @@ int	split_input(char *buf, t_shell *arg, size_t pos, int i)
 
 int	split_rest(char *buf, t_shell *arg, size_t pos)
 {
-	size_t count;
+	size_t	count;
 	int		i;
-	
+
 	i = 0;
 	count = 0;
 	while (buf[i] && count < pos)
@@ -99,7 +99,7 @@ int	split_rest(char *buf, t_shell *arg, size_t pos)
 		else
 			i++;
 	}
-	if (split_input(buf, arg, pos, i) <  0)
+	if (split_input(buf, arg, pos, i) < 0)
 		return (-1);
 	return (0);
 }

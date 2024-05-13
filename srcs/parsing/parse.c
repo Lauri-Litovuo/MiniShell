@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/11 16:57:05 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:04:04 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	set_count(t_shell *arg)
 		arg->count = arg->pipe_count + 1;
 }
 
+/****************************************
+*	Stores count of arguments and 		*
+*	count of pipes/redirections.		*
+*	Returns: -1 on error, 0 on success.	*
+*****************************************/
 void	init_count(char *buf, t_shell *arg)
 {
 	int	i;
@@ -51,6 +56,10 @@ void	init_count(char *buf, t_shell *arg)
 	set_count(arg);
 }
 
+/****************************************
+*	Checks for syntax errors.			*
+*	Returns: -1 on error, 0 on success.	*
+*****************************************/
 int	scan_input(char *buf)
 {
 	int	i;
@@ -69,7 +78,7 @@ int	scan_input(char *buf)
 			i = handle_qq(buf, i);
 		else if (buf[i] == '|')
 			i = handle_pipe(buf, i);
-		else if (buf[i] == '>' || buf[i] == '<')	
+		else if (buf[i] == '>' || buf[i] == '<')
 			i = handle_lessgreat(buf, i);
 		else
 			i++;
@@ -98,31 +107,41 @@ int	split(char *buf, t_shell *arg)
 	return (0);
 }
 
-int	parse_input(t_shell *arg, char *buf)
+/*		DELETE		*/
+void	print_vectors(t_shell *arg)
 {
-	size_t	i = 0;		//delete
-	size_t	j = 0;		//delete
-		
-	if (scan_input(buf) == -1)		//checks for syntax errors
-		return (-1);
-	init_count(buf, arg);			//  stores count of args && count of pipes/redirections
-	if (split(buf, arg) == -1)
-		return (-1);
-	while (i < arg->count)	//printing vectors of struct arg
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (i < arg->count)
 	{
 		j = 0;
 		while (j < arg[i].cmd.len)
 		{
-			printf("arg[%zu], cmd[%zu]: %s\n", i, j, *(char **)vec_get(&arg[i].cmd, j));
+			printf("arg[%zu], cmd[%zu]: %s\n", i, j,
+				*(char **)vec_get(&arg[i].cmd, j));
 			j++;
 		}
 		j = 0;
 		while (j < arg[i].rdrct.len)
 		{
-			printf("arg[%zu], rdrct[%zu]: %s\n", i, j, *(char **)vec_get(&arg[i].rdrct, j));
+			printf("arg[%zu], rdrct[%zu]: %s\n", i, j,
+				*(char **)vec_get(&arg[i].rdrct, j));
 			j++;
 		}
 		i++;
 	}
+}
+
+int	parse_input(t_shell *arg, char *buf)
+{
+	if (scan_input(buf) == -1)
+		return (-1);
+	init_count(buf, arg);
+	if (split(buf, arg) == -1)
+		return (-1);
+	print_vectors(arg);
 	return (1);
 }

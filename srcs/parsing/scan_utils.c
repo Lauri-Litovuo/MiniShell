@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 21:00:48 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/07 15:50:13 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:05:57 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 int	skip_spaces(char *buf, int i)
 {
 	while (buf[i] && (buf[i] == ' '
-		|| buf[i] == '\t' || buf[i] == '\n'))
+			|| buf[i] == '\t' || buf[i] == '\n'))
 		i++;
 	return (i);
 }
 
-int	handle_start(char *buf,  int i)
+int	handle_start(char *buf, int i)
 {
 	i = skip_spaces(buf, i);
 	if (buf[i] == '|')
@@ -32,7 +32,7 @@ int	handle_start(char *buf,  int i)
 	return (i);
 }
 
-int	handle_q(char *buf,  int i)
+int	handle_q(char *buf, int i)
 {
 	i++;
 	if (buf[i] == '\'')
@@ -44,7 +44,7 @@ int	handle_q(char *buf,  int i)
 	{
 		while (buf[i] && (buf[i] != '\''))
 			i++;
-		if (!buf[i]) 
+		if (!buf[i])
 		{
 			free(buf);
 			error_msg(2, UNMATCH, "`''\n");
@@ -55,7 +55,7 @@ int	handle_q(char *buf,  int i)
 	}
 }
 
-int	handle_qq(char *buf,  int i)
+int	handle_qq(char *buf, int i)
 {
 	i++;
 	if (buf[i] == '\"')
