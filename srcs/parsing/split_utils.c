@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:47:25 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/11 18:53:16 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:42:39 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 *	Stores < or > redirection into vector						*
 *	Returns: placement of i within the buf string.				*
 *****************************************************************/
-int	store_single(char *buf, t_shell *arg, size_t pos, int i, int j)
+int	store_single(char *buf, t_shell *arg, size_t pos, int i)
 {
-	arg->temp = ft_substr(buf, j, 1);
+	arg->temp = ft_substr(buf, arg->j, 1);
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
@@ -33,9 +33,9 @@ int	store_single(char *buf, t_shell *arg, size_t pos, int i, int j)
 *	Stores << or >> redirection into vector						*
 *	Returns: placement of i within the buf string.				*
 *****************************************************************/
-int	store_double(char *buf, t_shell *arg, size_t pos, int i, int j)
+int	store_double(char *buf, t_shell *arg, size_t pos, int i)
 {
-	arg->temp = ft_substr(buf, j, 2);
+	arg->temp = ft_substr(buf, arg->j, 2);
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
@@ -51,12 +51,12 @@ int	store_double(char *buf, t_shell *arg, size_t pos, int i, int j)
 *	Stores file content within "" into rdrct vector				*
 *	Returns: placement of i within the buf string.				*
 *****************************************************************/
-int	rdrct_qq(char *buf, t_shell *arg, size_t pos, int i, int j)
+int	rdrct_qq(char *buf, t_shell *arg, size_t pos, int i)
 {
 	i++;
 	while (buf[i] && buf[i] != '\"')
 		i++;
-	arg->temp = ft_substr(buf, j + 1, (i - j - 1));
+	arg->temp = ft_substr(buf, arg->j + 1, (i - arg->j - 1));
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
@@ -71,12 +71,12 @@ int	rdrct_qq(char *buf, t_shell *arg, size_t pos, int i, int j)
 *	Stores file content within '' into rdrct vector				*
 *	Returns: placement of i within the buf string.				*
 *****************************************************************/
-int	rdrct_q(char *buf, t_shell *arg, size_t pos, int i, int j)
+int	rdrct_q(char *buf, t_shell *arg, size_t pos, int i)
 {
 	i++;
 	while (buf[i] && buf[i] != '\'')
 		i++;
-	arg->temp = ft_substr(buf, j + 1, (i - j - 1));
+	arg->temp = ft_substr(buf, arg->j + 1, (i - arg->j - 1));
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
@@ -91,12 +91,12 @@ int	rdrct_q(char *buf, t_shell *arg, size_t pos, int i, int j)
 *	Stores file name into rdrct vector							*
 *	Returns: placement of i within the buf string.				*
 *****************************************************************/
-int	rdrct_file(char *buf, t_shell *arg, size_t pos, int i, int j)
+int	rdrct_file(char *buf, t_shell *arg, size_t pos, int i)
 {
 	while (buf[i] && buf[i] != ' ' && buf[i] != '\t' && buf[i] != '\n'
 		&& buf[i] != '|' && buf[i] != '>' && buf[i] != '<')
 		i++;
-	arg->temp = ft_substr(buf, j, (i - j + 1));
+	arg->temp = ft_substr(buf, arg->j, (i - arg->j + 1));
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);

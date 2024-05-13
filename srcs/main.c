@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 11:28:54 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:39:19 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_index(t_shell *arg)
 	arg->pipe_count = 0;
 	arg->gl_count = 0;
 	arg->i = 0;
+	arg->j = 0;
 }
 
 static int	copy_env(t_vec *env, char **envp)

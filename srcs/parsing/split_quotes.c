@@ -6,15 +6,15 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/11 17:45:36 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:40:46 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i, int j)
+int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 {
-	arg->temp = ft_substr(buf, j + 1, (i - j - 1));
+	arg->temp = ft_substr(buf, arg->j + 1, (i - arg->j - 1));
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
@@ -25,9 +25,9 @@ int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i, int j)
 	return (i + 1);
 }
 
-int	include_quote(char *buf, t_shell *arg, size_t pos, int i, int j)
+int	include_quote(char *buf, t_shell *arg, size_t pos, int i)
 {
-	arg->temp = ft_substr(buf, j, (i - j + 1));
+	arg->temp = ft_substr(buf, arg->j, (i - arg->j + 1));
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
@@ -47,11 +47,10 @@ int	include_quote(char *buf, t_shell *arg, size_t pos, int i, int j)
 *****************************************************************/
 int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 {
-	int	j;
 	int	flag;
 
 	flag = 0;
-	j = i;
+	arg->j = i;
 	i++;
 	if (buf[i] == '\'')
 		return (i + 1);
@@ -62,9 +61,9 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 		i++;
 	}
 	if (flag == 1)
-		return (include_quote(buf, arg, pos, i, j));
+		return (include_quote(buf, arg, pos, i));
 	else
-		return (exclude_quote(buf, arg, pos, i, j));
+		return (exclude_quote(buf, arg, pos, i));
 }
 
 /****************************************************************
@@ -75,11 +74,10 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 *****************************************************************/
 int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 {
-	int	j;
 	int	flag;
 
 	flag = 0;
-	j = i;
+	arg->j = i;
 	i++;
 	if (buf[i] == '\"')
 		return (i + 1);
@@ -90,7 +88,7 @@ int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 		i++;
 	}
 	if (flag == 1)
-		return (include_quote(buf, arg, pos, i, j));
+		return (include_quote(buf, arg, pos, i));
 	else
-		return (exclude_quote(buf, arg, pos, i, j));
+		return (exclude_quote(buf, arg, pos, i));
 }

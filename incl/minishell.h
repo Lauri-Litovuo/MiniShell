@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/11 18:57:43 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:43:11 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_shell
 	size_t	pipe_count;
 	size_t	gl_count;
 	size_t	i;
+	int		j;
 }	t_shell;
 
 int		parse_input(t_shell *arg, char *buf);
@@ -126,11 +127,11 @@ int		store_q(char *buf, t_shell *arg, size_t pos, int i);
 int		store_qq(char *buf, t_shell *arg, size_t pos, int i);
 int		store_less(char *buf, t_shell *arg, size_t pos, int i);
 int		store_great(char *buf, t_shell *arg, size_t pos, int i);
-int		rdrct_file(char *buf, t_shell *arg, size_t pos, int i, int j);
-int		rdrct_q(char *buf, t_shell *arg, size_t pos, int i, int j);
-int		rdrct_qq(char *buf, t_shell *arg, size_t pos, int i, int j);
-int		store_double(char *buf, t_shell *arg, size_t pos, int i, int j);
-int		store_single(char *buf, t_shell *arg, size_t pos, int i, int j);
+int		rdrct_file(char *buf, t_shell *arg, size_t pos, int i);
+int		rdrct_q(char *buf, t_shell *arg, size_t pos, int i);
+int		rdrct_qq(char *buf, t_shell *arg, size_t pos, int i);
+int		store_double(char *buf, t_shell *arg, size_t pos, int i);
+int		store_single(char *buf, t_shell *arg, size_t pos, int i);
 /* Builtins*/
 int		launch_builtin(t_vec *env, char *buf);
 int		ft_env(t_vec *env, t_vec *args);

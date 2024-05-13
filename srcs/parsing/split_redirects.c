@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:09:17 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/11 18:56:02 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:53:23 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,20 @@
 *****************************************************************/
 int	store_less(char *buf, t_shell *arg, size_t pos, int i)
 {
-	int	j;
-
-	j = i;
+	arg->j = i;
 	i++;
 	if (buf[i] == '<')
-		i = store_double(buf, arg, pos, i, j);
+		i = store_double(buf, arg, pos, i);
 	else
-		i = store_single(buf, arg, pos, i, j);
+		i = store_single(buf, arg, pos, i);
 	i = skip_spaces(buf, i);
-	j = i;
+	arg->j = i;
 	if (buf[i] == '\'')
-		i = rdrct_q(buf, arg, pos, i, j);
+		i = rdrct_q(buf, arg, pos, i);
 	else if (buf[i] == '\"')
-		i = rdrct_qq(buf, arg, pos, i, j);
+		i = rdrct_qq(buf, arg, pos, i);
 	else
-		i = rdrct_file(buf, arg, pos, i, j);
+		i = rdrct_file(buf, arg, pos, i);
 	return (i);
 }
 
@@ -43,21 +41,19 @@ int	store_less(char *buf, t_shell *arg, size_t pos, int i)
 *****************************************************************/
 int	store_great(char *buf, t_shell *arg, size_t pos, int i)
 {
-	int	j;
-
-	j = i;
+	arg->j = i;
 	i++;
 	if (buf[i] == '>')
-		i = store_double(buf, arg, pos, i, j);
+		i = store_double(buf, arg, pos, i);
 	else
-		i = store_single(buf, arg, pos, i, j);
+		i = store_single(buf, arg, pos, i);
 	i = skip_spaces(buf, i);
-	j = i;
+	arg->j = i;
 	if (buf[i] == '\'')
-		i = rdrct_q(buf, arg, pos, i, j);
+		i = rdrct_q(buf, arg, pos, i);
 	else if (buf[i] == '\"')
-		i = rdrct_qq(buf, arg, pos, i, j);
+		i = rdrct_qq(buf, arg, pos, i);
 	else
-		i = rdrct_file(buf, arg, pos, i, j);
+		i = rdrct_file(buf, arg, pos, i);
 	return (i);
 }
