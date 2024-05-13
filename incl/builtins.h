@@ -6,13 +6,14 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:05:22 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/06 15:34:48 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:03:58 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-# include <limits.h>
+
+# define PATH_MAX 4096
 
 typedef struct s_cd
 {

@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/12 16:05:02 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:03:23 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "../libft/includes/libft.h"
 # include "builtins.h"
+# include "utils.h"
+# define PATH_MAX 4096
 
 /****************************************
 *	Standard output formatting: printf	*
@@ -106,28 +108,10 @@ typedef struct s_shell
 	size_t	i;
 }	t_shell;
 
-typedef struct s_expd
-{
-	char	*temp;
-	char	*str;
-	char	*expanded;
-	char	*env_var;
-	char	*new;
-	int		ret;
-	size_t	var_len;
-	size_t	exp_len;
-	size_t	pre_len;
-	size_t	total_len;
-	size_t	index;
-	size_t	ds;
-	size_t	i;
-	size_t	var_index;
-}	t_expd;
-
-int		parse_input(t_shell *arg, char *buf);
+//int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
-int		error_triple_msg(int flag, char *first, char *sec, char *third)
+int		error_triple_msg(int flag, char *first, char *sec, char *third);
 /*		scan_utils		*/
 /*int		handle_start(char *buf, int i);
 int		handle_q(char *buf, int i);
@@ -138,7 +122,7 @@ int		skip_spaces(char *buf, int i);*/
 /*		split utils		*/
 /*t_shell	split_regular(char *buf, t_shell *arg, size_t pos);
 t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);*/
-int		split_input(char *buf, t_shell *arg, size_t pos, int i);
-int		split_rest(char *buf, t_shell *arg, size_t pos);
+//int		split_input(char *buf, t_shell *arg, size_t pos, int i);
+//int		split_rest(char *buf, t_shell *arg, size_t pos);
 
 #endif
