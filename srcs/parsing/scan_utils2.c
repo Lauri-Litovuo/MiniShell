@@ -6,11 +6,12 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:39:34 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/06 22:54:26 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:07:30 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
 int	last_red_error(char *buf, int i)
 {
 	if (buf[i + 1] == '<')
@@ -49,7 +50,7 @@ int	redirect_error(char *buf, int i)
 		return (-2000);
 	}
 	if (buf[i] == '<')
-		return(last_red_error(buf, i));
+		return (last_red_error(buf, i));
 	return (i);
 }
 
@@ -71,12 +72,12 @@ int	check_endofinput(char *buf, int i)
 		return (-2000);
 	}
 	else if (buf[i] == '>' || buf[i] == '<')
-		return (redirect_error(buf , i));
+		return (redirect_error(buf, i));
 	else
-		 return (ret);
+		return (ret);
 }
 
-int	handle_great(char *buf,  int i)
+int	handle_great(char *buf, int i)
 {
 	if (buf[i] == '>')
 	{
@@ -101,7 +102,7 @@ int	handle_great(char *buf,  int i)
 	return (check_endofinput(buf, i));
 }
 
-int	handle_lessgreat(char *buf,  int i)
+int	handle_lessgreat(char *buf, int i)
 {
 	int	count;
 

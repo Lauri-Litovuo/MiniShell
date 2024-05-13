@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:59:39 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/07 10:03:30 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:31:54 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
+#include "../../incl/minishell.h"
 
 int	error_msg(int flag, char *str, char *specifier)
 {
@@ -48,6 +48,7 @@ int	error_triple_msg(int flag, char *first, char *sec, char *third)
 	}
 	return (-1);
 }
+
 int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
 {
 	if (flag == 2)
