@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 11:39:19 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:12:00 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,25 +84,6 @@ int minishell(char **envp)
 	ft_memset(&arg, 0 , sizeof(t_shell));
 	copy_env(&env, envp);
 	miniloop(&env, buf, &arg);
-	// while (1)
-	// {
-	// 	init_index(&arg);
-	// 	if (isatty(STDIN_FILENO) == 1)
-	// 	{
-	// 		buf = readline("minishell> ");
-	// 		if (!buf)
-	// 		{
-	// 			exit (1);
-	// 		}
-	// 		launch_builtin(&env, buf);
-	// 		parse_input(&arg, buf);
-	// 		if (buf && *buf)
-	// 			add_history(buf);
-	// 		free(buf);
-	// 	}
-	// 	else
-	// 		printf ("is not interactive with terminal\n");
-	// }
 	free(buf);
 	return (0);
 }
