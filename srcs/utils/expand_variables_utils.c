@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 10:14:43 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/13 11:49:09 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec)
 {
 	char	*dupped;
 
+	s->expanded = malloc (ft_strlen(*(char **)vec_get(env, s->var_index)) \
+	- s->var_len - 1);
 	ft_strlcpy(s->expanded, \
 	(*(char **)vec_get(env, s->var_index) + s->var_len + 1), PATH_MAX);
 	s->exp_len = ft_strlen(s->expanded);
@@ -37,7 +39,7 @@ int	expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec)
 	return (0);
 }
 
-int	expand_to_empty(t_vec *env, t_expd *s, t_vec *vec)
+int	expand_to_empty(t_expd *s, t_vec *vec)
 {
 	char	*dupped;
 
@@ -54,7 +56,7 @@ int	expand_to_empty(t_vec *env, t_expd *s, t_vec *vec)
 	return (0);
 }
 
-int	get_exit_status(t_expd *s, t_vec *vec)
+int	expand_to_exit_status(t_expd *s, t_vec *vec)
 {
 	char	*dupped;
 
@@ -76,6 +78,7 @@ int	get_exit_status(t_expd *s, t_vec *vec)
 	if (!dupped)
 		return (-1);
 	vec_replace_str(vec, dupped, s->index);
+	s->str = *(char **)vec_get(vec, s->index);
 	return (0);
 }
 
