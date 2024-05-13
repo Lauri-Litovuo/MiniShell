@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 11:43:11 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:58:29 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_shell
 {
 	t_vec	cmd;
 	t_vec	rdrct;
+	t_vec	env;
 	char	*temp;
 	size_t	count;
 	size_t	pipe_count;
@@ -109,7 +110,7 @@ typedef struct s_shell
 	int		j;
 }	t_shell;
 
-//int		parse_input(t_shell *arg, char *buf);
+int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
 int		error_triple_msg(int flag, char *first, char *sec, char *third);
@@ -134,15 +135,5 @@ int		rdrct_q(char *buf, t_shell *arg, size_t pos, int i);
 int		rdrct_qq(char *buf, t_shell *arg, size_t pos, int i);
 int		store_double(char *buf, t_shell *arg, size_t pos, int i);
 int		store_single(char *buf, t_shell *arg, size_t pos, int i);
-/* Builtins*/
-int		launch_builtin(t_vec *env, char *buf);
-int		ft_env(t_vec *env, t_vec *args);
-// int		ft_pwd(void);
-int		ft_unset(t_vec *env, t_vec *args);
-int		ft_export(t_vec *env, t_vec *args);
-void	print_exports(t_vec *env);
-int		find_index_of_env(t_vec *src, char *str);
-char	*extract_env_var(char *arg);
-int		ft_echo(t_vec *args);
 
 #endif

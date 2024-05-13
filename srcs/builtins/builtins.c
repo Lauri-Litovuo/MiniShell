@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 12:04:59 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/13 12:27:05 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	launch_builtin(t_vec *env, char *buf)
 		ft_cd(env, &args);
 	// else if (ft_strncmp(args, "exit", ft_strlen(args)) == 0)
 	// 	ft_exit();
-	else if (ft_strchr(arg_strs[0], '$') != NULL)
-		expand_variables(env, &args);
 	free_2d_array(arg_strs);
 	return (0);
 }

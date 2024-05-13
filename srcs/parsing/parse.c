@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/13 12:04:04 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:37:30 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int	parse_input(t_shell *arg, char *buf)
 	init_count(buf, arg);
 	if (split(buf, arg) == -1)
 		return (-1);
+	printf("arg->count: %zu\n", arg->count);
 	print_vectors(arg);
 	return (1);
 }

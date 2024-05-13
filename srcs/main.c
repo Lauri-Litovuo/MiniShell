@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 12:12:00 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:00:00 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,12 @@ int	miniloop(t_vec *env, char *buf, t_shell *arg)
 int minishell(char **envp)
 {
 	char	*buf;
-	t_vec	env;
 	t_shell	arg;
 
 	buf = NULL;
 	ft_memset(&arg, 0 , sizeof(t_shell));
-	copy_env(&env, envp);
-	miniloop(&env, buf, &arg);
+	copy_env(&arg.env, envp);
+	miniloop(&arg.env, buf, &arg);
 	free(buf);
 	return (0);
 }
