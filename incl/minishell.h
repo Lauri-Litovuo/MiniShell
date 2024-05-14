@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 13:58:29 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/14 15:06:43 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include "../libft/includes/libft.h"
 # include "builtins.h"
 # include "utils.h"
+# include "execute.h"
 # define PATH_MAX 4096
+# include <limits.h>
 
 /****************************************
 *	Standard output formatting: printf	*
@@ -97,6 +99,7 @@
 /************************************
 *			SHELL STRUCT			*
 *************************************/
+
 typedef struct s_shell
 {
 	t_vec	cmd;
@@ -135,5 +138,12 @@ int		rdrct_q(char *buf, t_shell *arg, size_t pos, int i);
 int		rdrct_qq(char *buf, t_shell *arg, size_t pos, int i);
 int		store_double(char *buf, t_shell *arg, size_t pos, int i);
 int		store_single(char *buf, t_shell *arg, size_t pos, int i);
+int		execute(t_shell *arg, t_vec *env);
+int		get_exec_paths(t_vec *paths, int *cmd_pos, t_shell *arg, t_vec *env);
+int		prepare_ex_env(t_vec *paths, int *cmd_pos, t_shell *arg, \
+char **paths_env);
+int		isit_builtin(char *cmd, int pos);
+int		add_builtin(t_vec *paths, char *cmd);
+
 
 #endif

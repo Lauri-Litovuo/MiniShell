@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
+#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/13 11:11:40 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/05/14 13:51:18 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,10 @@ SOURCES = \
 			srcs/builtins/ft_cd.c \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
-      		srcs/errors/errors.c
+      		srcs/errors/errors.c \
+			srcs/execute/execute.c \
+			srcs/execute/get_exec_paths.c \
+			srcs/execute/add_builtin.c
 			
 OBJECTS = $(SOURCES:.c=.o)
 
