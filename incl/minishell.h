@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 13:58:29 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:40:09 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,9 @@ typedef struct s_shell
 	size_t	gl_count;
 	size_t	i;
 	int		j;
+	int		join_flag;
+	int		end_flag;
+	int		expand_flag;
 }	t_shell;
 
 int		parse_input(t_shell *arg, char *buf);

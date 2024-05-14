@@ -6,34 +6,101 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/13 12:08:32 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:35:50 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+int	push_expand_vector(char *buf, t_shell *arg, size_t pos, int i)
+{
+	i++;
+	while (buf[i] && buf[i] != ' ' && buf[i] != '$' && buf[i] != '<'
+			&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' 
+			&& buf[i] != '\"' && buf[i] != '\t' && buf[i] != '\n')
+			i++;
+	arg->temp = ft_substr(buf, arg->j, (i - arg->j));
+	if (arg->temp == NULL)
+	{
+		error_msg(1, SUBSTR, NULL);
+		return (-1);
+	}
+	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
+		return (-1);
+	return (i);
+}
+
+int	push_to_vector(char *buf, t_shell *arg, size_t pos, int i)
+{
+	arg->temp = ft_substr(buf, arg->j, (i - arg->j));
+	if (arg->temp == NULL)
+	{
+		error_msg(1, SUBSTR, NULL);
+		return (-1);
+	}
+	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
+		return (-1); 
+	return (i);
+}
+
+/****************************************************************
+*	Stores content of buf string which includes ', ", or $		*
+*	in the middle of normal characters into single vector.		*
+*	Returns: placement of i within the buf string.				*
+*****************************************************************/
+int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
+{
+	if (i > arg->j)
+	{
+		i = push_to_vector(buf, arg, pos, i);
+		if (i < 0)
+			return (-1);
+		arg->j = i;	
+	}
+	if (buf[i] == '$')
+	{
+		i = push_expand_vector(buf, arg, pos, i);
+		if (expand_variables(&arg->env, &arg[pos].cmd, arg[pos].cmd.len - 1) < 0)
+			return (-1);
+	}
+	// else if (buf[i] == '\'')
+	// 	i = long_quote(buf, arg, pos, i);
+	// else if (buf[i] == '\"')
+	// 	i = long_qq(buf, arg, pos, i);
+	return (i);
+}
+
 /****************************************************************
 *	Stores normal content of buf string into cmd vector.		*
+*	Also checks for longline content and joins the vector 		*
+*	pointers into one long vector  pointer in that case.		*
 *	Returns: placement of i within the buf string.				*
 *****************************************************************/
 int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 {
-	int		j;
-
-	j = i;
-	i++;
+	arg->j = i;
 	while (buf[i] && buf[i] != ' ' && buf[i] != '$' && buf[i] != '<'
 		&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' && buf[i] != '\"'
 		&& buf[i] != '\t' && buf[i] != '\n')
 		i++;
-	arg->temp = ft_substr(buf, j, (i - j));
-	if (arg->temp == NULL)
+	if (buf[i] == '\'' || buf[i] == '\"' || buf[i] == '$')
 	{
-		error_msg(1, SUBSTR, NULL);
-		return (-2000);
+		arg->join_flag = arg[pos].cmd.len + 1;
+		i = store_special_cmd(buf, arg, pos, i);
 	}
-	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
-		return (-2000);
+	else
+	{
+		arg->temp = ft_substr(buf, arg->j, (i - arg->j));
+		if (arg->temp == NULL)
+		{
+			error_msg(1, SUBSTR, NULL);
+			return (-1);
+		}
+		if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
+			return (-1);
+	}
+	// if (arg->end_flag > 0)
+	// 	join_vec(arg, pos);
 	return (i);
 }
 
@@ -62,11 +129,13 @@ int	init_vectors(char *buf, t_shell *arg, size_t pos, int i)
 	return (0);
 }
 
+/****************************************************************
+*	Creates vectors for each new arg->count depending on		*
+*	what position is passed as a parameter.						*
+*	Returns: -1 on error.										*
+*****************************************************************/
 int	split_input(char *buf, t_shell *arg, size_t pos, int i)
 {
-	int		j;
-
-	j = 0;
 	if (vec_new(&arg[pos].cmd, 1, sizeof(char *)) < 0)
 		return (-1);
 	if (vec_new(&arg[pos].rdrct, 1, sizeof(char *)) < 0)
@@ -76,6 +145,11 @@ int	split_input(char *buf, t_shell *arg, size_t pos, int i)
 	return (0);
 }
 
+/****************************************************************
+*	Finds the index of starting point within buf string, 		*
+*	depending on which arg->count was passed as pos.			*
+*	Returns: -1 on error.										*
+*****************************************************************/
 int	split_rest(char *buf, t_shell *arg, size_t pos)
 {
 	size_t	count;
