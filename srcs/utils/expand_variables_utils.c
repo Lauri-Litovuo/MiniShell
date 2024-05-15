@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 17:23:59 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/15 11:04:20 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,21 @@ int	expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec, int index)
 	- s->var_len - 1);
 	ft_strlcpy(s->expanded, \
 	(*(char **)vec_get(env, s->var_index) + s->var_len + 1), PATH_MAX);
-	printf("s->expanded: %s\n", s->expanded);
 	s->exp_len = ft_strlen(s->expanded);
 	s->new = malloc((s->total_len - s->var_len + s->exp_len) * 1);
 	s->new = ft_substr(s->str, 0, s->pre_len);
 	if (!s->new)
 		return (-1);
-	printf("s->new: %s\n", s->new);
 	ft_strlcat(s->new, s->expanded, (s->total_len - s->var_len + s->exp_len));
 	if (!s->new)
 		return (-1);
-	printf("s->new2: %s\n", s->new);
-	printf("source str index: %lu\n", s->ds + s->var_len);
 	ft_strlcat(s->new, s->str + (s->ds + s->var_len + 1), \
 	(s->total_len - s->var_len + s->exp_len));
 	if (!s->new)
 		return (-1);
-	printf("s->new3: %s\n", s->new);
 	dupped = ft_strdup(s->new);
 	if (!dupped)
 		return (-1);
-	printf("dupped: %s\n", dupped);
 	vec_replace_str(vec, dupped, index);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 17:56:06 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:31:54 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ static void	init_expd_struct(t_expd *s)
 	s->ret = 0;
 	s->index = 0;
 	s->ds = 0;
+	s->flag = 0;
 }
 
 int	expand_string(t_vec *env, t_expd *s, t_vec *vec, int index)
@@ -106,7 +107,7 @@ int	expand_string(t_vec *env, t_expd *s, t_vec *vec, int index)
 	if (s->str[s->ds] == '\0' || s->str[s->ds + 1] == '$')
 		return (0);
 	s->ret = check_if_exists(env, s);
-	printf("s.ret: %d\n", s->ret);
+	printf("s->ret: %d\n", s->ret);
 	if (s->ret >= 0)
 	{
 		if (s->ret > 0)
@@ -123,7 +124,22 @@ int	expand_string(t_vec *env, t_expd *s, t_vec *vec, int index)
 	}
 	else if (s->ret < 0)
 		return (-1);
+	if (s->flag == 1)
+		printf("flagged\n");
 	return (0);
+}
+
+void	check_extra_expand(t_expd *s, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			s->flag = 1;
+		i++;
+	}
 }
 
 static int	check_if_exists(t_vec *env, t_expd *s)
@@ -133,13 +149,13 @@ static int	check_if_exists(t_vec *env, t_expd *s)
 	s->str[s->i] != '$' && s->str[s->i] != ' ' && \
 	(ft_isalnum(s->str[s->i]) != 0 || s->str[s->i] == '_' ))
 		s->i++;
+	check_extra_expand(s, &s->str[s->i]);
 	s->var_len = s->i - s->ds - 1;
 	s->env_var = ft_substr(s->str, s->ds + 1, s->var_len);
 	if (!s->env_var)
 		return (-1);
-	s->var_index = 0;
-	printf("s->var_len: %zu\n", s->var_len);
 	printf("s->env_var: %s\n", s->env_var);
+	s->var_index = 0;
 	while (s->var_index < env->len)
 	{
 		s->temp = extract_env_var(*(char **)vec_get(env, s->var_index));

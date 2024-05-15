@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 14:01:02 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/15 11:57:16 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	copy_env(t_vec *env, char **envp)
 	return (0);
 }
 
-int	miniloop(t_vec *env, char *buf, t_shell *arg)
+int	miniloop(char *buf, t_shell *arg)
 {
 	while (1)
 	{
@@ -65,7 +65,6 @@ int	miniloop(t_vec *env, char *buf, t_shell *arg)
 			{
 				exit (1);
 			}
-			launch_builtin(env, buf);
 			parse_input(arg, buf);
 			if (buf && *buf)
 				add_history(buf);
@@ -85,7 +84,7 @@ int minishell(char **envp)
 	buf = NULL;
 	ft_memset(&arg, 0 , sizeof(t_shell));
 	copy_env(&arg.env, envp);
-	miniloop(&arg.env, buf, &arg);
+	miniloop(buf, &arg);
 	free(buf);
 	return (0);
 }

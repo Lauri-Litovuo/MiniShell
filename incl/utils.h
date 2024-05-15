@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:28:32 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 15:33:35 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:48:32 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_expd
 	char	*env_var;
 	char	*new;
 	int		ret;
+	int		flag;
 	size_t	var_len;
 	size_t	exp_len;
 	size_t	pre_len;
