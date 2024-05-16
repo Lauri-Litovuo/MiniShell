@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 15:06:43 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:48:12 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 # define MINISHELL_H
 
 # include "../libft/includes/libft.h"
-# include "builtins.h"
-# include "utils.h"
-# include "execute.h"
 # define PATH_MAX 4096
-# include <limits.h>
+# define INT_MIN -2147483647
 
 /****************************************
 *	Standard output formatting: printf	*
@@ -112,6 +109,10 @@ typedef struct s_shell
 	size_t	i;
 	int		j;
 }	t_shell;
+
+# include "builtins.h"
+# include "utils.h"
+# include "execute.h"
 
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);

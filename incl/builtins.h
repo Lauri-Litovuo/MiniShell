@@ -6,14 +6,12 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:05:22 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 12:03:58 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:46:16 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-
-# define PATH_MAX 4096
 
 typedef struct s_cd
 {
@@ -28,7 +26,7 @@ typedef struct s_cd
 }			t_cd;
 
 void		init_struct(t_cd *data);
-int			launch_builtin(t_vec *env, char *buf);
+int			launch_builtin(t_vec *env, t_vec *args);
 int			ft_env(t_vec *env, t_vec *args);
 int			ft_pwd(t_vec *env);
 int			ft_unset(t_vec *env, t_vec *args);
