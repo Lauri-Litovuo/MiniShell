@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 12:00:55 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 14:54:36 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:35:39 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,31 @@ int	isit_builtin(char *cmd, int pos)
 		return (INT_MIN);
 	else
 		return (pos);
+}
+
+int	isit_child_builtin(char *cmd)
+{
+	if (!cmd)
+		exit (1);
+	if (ft_strncmp(cmd, "env", ft_strlen(cmd) + 1) == 0
+		|| ft_strncmp(cmd, "pwd", ft_strlen(cmd) + 1) == 0
+		|| ft_strncmp(cmd, "echo", ft_strlen(cmd) + 1) == 0)
+		return (1);
+	else
+		return (-1);
+}
+
+int	isit_parent_builtin(char *cmd)
+{
+	if (!cmd)
+		exit (1);
+	if (ft_strncmp(cmd, "unset", ft_strlen(cmd) + 1) == 0
+		|| ft_strncmp(cmd, "export", ft_strlen(cmd) + 1) == 0
+		|| ft_strncmp(cmd, "cd", ft_strlen(cmd) + 1) == 0
+		|| ft_strncmp(cmd, "exit", ft_strlen(cmd) + 1) == 0)
+		return (1);
+	else
+		return (-1);
 }
 
 int	add_builtin(t_vec *paths, char *cmd)

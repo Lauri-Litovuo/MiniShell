@@ -6,21 +6,22 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 14:03:06 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:51:17 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	handle_redirect(t_shell *arg, t_exec *exe)
+int	do_redirects(t_vec *rdrct, t_redir *redir, t_vec *heredoc)
 {
-	if (a->gl_count == 0)
+	if (rdrct->len == 0)
 	{
-		p->fd_in = STDIN_FILENO;
-		p->fd_out = STDOUT_FILENO;
+		redir->new_fdin = STDIN_FILENO;
+		redir->new_fdout = STDOUT_FILENO;
+		(void)heredoc;
 		return (0);
 	}
-
+	return (-1);
 }
 
 /*
