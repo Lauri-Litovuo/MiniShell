@@ -6,84 +6,89 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/15 15:51:17 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/17 13:24:36 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	do_redirects(t_vec *rdrct, t_redir *redir, t_vec *heredoc)
+int	reset_fds(t_redir *redir)
 {
-	if (rdrct->len == 0)
-	{
-		redir->new_fdin = STDIN_FILENO;
-		redir->new_fdout = STDOUT_FILENO;
-		(void)heredoc;
+	int	ret;
+
+	ret = 0;
+	if (!redir)
 		return (0);
+	if (redir->orig_fdin != -1)
+	{
+		if (dup2(redir->orig_fdin, STDIN_FILENO) == -1)
+			ret = -1;
+		close (redir->orig_fdin);
+		redir->orig_fdin = -1;
 	}
-	return (-1);
+	if (redir->orig_fdout != -1)
+	{
+		if (dup2(redir->orig_fdout, STDIN_FILENO) == -1)
+			ret = -1;
+		close (redir->orig_fdout);
+		redir->orig_fdout = -1;
+	}
+	return (ret);
 }
 
-/*
-int	get_fdin(t_pipex *cont, char **av)
+int	set_fds(t_redir *redir, t_vec *rdrct, int *pipe_fd)
 {
-	if (cont->here_doc == 1)
-	{
-		handle_heredoc(cont, av);
-		if (cont->fd_in < 0)
-		{
-			write (2, "pipex: ", 7);
-			perror("heredoc");
-			return (-1);
-		}
-		return (0);
-	}
-	else
-	{
-		cont->fd_in = open(av[1], O_RDONLY);
-		if (cont->fd_in == -1)
-		{
-			write (2, "pipex: ", 7);
-			perror (av[1]);
-			return (-1);
-		}
-	}
-	return (0);
+	 int	ret;
+
+	 ret = 0;
+	 if (!redir)
+	 	return (-1);
+	redir->orig_fdin = dup(STDIN_FILENO);
+	if (redir->orig_fdin == -1)
+		return (perror("dup failed"), -1); //
+	redir->orig_fdout = dup(STDOUT_FILENO);
+	if (redir->orig_fdout == -1)
+		return (perror("dup failed"), -1); //
+	if (redir->fd_in != -1)
+		if (dup2(redir->fd_in, STDIN_FILENO) == -1)
+			ret = error_triple_msg(3, "minishell :", "dup2 :", redir->infile); //
+	if (redir->fd_out != -1)
+		if (dup2(redir->fd_out, STDOUT_FILENO) == -1)
+			ret = error_triple_msg(3, "minishell :", "dup2 :", redir->outfile); //
+	return (ret);
 }
 
-int	get_fdout(t_pipex *cont, char **av)
+int	check_files_and_fd(t_redir *redir)
 {
-	if (cont->here_doc == 1)
-		cont->fd_out = open(av[cont->cmd_count + 3], \
-		O_RDWR | O_APPEND | O_CREAT, 0644);
-	else
-		cont->fd_out = open(av[cont->cmd_count + 2], \
-		O_RDWR | O_TRUNC | O_CREAT, 0644);
-	if (cont->fd_out == -1)
-	{
-		write (2, "pipex: ", 7);
-		if (cont->here_doc == 1)
-		{
-			perror(av[cont->cmd_count + 3]);
-		}
-		else
-		{
-			perror(av[cont->cmd_count + 2]);
-		}
-		if (cont->fd_in != -1)
-			close(cont->fd_in);
+	if (!redir || (!redir->infile || redir->outfile))
 		return (-1);
-	}
+	if ((redir->infile && redir->fd_in == -1)
+		|| (redir->outfile && redir->fd_out == -1))
+		return (-1);
 	return (0);
 }
 
-void	write_error(char *name, char *errmsg)
+int	create_pipes(t_exec *exe, size_t pipe_count)
 {
-	write (2, "pipex: ", 7);
-	ft_putstr_fd(name, 2);
-	write(2, ": ", 2);
-	ft_putstr_fd(errmsg, 2);
-	write (2, "\n", 1);
+	size_t	i;
+	int		*fd;
+
+	i = 0;
+	while (i < pipe_count)
+	{
+		fd = malloc(sizeof(fd) * 2);
+		if (!fd || pipe(fd) < 0)
+		{
+			free_exe(exe);
+			return (-1);
+		}
+		exe->pipe_fd = fd;
+	} 
+}
+
+int setup_pipe_fds(t_redir *redir, t_vec *rdrct, int pos)
+{
+	
 }
 
 void	handle_heredoc(t_pipex *cont, char **av)
@@ -111,4 +116,13 @@ void	handle_heredoc(t_pipex *cont, char **av)
 	if (cont->fd_in < 0)
 		unlink(".heredoc");
 }
-*/
+
+int	do_redirects(t_vec *rdrct, t_redir *redir, int *pipe_fd)
+{
+	if (rdrct->len == 0)
+	{
+		return (0);
+	}
+	
+	return (-1);
+}
