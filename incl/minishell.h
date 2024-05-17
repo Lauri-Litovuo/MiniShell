@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/15 15:48:12 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:43:12 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,12 @@ typedef struct s_shell
 	size_t	gl_count;
 	size_t	i;
 	int		j;
+	int		*pids;
 }	t_shell;
 
-# include "builtins.h"
 # include "utils.h"
 # include "execute.h"
+# include "builtins.h"
 
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
