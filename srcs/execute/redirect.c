@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/17 13:24:36 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/20 09:38:06 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	create_pipes(t_exec *exe, size_t pipe_count)
 			return (-1);
 		}
 		exe->pipe_fd = fd;
-	} 
+	}
 }
 
 int setup_pipe_fds(t_redir *redir, t_vec *rdrct, int pos)

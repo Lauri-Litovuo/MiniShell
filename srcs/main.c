@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 14:00:00 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/16 10:07:04 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ static int	copy_env(t_vec *env, char **envp)
 	while (envp[i])
 	{
 		temp = ft_strdup(envp[i]);
-		if (vec_push(env, &temp) < 0)
-		{
-			vec_free(env);
-			return (-1);
-		}
 		// printf("env: %s\n", *(char **)vec_get(env, i));
 		// printf("temp:%s\n", temp);
 		if (vec_push(env, &temp) < 0)
@@ -62,8 +57,8 @@ int	miniloop(t_vec *env, char *buf, t_shell *arg)
 			{
 				exit (1);
 			}
-			launch_builtin(env, buf);
 			parse_input(arg, buf);
+			execute(arg, env);
 			if (buf && *buf)
 				add_history(buf);
 			free(buf);
@@ -80,7 +75,7 @@ int minishell(char **envp)
 	t_shell	arg;
 
 	buf = NULL;
-	ft_memset(&arg, 0 , sizeof(t_shell));
+	ft_memset(&arg, 0, sizeof(t_shell));
 	copy_env(&arg.env, envp);
 	miniloop(&arg.env, buf, &arg);
 	free(buf);

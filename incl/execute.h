@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/17 13:29:29 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:07:31 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ typedef struct s_redir
 typedef struct s_exec
 {
 	t_redir		redir;
-	char		**cmd_args;
+	char		**cmd_argv;
 	char		*cmd;
 	char		*path;
 	int			ret;
-	int			*pipe_fd;
+	t_vec		*paths;
 }				t_exec;
 
 /* add_builtin.c*/

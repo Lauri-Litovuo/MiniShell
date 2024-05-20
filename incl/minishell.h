@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/17 14:43:12 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:36:12 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ typedef struct s_shell
 	size_t	gl_count;
 	size_t	i;
 	int		j;
-	int		*pids;
+	t_vec	pids;
 }	t_shell;
 
 # include "utils.h"

@@ -6,13 +6,13 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/16 10:09:28 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/17 10:37:49 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	launch_builtin(t_vec *env, t_vec *cmd)
+int	launch_builtin(t_vec *env, t_vec *cmd, t_redir *redir)
 {
 	char	**arg_strs;
 
