@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_redirects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:09:17 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/16 18:18:14 by aidaneitenb      ###   ########.fr       */
+/*   Updated: 2024/05/20 15:54:07 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	store_less(char *buf, t_shell *arg, size_t pos, int i)
 		i = rdrct_file(buf, arg, pos, i);
 	if (buf[i] && (buf[i] != ' ' || buf[i] != '\t' || buf[i] != '\n'
 		|| buf[i] != '<' || buf[i] != '>' || buf[i] != '|'))
+	{
+		check_joinrd(buf, arg, pos, i);
 		i = store_less(buf, arg, pos, i);
+	}
 	return (i);
 }
 
@@ -58,6 +61,9 @@ int	store_great(char *buf, t_shell *arg, size_t pos, int i)
 		i = rdrct_file(buf, arg, pos, i);
 	if (buf[i] && (buf[i] != ' ' || buf[i] != '\t' || buf[i] != '\n'
 		|| buf[i] != '<' || buf[i] != '>' || buf[i] != '|'))
+	{
+		check_joinrd(buf, arg, pos, i);
 		i = store_great(buf, arg, pos, i);
+	}
 	return (i);
 }

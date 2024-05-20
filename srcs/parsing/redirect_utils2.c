@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:46:11 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/05/19 18:08:07 by aidaneitenb      ###   ########.fr       */
+/*   Updated: 2024/05/20 15:38:32 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	store_specialrd_cmd(char *buf, t_shell *arg, size_t pos, int i)
 		if (i < 0)
 			return (-1);
 		arg->j = i;
-		if (arg->joinrd_flag == 0)
+		if (arg->joinrd_flag == -1)
 			arg->joinrd_flag = arg[pos].cmd.len - 1;
 	}
     i = push_rdrct_expand_vector(buf, arg, pos, i);

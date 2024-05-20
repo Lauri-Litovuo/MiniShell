@@ -3,34 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/19 22:20:41 by aidaneitenb      ###   ########.fr       */
+/*   Updated: 2024/05/20 17:42:18 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-// int			expand_cmd_and_rdrct(t_vec *env, t_vec *vec);
 static void	init_expd_struct(t_expd *s);
 int			expand_string(t_vec *env, t_expd *s, t_vec *vec, int index);
 static int	check_if_exists(t_vec *env, t_expd *s);
-
-// int	expand_variables(t_vec *env, t_shell *arg)
-// {
-// 	if (&arg->cmd.len != 0)
-// 	{
-// 		if (expand_cmd_and_rdrct(env, &arg->cmd) < 0)
-// 			return (-1);
-// 	}
-// 	if (&arg->rdrct.len != 0)
-// 	{
-// 		if (expand_cmd_and_rdrct(env, &arg->rdrct) < 0)
-// 			return (-1);
-// 	}
-// 	return (0);
-// }
 
 int	expand_variables(t_vec *env, t_vec *vec, int index)
 {
@@ -56,35 +40,6 @@ int	expand_variables(t_vec *env, t_vec *vec, int index)
 	}
 	return (0);
 }
-
-// int	expand_cmd_and_rdrct(t_vec *env, t_vec *vec)
-// {
-// 	t_expd	s;
-
-// 	init_expd_struct(&s);
-// 	while (s.index < vec->len)
-// 	{
-// 		s.str = *(char **)vec_get(vec, s.index);
-// 		s.total_len = ft_strlen(s.str);
-// 		while (s.str[s.ds + 1] != '\0')
-// 		{
-// 			if (s.str[s.ds] == '$')
-// 			{
-// 				s.pre_len = s.ds;
-// 				if (s.str[s.ds] == '$' && s.str[s.ds + 1] == '?')
-// 					s.ret = expand_to_exit_status(&s, vec);
-// 				else
-// 					s.ret = expand_string(env, &s, vec);
-// 				//free_expd(&s);
-// 			}
-// 			if (s.ret < 0)
-// 				return (-1);
-// 			s.ds++;
-// 		}
-// 		s.index++;
-// 	}
-// 	return (0);
-// }
 
 static void	init_expd_struct(t_expd *s)
 {

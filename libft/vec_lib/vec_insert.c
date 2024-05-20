@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_insert.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:34:36 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/25 13:32:42 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/20 17:22:55 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 *	overwriting existing elements.									*
 *	Returns: 1 on success, -1 on failure.							*
 *********************************************************************/
+
+#include <stdio.h>
 
 int	vec_insert(t_vec *dst, void *src, size_t index)
 {
