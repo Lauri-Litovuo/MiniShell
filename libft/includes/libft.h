@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:52:13 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/03 16:03:50 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/19 22:24:06 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ int		vec_prepend(t_vec *dst, t_vec *src);
 void	vec_iter(t_vec *src, void (*f) (void *));
 void	vec_free_str(t_vec *src);
 int		vec_remove_str(t_vec *src, size_t index);
+int		vec_replace_one(t_vec *dst, void *src, size_t index); //change
 int		vec_replace_str(t_vec *dst, void *src, size_t index);
 void	vec_sort_alpha(t_vec *src);
 int		vec_copy_len(t_vec *dst, t_vec *src);

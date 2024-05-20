@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/15 12:00:02 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/05/16 16:55:09 by aidaneitenb      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,10 @@ SOURCES = \
 			srcs/parsing/split.c \
 			srcs/parsing/split_quotes.c \
 			srcs/parsing/split_redirects.c \
+			srcs/parsing/redirect_utils.c \
+			srcs/parsing/redirect_utils2.c \
 			srcs/parsing/split_utils.c \
+			srcs/parsing/vec_join.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \

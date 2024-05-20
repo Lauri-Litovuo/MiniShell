@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_replace_str.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 13:30:47 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 15:29:50 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/20 13:18:30 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

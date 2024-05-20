@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 09:42:57 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/16 15:56:11 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/17 12:19:00 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
        are then copied from the temporary array to dest.
 	RETURN VALUE
        The memmove() function returns a pointer to dest.	*/
+#include <stdio.h>	//del
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	i;
 	char	*d;
 	char	*s;
-
-	if (dst == NULL && src == NULL)
+	if (dst == NULL && src == NULL)	
 		return (NULL);
 	i = 0;
 	d = (char *)dst;
