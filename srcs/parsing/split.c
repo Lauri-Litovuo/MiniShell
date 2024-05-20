@@ -3,51 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/14 14:35:50 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/19 18:06:22 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	push_expand_vector(char *buf, t_shell *arg, size_t pos, int i)
-{
-	i++;
-	while (buf[i] && buf[i] != ' ' && buf[i] != '$' && buf[i] != '<'
-			&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' 
-			&& buf[i] != '\"' && buf[i] != '\t' && buf[i] != '\n')
-			i++;
-	arg->temp = ft_substr(buf, arg->j, (i - arg->j));
-	if (arg->temp == NULL)
-	{
-		error_msg(1, SUBSTR, NULL);
-		return (-1);
-	}
-	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
-		return (-1);
-	return (i);
-}
-
-int	push_to_vector(char *buf, t_shell *arg, size_t pos, int i)
-{
-	arg->temp = ft_substr(buf, arg->j, (i - arg->j));
-	if (arg->temp == NULL)
-	{
-		error_msg(1, SUBSTR, NULL);
-		return (-1);
-	}
-	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
-		return (-1); 
-	return (i);
-}
-
-/****************************************************************
-*	Stores content of buf string which includes ', ", or $		*
-*	in the middle of normal characters into single vector.		*
-*	Returns: placement of i within the buf string.				*
-*****************************************************************/
+/************************************************************
+*	Stores expandable content of buf string, possibly		*
+*	following normal characters, into single vector.		*
+*	Returns: placement of i within the buf string.			*
+*************************************************************/
 int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
 {
 	if (i > arg->j)
@@ -55,18 +24,14 @@ int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
 		i = push_to_vector(buf, arg, pos, i);
 		if (i < 0)
 			return (-1);
-		arg->j = i;	
+		arg->j = i;
+		if (arg->join_flag == 0)
+			arg->join_flag = arg[pos].cmd.len - 1;
 	}
-	if (buf[i] == '$')
-	{
-		i = push_expand_vector(buf, arg, pos, i);
-		if (expand_variables(&arg->env, &arg[pos].cmd, arg[pos].cmd.len - 1) < 0)
-			return (-1);
-	}
-	// else if (buf[i] == '\'')
-	// 	i = long_quote(buf, arg, pos, i);
-	// else if (buf[i] == '\"')
-	// 	i = long_qq(buf, arg, pos, i);
+	i = push_expand_vector(buf, arg, pos, i);
+	if (expand_variables(&arg->env, &arg[pos].cmd, \
+		arg[pos].cmd.len - 1) < 0)
+		return (-1);
 	return (i);
 }
 
@@ -83,11 +48,8 @@ int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 		&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' && buf[i] != '\"'
 		&& buf[i] != '\t' && buf[i] != '\n')
 		i++;
-	if (buf[i] == '\'' || buf[i] == '\"' || buf[i] == '$')
-	{
-		arg->join_flag = arg[pos].cmd.len + 1;
+	if (buf[i] == '$')
 		i = store_special_cmd(buf, arg, pos, i);
-	}
 	else
 	{
 		arg->temp = ft_substr(buf, arg->j, (i - arg->j));
@@ -99,8 +61,7 @@ int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 		if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
 			return (-1);
 	}
-	// if (arg->end_flag > 0)
-	// 	join_vec(arg, pos);
+	check_join(buf, arg, pos, i);
 	return (i);
 }
 

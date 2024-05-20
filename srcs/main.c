@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/15 11:57:16 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:06:10 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ void	init_index(t_shell *arg)
 	arg->gl_count = 0;
 	arg->i = 0;
 	arg->j = 0;
-	arg->join_flag = 0;
+	arg->join_flag = -1;
 	arg->end_flag = 0;
 	arg->expand_flag = 0;
+	arg->joinrd_flag = -1;
+	arg->endrd_flag = 0;
+	arg->expandrd_flag = 0;
 }
 
 static int	copy_env(t_vec *env, char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/14 16:39:35 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:31:37 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 			arg[pos].cmd.len - 1) < 0)
 			return (-1);
 	}
-	return (i + 1);
+	i++;
+	check_join(buf, arg, pos, i);
+	return (i);
 }
 
 int	include_quote(char *buf, t_shell *arg, size_t pos, int i)
@@ -41,7 +43,9 @@ int	include_quote(char *buf, t_shell *arg, size_t pos, int i)
 	}
 	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
 		return (-2000);
-	return (i + 1);
+	i++;
+	check_join(buf, arg, pos, i);
+	return (i);
 }
 
 /****************************************************************

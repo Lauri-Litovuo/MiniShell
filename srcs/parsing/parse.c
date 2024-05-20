@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/14 14:23:13 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/19 22:16:44 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,25 +88,6 @@ int	scan_input(char *buf)
 	return (0);
 }
 
-int	split(char *buf, t_shell *arg)
-{
-	while (arg->i < arg->count)
-	{
-		if (arg->i == 0)
-		{
-			if (split_input(buf, arg, 0, 0) < 0)
-				return (-1);
-		}
-		else
-		{
-			if (split_rest(buf, arg, arg->i) < 0)
-				return (-1);
-		}
-		arg->i++;
-	}
-	return (0);
-}
-
 /*		DELETE		*/
 void	print_vectors(t_shell *arg)
 {
@@ -134,6 +115,29 @@ void	print_vectors(t_shell *arg)
 		i++;
 	}
 }
+
+int	split(char *buf, t_shell *arg)
+{
+	while (arg->i < arg->count)
+	{
+		if (arg->i == 0)
+		{
+			if (split_input(buf, arg, 0, 0) < 0)
+				return (-1);
+		}
+		else
+		{
+			if (split_rest(buf, arg, arg->i) < 0)
+				return (-1);
+		}
+		if (arg->end_flag > 0 || arg->endrd_flag > 0)
+			if (vec_join(arg, arg->i) < 0)
+				return (-1);
+		arg->i++;
+	}
+	return (0);
+}
+
 
 int	parse_input(t_shell *arg, char *buf)
 {

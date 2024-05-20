@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/15 15:31:54 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/19 22:20:41 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ static void	init_expd_struct(t_expd *s)
 	s->ret = 0;
 	s->index = 0;
 	s->ds = 0;
-	s->flag = 0;
 }
 
 int	expand_string(t_vec *env, t_expd *s, t_vec *vec, int index)
@@ -107,7 +106,6 @@ int	expand_string(t_vec *env, t_expd *s, t_vec *vec, int index)
 	if (s->str[s->ds] == '\0' || s->str[s->ds + 1] == '$')
 		return (0);
 	s->ret = check_if_exists(env, s);
-	printf("s->ret: %d\n", s->ret);
 	if (s->ret >= 0)
 	{
 		if (s->ret > 0)
@@ -124,8 +122,6 @@ int	expand_string(t_vec *env, t_expd *s, t_vec *vec, int index)
 	}
 	else if (s->ret < 0)
 		return (-1);
-	if (s->flag == 1)
-		printf("flagged\n");
 	return (0);
 }
 
@@ -154,7 +150,6 @@ static int	check_if_exists(t_vec *env, t_expd *s)
 	s->env_var = ft_substr(s->str, s->ds + 1, s->var_len);
 	if (!s->env_var)
 		return (-1);
-	printf("s->env_var: %s\n", s->env_var);
 	s->var_index = 0;
 	while (s->var_index < env->len)
 	{
@@ -169,14 +164,3 @@ static int	check_if_exists(t_vec *env, t_expd *s)
 	return (0);
 }
 
-/*
-FOR TESTING
-int	expand_variables(t_vec *env, t_vec *vec)
-{
-	if (vec->len != 0)
-	{
-		if (expand_cmd_and_rdrct(env, vec) < 0)
-			return (-1);
-	}
-	return (0);
-}*/
