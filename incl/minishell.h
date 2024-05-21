@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/19 21:09:44 by aidaneitenb      ###   ########.fr       */
+/*   Updated: 2024/05/21 13:38:35 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int		store_single(char *buf, t_shell *arg, size_t pos, int i);
 int		push_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
 int		push_to_vector(char *buf, t_shell *arg, size_t pos, int i);
 int		vec_join(t_shell *arg, size_t pos);
+int		vec_replace_special(t_vec *dst, void *src, size_t index);
 void	check_join(char *buf, t_shell *arg, size_t pos, int i);
 void	check_joinrd(char *buf, t_shell *arg, size_t pos, int i);
 int		store_specialrd_cmd(char *buf, t_shell *arg, size_t pos, int i);

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:03:03 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/05/20 17:12:29 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:56:47 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void    reset_flags(t_shell *arg)
 {
     arg->join_flag = -1;
-	arg->end_flag = 0;
-	arg->joinrd_flag = -1;
-	arg->endrd_flag = 0;
-	arg->expand_flag = 0;
+    arg->end_flag = 0;
+    arg->joinrd_flag = -1;
+    arg->endrd_flag = 0;
+    arg->expand_flag = 0;
 }
 
 void    init_s(t_vecjoin *s)
@@ -31,7 +31,7 @@ void    init_s(t_vecjoin *s)
 int join_rdrct_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 {
     int i;
-    
+
     s->index = arg->joinrd_flag;
     i = s->index + 1;
     s->base = *(char **)vec_get(&arg[pos].rdrct, arg->joinrd_flag);
@@ -39,13 +39,13 @@ int join_rdrct_vector(t_shell *arg, size_t pos, t_vecjoin *s)
     while (arg->joinrd_flag < arg->endrd_flag)
     {
         s->fin = ft_strjoin(s->base, \
-            *(char **)vec_get(&arg[pos].rdrct, arg->joinrd_flag + 1));
+            *(char **)vec_get(&arg[pos].rdrct, arg->joinrd_flag));
         s->base = ft_strdup(s->fin);
         if (s->base == NULL)
             return (-1);
-        arg->joinrd_flag++;   
+        arg->joinrd_flag++;
     }
-    if (vec_replace_str(&arg[pos].rdrct, s->fin, (size_t)s->index ) < 0)
+    if (vec_replace_special(&arg[pos].rdrct, s->fin, (size_t)s->index ) < 0)
         return (-1);
     s->index++;
     while (s->index < arg->endrd_flag)
@@ -60,7 +60,7 @@ int join_rdrct_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 int join_cmd_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 {
     int i;
-    
+
     s->index = arg->join_flag;
     i = s->index + 1;
     s->base = *(char **)vec_get(&arg[pos].cmd, arg->join_flag);
@@ -72,10 +72,9 @@ int join_cmd_vector(t_shell *arg, size_t pos, t_vecjoin *s)
         s->base = ft_strdup(s->fin);
         if (s->base == NULL)
             return (-1);
-        arg->join_flag++;   
+        arg->join_flag++;
     }
-    printf("s->fin: %s\n", s->fin);
-    if (vec_replace_str(&arg[pos].cmd, s->fin, (size_t)s->index) < 0)
+    if (vec_replace_special(&arg[pos].cmd, s->fin, (size_t)s->index) < 0)
         return (-1);
     s->index++;
     while (s->index < arg->end_flag)

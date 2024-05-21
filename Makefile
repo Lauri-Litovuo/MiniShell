@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+         #
+#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/16 16:55:09 by aidaneitenb      ###   ########.fr        #
+#    Updated: 2024/05/21 13:38:51 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SOURCES = \
 			srcs/parsing/redirect_utils2.c \
 			srcs/parsing/split_utils.c \
 			srcs/parsing/vec_join.c \
+			srcs/parsing/vec_utils.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \

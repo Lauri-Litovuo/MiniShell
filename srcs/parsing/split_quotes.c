@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/16 16:31:37 by aidaneitenb      ###   ########.fr       */
+/*   Updated: 2024/05/21 09:30:40 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 		if (expand_variables(&arg->env, &arg[pos].cmd, \
 			arg[pos].cmd.len - 1) < 0)
 			return (-1);
+		arg->expand_flag = 0;
 	}
 	i++;
 	check_join(buf, arg, pos, i);

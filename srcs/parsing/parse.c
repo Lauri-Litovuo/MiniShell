@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/20 17:41:10 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:42:52 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ int	split(char *buf, t_shell *arg)
 	}
 	return (0);
 }
-
 
 int	parse_input(t_shell *arg, char *buf)
 {

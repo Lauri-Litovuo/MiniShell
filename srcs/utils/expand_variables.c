@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/20 17:42:18 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:34:53 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	expand_variables(t_vec *env, t_vec *vec, int index)
 	s.total_len = ft_strlen(s.str);
 	while (s.str[s.ds + 1] != '\0')
 	{
+		s.str = *(char **)vec_get(vec, index);
+		s.total_len = ft_strlen(s.str);
 		if (s.str[s.ds] == '$')
 		{
 			s.pre_len = s.ds;
@@ -118,4 +120,3 @@ static int	check_if_exists(t_vec *env, t_expd *s)
 	}
 	return (0);
 }
-

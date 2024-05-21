@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/19 22:32:23 by aidaneitenb      ###   ########.fr       */
+/*   Updated: 2024/05/21 13:37:10 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec, int index)
 	dupped = ft_strdup(s->new);
 	if (!dupped)
 		return (-1);
-	printf("dupped: %s\n", dupped);
-	vec_replace_str(vec, dupped, index);	//chagned
+	vec_replace_str(vec, dupped, index);
 	return (0);
 }
 

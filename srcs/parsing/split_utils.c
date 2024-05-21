@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:17:08 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/05/20 17:35:49 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:50:16 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,31 @@
 
 void	check_join(char *buf, t_shell *arg, size_t pos, int i)
 {
-    if (arg->join_flag > -1 && arg->end_flag == 0 && (!buf[i] || buf[i] == ' ' 
-		|| buf[i] == '\t' || buf[i] == '\n' || buf[i] == '<' || buf[i] == '>' 
+	if (arg->join_flag > -1 && arg->end_flag == 0 && (!buf[i] || buf[i] == ' ' \
+		|| buf[i] == '\t' || buf[i] == '\n' || buf[i] == '<' || buf[i] == '>' \
 		|| buf[i] == '|'))
 		arg->end_flag = arg[pos].cmd.len;
-	if (arg->join_flag == -1 && buf[i] && buf[i] != ' ' && buf[i] != '\t' 
+	if (arg->join_flag == -1 && buf[i] && buf[i] != ' ' && buf[i] != '\t' \
 		&& buf[i] != '\n' && buf[i] != '<' && buf[i] != '>' && buf[i] != '|')
 		arg->join_flag = arg[pos].cmd.len - 1;
 }
 
 void	check_joinrd(char *buf, t_shell *arg, size_t pos, int i)
 {
-    if (arg->joinrd_flag > -1 && arg->endrd_flag == 0 && (!buf[i] 
-		|| buf[i] == ' ' || buf[i] == '\t' || buf[i] == '\n' || buf[i] == '<' 
+	if (arg->joinrd_flag > -1 && arg->endrd_flag == 0 && (!buf[i] \
+		|| buf[i] == ' ' || buf[i] == '\t' || buf[i] == '\n' || buf[i] == '<' \
 		|| buf[i] == '>' || buf[i] == '|'))
 		arg->endrd_flag = arg[pos].rdrct.len;
-	if (arg->joinrd_flag == -1 && buf[i] && buf[i] != ' ' && buf[i] != '\t' 
+	if (arg->joinrd_flag == -1 && buf[i] && buf[i] != ' ' && buf[i] != '\t' \
 		&& buf[i] != '\n' && buf[i] != '<' && buf[i] != '>' && buf[i] != '|')
-		{
-			printf("made it\n");
-			arg->joinrd_flag = arg[pos].rdrct.len - 1;
-		}
+		arg->joinrd_flag = arg[pos].rdrct.len - 1;
 }
 
 int	push_expand_vector(char *buf, t_shell *arg, size_t pos, int i)
 {
 	i++;
-	while (buf[i] && buf[i] != ' ' && buf[i] != '$' && buf[i] != '<'
-		&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' 
+	while (buf[i] && buf[i] != ' ' && buf[i] != '$' && buf[i] != '<' \
+		&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' \
 		&& buf[i] != '\"' && buf[i] != '\t' && buf[i] != '\n')
 		i++;
 	arg->temp = ft_substr(buf, arg->j, (i - arg->j));
