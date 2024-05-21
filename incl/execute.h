@@ -6,13 +6,15 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/20 10:07:31 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:59:44 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 # include "minishell.h"
+
+
 
 typedef struct s_redir
 {
@@ -23,6 +25,13 @@ typedef struct s_redir
 	char	*infile;
 	char	*outfile;
 	char	*hd_lim;
+	char	*hd_file;
+	int		pipe_out;
+	int		pipe_in;
+	int		file_in;
+	int		file_out;
+	int		hd_in;
+	int		hd_out;
 }	t_redir;
 
 typedef struct s_exec
@@ -32,7 +41,6 @@ typedef struct s_exec
 	char		*cmd;
 	char		*path;
 	int			ret;
-	t_vec		*paths;
 }				t_exec;
 
 /* add_builtin.c*/
