@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 10:14:42 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/20 10:09:30 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:50:53 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,33 +97,74 @@ int	last_run(t_shell *arg, t_exec *exe, int *pipe_fd, int i)
 {
 	
 }
-static int	setup_exe(t_exec *exe, t_shell *arg, size_t pos, int *stat_fd)
-{	
-	vec_new(exe->paths, arg->count + 1, sizeof(char *));
-	get_exec_paths(exe->paths, pos, arg, &arg->env);
-	exe->path = *(char **)vec_get(exe->paths, pos);
-	exe->cmd = *(char **)vec_get(&arg[pos].cmd, 0);
-	exe->cmd_argv = (char **)arg[pos].cmd.memory;
-	exe->ret = 0;
+
+static int	setup_exe(t_shell *arg, int *stat_fd)
+{
+	size_t	i;
+	int		ret;
+	t_exec	*exe;
+
+	i = 0;
+	ret = 0;
+	if (vec_new(&arg->exe, arg->count, sizeof(t_exec *)) < 0)
+			return (-1);
+	while (i < &arg->count)
+	{
+		exe = malloc (sizeof(t_exec *));
+		exe->cmd_argv = (char **)arg[i].cmd.memory;
+		exe->cmd = *(char **)vec_get(&arg[i].cmd, 0);
+		get_exec_path(exe->path, exe->cmd);
+		exe->ret = 0;
+		if (i == 0)
+			open_files(&arg[i].rdrct, exe->redir, NULL);
+		else
+			open_files(&arg[i].rdrct, exe->redir, (t_exec *)vec_get(&arg->exe, i - 1));
+		if (vec_push(&arg->exe, &exe) < 0)
+			return (-1);
+	}
+	return (0);
+	
 }
 
+int	create_pipes(t_vec *pids, size_t pipe_count)
+{
+	size_t	i;
+	int		*fd;
+
+	i = 0;
+	if (vec_new(pids, pipe_count, sizeof(fd)) < 0)
+		return (-1);
+	while (i < pipe_count)
+	{
+		fd = malloc(sizeof(fd) * 2);
+		if (!fd || pipe(fd) < 0)
+		{
+			vec_iter(pids, free);
+			return (-1);
+		}
+		if (vec_push(pids, &fd) < 0)
+			return (-1);
+	}
+	return (0);
+}
 int	piping(t_shell *arg, t_vec *env)
 {
 	int	i;
-	t_exec exe;
 	int		stat_fd[2];
 
 	i = 0;
+	if (create_pipes(&arg->pids, arg->pipe_count) < 0)
+		return (-1); //
+	if (setup_exe(&arg, &stat_fd) < -1);
+	i = 0;
 	if (arg->count == 1)
 	{
-		setup_exe(&exe, &arg, 0, &stat_fd);
 		if (handle_single_arg(&arg[0].rdrct, exec, &arg->env, arg) < 0)
 			return (-1);
 		return (0);
 	}
 	while (i < arg->count)
 	{
-		setup_exe(&exe, &arg, i, &stat_fd);
 		if (i == 0)
 			arg->pids[i] = first_run(&exe, &arg, i);
 		else if (i == arg->count - 1)
@@ -139,7 +180,7 @@ int	piping(t_shell *arg, t_vec *env)
 }
 
 
-int	wait_children(int	*pids, size_t cmd_count)
+int	wait_children(int *pids, size_t cmd_count)
 {
 	int	exitcode;
 	int	i;
@@ -162,11 +203,9 @@ int	wait_children(int	*pids, size_t cmd_count)
 int	execute(t_shell *arg, t_vec *env)
 {
 	int	ret;
+
 	if (piping(arg, env) < -1)
-	{
-		//free_exe(&exe);
 		return (-1);
-	}
-	wait_children(arg->pids, arg->count);
+	wait_children(&arg->pids, arg->count);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/20 09:38:06 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:59:07 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,54 +68,14 @@ int	check_files_and_fd(t_redir *redir)
 	return (0);
 }
 
-int	create_pipes(t_exec *exe, size_t pipe_count)
-{
-	size_t	i;
-	int		*fd;
 
-	i = 0;
-	while (i < pipe_count)
-	{
-		fd = malloc(sizeof(fd) * 2);
-		if (!fd || pipe(fd) < 0)
-		{
-			free_exe(exe);
-			return (-1);
-		}
-		exe->pipe_fd = fd;
-	}
-}
 
 int setup_pipe_fds(t_redir *redir, t_vec *rdrct, int pos)
 {
 	
 }
 
-void	handle_heredoc(t_pipex *cont, char **av)
-{
-	int		fd;
-	char	*buffer;
 
-	fd = open(".heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
-		perror("here_doc");
-	while (1)
-	{
-		ft_printf("heredoc> ");
-		buffer = get_next_line(0);
-		if (buffer == NULL)
-			exit (EXIT_FAILURE);
-		if (ft_strncmp(av[2], buffer, ft_strlen(buffer) - 1) == 0)
-			break ;
-		ft_putstr_fd(buffer, fd);
-		free(buffer);
-	}
-	free(buffer);
-	close (fd);
-	cont->fd_in = open (".heredoc", O_RDONLY);
-	if (cont->fd_in < 0)
-		unlink(".heredoc");
-}
 
 int	do_redirects(t_vec *rdrct, t_redir *redir, int *pipe_fd)
 {

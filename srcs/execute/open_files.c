@@ -6,96 +6,89 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/20 13:17:05 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:54:22 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 
-int	get_fdin(t_pipex *cont, char **av)
+int	get_fdin(t_vec *rdrct, t_vec *fd_in, int i)
 {
-	if (cont->here_doc == 1)
+	char	*filename;
+	int		temp;
+
+	if (i < rdrct->len)
 	{
-		handle_heredoc(cont, av);
-		if (cont->fd_in < 0)
+		i++;
+		filename = *(char **)vec_get(rdrct, i);
+		temp = open(filename, O_RDONLY);
+		if (temp == -1)
 		{
-			write (2, "pipex: ", 7);
-			perror("heredoc");
-			return (-1);
-		}
-		return (0);
-	}
-	else
-	{
-		cont->fd_in = open(av[1], O_RDONLY);
-		if (cont->fd_in == -1)
-		{
-			write (2, "pipex: ", 7);
-			perror (av[1]);
+			write (2, "minishell: ", 7);
+			perror (filename);
 			return (-1);
 		}
 	}
+	vec_push(&fd_in, temp);
 	return (0);
 }
 
-int	get_fdout(t_pipex *cont, char **av)
+int	get_fdout(t_vec *rdrct, t_vec *fd_out, int i)
 {
-	if (cont->here_doc == 1)
-		cont->fd_out = open(av[cont->cmd_count + 3], \
-		O_RDWR | O_APPEND | O_CREAT, 0644);
-	else
-		cont->fd_out = open(av[cont->cmd_count + 2], \
-		O_RDWR | O_TRUNC | O_CREAT, 0644);
-	if (cont->fd_out == -1)
+	char	*filename;
+	int		temp;
+
+
+	while (i < rdrct->len)
 	{
-		write (2, "pipex: ", 7);
-		if (cont->here_doc == 1)
+		if (ft_strncmp(*(char **)vec_get(rdrct, i), ">", 2) == 0)
 		{
-			perror(av[cont->cmd_count + 3]);
+			i++;
+			filename = *(char **)vec_get(rdrct, i);
+			temp = open (filename, O_RDWR | O_TRUNC | O_CREAT, 0644);
+			if (temp < 0)
+			{
+				write (2, "minishell: ", 7);
+				perror(filename);
+				return (-1);
+			}
 		}
-		else
-		{
-			perror(av[cont->cmd_count + 2]);
-		}
-		if (cont->fd_in != -1)
-			close(cont->fd_in);
-		return (-1);
+		i++;
 	}
+	vec_push(&fd_out, temp);
 	return (0);
 }
 
-int	loop_open_files(t_vec *rdrct, int *file_fds)
+int	check_redirs(t_vec *rdrct, t_redir *redir)
 {
 	int	i;
 
 	i = 0;
 	while (i < rdrct->len)
 	{
-		if (ft_strncmp[])
+		if (ft_strncmp(*(char **)vec_get(rdrct, i), "<", 2) == 0)
+			redir->file_in = get_fdin(rdrct, redir, i);
+		else if (ft_strncmp(*(char **)vec_get(rdrct, i), ">", 2) == 0)
+			redir->file_out = get_fdout(rdrct, redir, i);
+		else if (ft_strncmp(*(char **)vec_get(rdrct, i), ">>", 3) == 0)
+			redir->hd_out = handle_heredoc_out(rdrct, redir, i);
+		else if (ft_strncmp(*(char **)vec_get(rdrct, i), "<<", 3) == 0)
+			redir->hd_in = handle_heredoc_in(rdrct, redir, i);
+		i++;
 	}
+	return (0);
 }
 
-int	open_files(t_shell *args)
+int	open_files(t_vec *rdrct, t_redir *redir, t_exec *pre)
 {
-	char	**ptr;
-	int		i;
-	int		*file_fds;
-
-	if (args->gl_count == 0)
-		return (0);
-	file_fds = ft_calloc(args->gl_count, sizeof(int));
-	if (!file_fds)
-		return (-1); //
-	i = 0;
-	while (i < args->count)
+	if (rdrct->len == 0 && pre != NULL)
 	{
-		if (args[i].rdrct.len == 0)
-			i++;
-		else
-		{
-			loop_open_files(&args[i].rdrct, file_fds);
-			i++;
-		}
+		if (pre->redir.pipe_out == 0)
 	}
+	check_redirs(rdrct, redir);
+	if (redir->file_in == 0 && redir->hd_in == 0)
+		redir->pipe_in = 1;
+	if (redir->file_out == 0 && redir->hd_out == 0)
+		redir->pipe_out = 1;
 }
