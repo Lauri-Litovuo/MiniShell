@@ -6,7 +6,7 @@
 #    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/13 11:11:40 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/05/21 13:38:51 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,11 @@ SOURCES = \
 			srcs/parsing/split.c \
 			srcs/parsing/split_quotes.c \
 			srcs/parsing/split_redirects.c \
+			srcs/parsing/redirect_utils.c \
+			srcs/parsing/redirect_utils2.c \
 			srcs/parsing/split_utils.c \
+			srcs/parsing/vec_join.c \
+			srcs/parsing/vec_utils.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
@@ -37,8 +41,10 @@ SOURCES = \
 			srcs/builtins/ft_cd.c \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
-      		srcs/errors/errors.c
-			
+      		srcs/errors/errors.c \
+			srcs/utils/expand_variables.c \
+			srcs/utils/expand_variables_utils.c 
+
 OBJECTS = $(SOURCES:.c=.o)
 
 CFLAGS =  -Wall -Wextra -Werror -I$(RLHEAD) #-g  -fsanitize=address

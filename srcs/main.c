@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 14:00:00 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/19 21:06:10 by aidaneitenb      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ void	init_index(t_shell *arg)
 	arg->gl_count = 0;
 	arg->i = 0;
 	arg->j = 0;
+	arg->join_flag = -1;
+	arg->end_flag = 0;
+	arg->expand_flag = 0;
+	arg->joinrd_flag = -1;
+	arg->endrd_flag = 0;
+	arg->expandrd_flag = 0;
 }
 
 static int	copy_env(t_vec *env, char **envp)
@@ -50,7 +56,7 @@ static int	copy_env(t_vec *env, char **envp)
 	return (0);
 }
 
-int	miniloop(t_vec *env, char *buf, t_shell *arg)
+int	miniloop(char *buf, t_shell *arg)
 {
 	while (1)
 	{
@@ -62,7 +68,6 @@ int	miniloop(t_vec *env, char *buf, t_shell *arg)
 			{
 				exit (1);
 			}
-			launch_builtin(env, buf);
 			parse_input(arg, buf);
 			if (buf && *buf)
 				add_history(buf);
@@ -82,7 +87,7 @@ int minishell(char **envp)
 	buf = NULL;
 	ft_memset(&arg, 0 , sizeof(t_shell));
 	copy_env(&arg.env, envp);
-	miniloop(&arg.env, buf, &arg);
+	miniloop(buf, &arg);
 	free(buf);
 	return (0);
 }

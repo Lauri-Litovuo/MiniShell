@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/13 13:37:30 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:42:52 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,25 +88,6 @@ int	scan_input(char *buf)
 	return (0);
 }
 
-int	split(char *buf, t_shell *arg)
-{
-	while (arg->i < arg->count)
-	{
-		if (arg->i == 0)
-		{
-			if (split_input(buf, arg, 0, 0) < 0)
-				return (-1);
-		}
-		else
-		{
-			if (split_rest(buf, arg, arg->i) < 0)
-				return (-1);
-		}
-		arg->i++;
-	}
-	return (0);
-}
-
 /*		DELETE		*/
 void	print_vectors(t_shell *arg)
 {
@@ -135,6 +116,30 @@ void	print_vectors(t_shell *arg)
 	}
 }
 
+int	split(char *buf, t_shell *arg)
+{
+	while (arg->i < arg->count)
+	{
+		if (arg->i == 0)
+		{
+			if (split_input(buf, arg, 0, 0) < 0)
+				return (-1);
+		}
+		else
+		{
+			if (split_rest(buf, arg, arg->i) < 0)
+				return (-1);
+		}
+		// printf("joinRD flag: %d\n", arg->joinrd_flag);
+		// printf("endRD flag: %d\n", arg->endrd_flag);
+		if (arg->end_flag > 0 || arg->endrd_flag > 0)
+			if (vec_join(arg, arg->i) < 0)
+				return (-1);
+		arg->i++;
+	}
+	return (0);
+}
+
 int	parse_input(t_shell *arg, char *buf)
 {
 	if (scan_input(buf) == -1)
@@ -142,7 +147,6 @@ int	parse_input(t_shell *arg, char *buf)
 	init_count(buf, arg);
 	if (split(buf, arg) == -1)
 		return (-1);
-	printf("arg->count: %zu\n", arg->count);
 	print_vectors(arg);
 	return (1);
 }

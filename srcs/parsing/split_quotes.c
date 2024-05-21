@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/13 11:40:46 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/21 09:30:40 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,16 @@ int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 	}
 	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
 		return (-2000);
-	return (i + 1);
+	if (arg->expand_flag > 0)
+	{
+		if (expand_variables(&arg->env, &arg[pos].cmd, \
+			arg[pos].cmd.len - 1) < 0)
+			return (-1);
+		arg->expand_flag = 0;
+	}
+	i++;
+	check_join(buf, arg, pos, i);
+	return (i);
 }
 
 int	include_quote(char *buf, t_shell *arg, size_t pos, int i)
@@ -35,7 +44,9 @@ int	include_quote(char *buf, t_shell *arg, size_t pos, int i)
 	}
 	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
 		return (-2000);
-	return (i + 1);
+	i++;
+	check_join(buf, arg, pos, i);
+	return (i);
 }
 
 /****************************************************************
@@ -56,7 +67,7 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 		return (i + 1);
 	while (buf[i] && buf[i] != '\'')
 	{
-		if (buf[i] == '>' || buf[i] == '<' || buf[i] == '$')
+		if (buf[i] == '>' || buf[i] == '<')
 			flag = 1;
 		i++;
 	}
@@ -85,6 +96,8 @@ int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 	{
 		if (buf[i] == '>' || buf[i] == '<')
 			flag = 1;
+		if (buf[i] == '$')
+			arg->expand_flag = 1;
 		i++;
 	}
 	if (flag == 1)
