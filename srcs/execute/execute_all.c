@@ -113,8 +113,12 @@ static int	setup_exe(t_shell *arg, int *stat_fd)
 		exe = malloc (sizeof(t_exec *));
 		exe->cmd_argv = (char **)arg[i].cmd.memory;
 		exe->cmd = *(char **)vec_get(&arg[i].cmd, 0);
-		get_exec_path(exe->path, exe->cmd);
+		exe->path = get_exec_path(exe->cmd, &arg->env)
+		exe->pos = i;
+		if (exe->path == NULL)
+			return (-1);
 		exe->ret = 0;
+		init_redir(exe->redir);
 		if (i == 0)
 			open_files(&arg[i].rdrct, exe->redir, NULL);
 		else

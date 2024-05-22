@@ -65,7 +65,7 @@ int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
 }
 
 
-int	handle_heredoc_in(t_vec *rdrct, t_redir *redir, int i, t_vec *env)
+int	handle_heredoc(t_vec *rdrct, t_redir *redir, int i, t_vec *env)
 {
 	int		fd;
 	char	*buf;
@@ -73,6 +73,7 @@ int	handle_heredoc_in(t_vec *rdrct, t_redir *redir, int i, t_vec *env)
 
 	redir->hd_lim = *(char **)vec_get(rdrct, i + 1);
 	redir->hd_file = get_hdfile_name(redir->hd_lim, i);
+	redir->hd_pos = i;
 	fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if(fd < 0)
 		return (-1); //
@@ -93,4 +94,9 @@ int	handle_heredoc_in(t_vec *rdrct, t_redir *redir, int i, t_vec *env)
 	if (redir->fd_in < 0)
 		unlink(redir->hd_file);
 	return (ret);
+}
+
+check_for_heredoc(rdrct, redir, env)
+{
+	
 }

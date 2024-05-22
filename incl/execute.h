@@ -14,7 +14,12 @@
 # define EXECUTE_H
 # include "minishell.h"
 
-
+typedef enum e_pipe
+{
+	YES = 1,
+	NO = 0,
+	ERR = -1
+}	t_pipe;
 
 typedef struct s_redir
 {
@@ -31,7 +36,7 @@ typedef struct s_redir
 	int		file_in;
 	int		file_out;
 	int		hd_in;
-	int		hd_out;
+	int		hd_pos;
 }	t_redir;
 
 typedef struct s_exec
@@ -41,6 +46,8 @@ typedef struct s_exec
 	char		*cmd;
 	char		*path;
 	int			ret;
+	int			*pipe_fd;
+	size_t		pos;
 }				t_exec;
 
 /* add_builtin.c*/

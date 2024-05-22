@@ -70,19 +70,30 @@ int	check_files_and_fd(t_redir *redir)
 
 
 
-int setup_pipe_fds(t_redir *redir, t_vec *rdrct, int pos)
+int	set_pipe_fds(t_exec *exe, t_exec *pre)
 {
-	
+	if (!exe)
+		return (-1);
+	if (pre && pre->redir.pipe_out)
+		dup2(pre->pipe_fd[0], STDIN_FILENO);
+	if (redir->pipe_out)
+		dup2(exe->pipe_fd[1], STDOUT_FILENO);
+	// might need to close all other fds in other t_exec to avoid fd leaks!
+	return (1);
 }
 
-
-
-int	do_redirects(t_vec *rdrct, t_redir *redir, int *pipe_fd)
+void close_pipe_fds(t_shell *arg, t_exec *exe, size_t pos)
 {
-	if (rdrct->len == 0)
+	size_t	i;
+
+	i = 0;
+	while (i < &arg->count)
 	{
-		return (0);
+		if (i != pos && &arg[i].exe->pipe_fd != 0)
+		{
+			close (arg[i]->exe->pipe_fd[0]);
+			close (arg[i]->exe->pipe_fd[1]);
+		}
+		i++;
 	}
-	
-	return (-1);
 }
