@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/21 14:59:44 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:01:23 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_redir
 	int		file_out;
 	int		hd_in;
 	int		hd_pos;
+	int		re_pos;
+	int		i;
 }	t_redir;
 
 typedef struct s_exec
