@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_exec_paths.c                                   :+:      :+:    :+:   */
+/*   get_exec_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:26:52 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/14 15:17:56 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:04:14 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@ char **paths_env);
 static void	add_path(t_vec *paths, char *cmd, char **paths_env);
 static char	*find_path(char *cmd, char **env_paths);
 
-char *get_exec_path(char *cmd, t_vec *env)
+char	*get_exec_path(char *cmd, t_vec *env)
 {
 	char	**paths_env;
 	char	*temp;
 
-	if (arg->count <= 0)
-		return (0);
 	if (isit_builtin(cmd, 1) == INT_MIN)
 	{
 		temp = ft_strdup(cmd);
