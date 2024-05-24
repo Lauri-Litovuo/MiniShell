@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/23 12:43:13 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:52:14 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,37 @@
 *			SHELL STRUCT			*
 *************************************/
 
+typedef struct s_redir
+{
+	int		fd_in;
+	int		fd_out;
+	int		orig_fdin;
+	int		orig_fdout;
+	char	*infile;
+	char	*outfile;
+	char	*hd_lim;
+	char	*hd_file;
+	int		pipe_out;
+	int		pipe_in;
+	int		file_in;
+	int		file_out;
+	int		hd_in;
+	int		hd_pos;
+	int		re_pos;
+	int		i;
+}	t_redir;
+
+typedef struct s_exec
+{
+	t_redir		redir;
+	char		**cmd_argv;
+	char		*cmd;
+	char		*path;
+	int			ret;
+	int			*pipe_fd;
+	size_t		pos;
+}				t_exec;
+
 typedef struct s_shell
 {
 	t_vec	cmd;
@@ -111,14 +142,16 @@ typedef struct s_shell
 	size_t	i;
 	int		j;
 	int		*pids;
-	t_vec	exe;
-  int		join_flag;
+	t_exec	**exe;
+ 	int		join_flag;
 	int		end_flag;
 	int		expand_flag;
 	int		joinrd_flag;
 	int		endrd_flag;
 	int		expandrd_flag;
 }	t_shell;
+
+
 
 # include "utils.h"
 # include "execute.h"
