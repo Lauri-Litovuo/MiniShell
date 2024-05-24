@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 10:51:10 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:01:52 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	child_execute(t_shell *arg, t_exec *exe, int *fd, int i)
 	ret = do_redirects(arg, &exe->redir, fd);
 	if (ret < 0)
 		close_and_exit();
-	close_fds(&exe->redir)
+	close_fds(&exe->redir);
 	if (isit_child_builtin(exe->cmds[i]) == 1)
 	{
 		ret = launch_builtin(&arg->env, &arg->cmd, &exe->redir);

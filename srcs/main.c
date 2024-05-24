@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/16 10:07:04 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:12:17 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	miniloop(t_vec *env, char *buf, t_shell *arg)
 				exit (1);
 			}
 			parse_input(arg, buf);
-			execute(arg, env);
+			//execute(arg, env);
 			if (buf && *buf)
 				add_history(buf);
 			free(buf);

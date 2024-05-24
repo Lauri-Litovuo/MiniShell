@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/15 15:49:43 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/05/24 12:13:22 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,7 @@ SOURCES = \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
       		srcs/errors/errors.c \
-			srcs/execute/execute.c \
-			srcs/execute/get_exec_paths.c \
-			srcs/execute/add_builtin.c \
-			srcs/execute/redirect.c \
-			srcs/execute/run_commands.c \
-			srcs/execute/init_piping.c
+			srcs/execute/add_builtin.c 
 			
 OBJECTS = $(SOURCES:.c=.o)
 

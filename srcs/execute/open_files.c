@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 10:07:16 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:17:47 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	open_infiles(t_vec *rdrct, t_redir *redir, int pos)
 		redir->fd_in = temp;
 	redir->file_in = ERR;
 	if (temp == ERR)
-		return (write_file_error(filename, strerror(errno)), -1); //check how errno works
+		return (ft_fprintf(2, "minishell : %s: Permission denied.", filename), -1); //
 	redir->file_in = YES;
 	return (0);
 }
@@ -66,7 +66,7 @@ int	get_fdout(t_vec *rdrct, t_redir *redir, int pos)
 	redir->fd_out = redir->i;
 	redir->file_out = ERR;
 	if (redir->i == ERR)
-		return (write_file_error(redir->outfile, strerror(errno)), -1);
+		return (ft_fprintf(2, "minishell : %s: Permission denied.", redir->outfile), -1); //
 	redir->file_out = YES;
 	return (0);
 }
@@ -99,7 +99,7 @@ int	open_files(t_vec *rdrct, t_redir *redir, t_vec *env)
 	if (rdrct->len != 0)
 	{
 		if (check_for_heredoc(rdrct, redir, env) < 0)
-			return (ft_fprintf(2, "minishell :heredoc failed."), -1);
+			return (ft_fprintf(2, "minishell : heredoc failed."), -1); //
 		if (setup_and_open_files(rdrct, redir) < 0)
 			return (-1);
 	}

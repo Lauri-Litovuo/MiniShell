@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 10:34:31 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:11:24 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static int	wait_children(int *pids, size_t cmd_count)
 
 static int	piping(t_shell *arg, t_vec *env)
 {
-	int	i;
-	t_exec *exe;
+	int		i;
+	t_exec	*exe;
 	int		stat_fd[2];
 
 	i = 0;
@@ -91,6 +91,7 @@ int	execute(t_shell *arg, t_vec *env)
 	if (!arg || &arg[0].cmd == NULL)
 		return (0);
 	ret = setup_exe(&arg);
+	print_exec(arg);
 	// if (ret != 42)
 	// 	return (ret);
 	// if (piping(arg, env) < -1)
