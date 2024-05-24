@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
+#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/21 13:38:51 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/05/24 12:13:22 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,8 @@ SOURCES = \
 			srcs/builtins/ft_cd.c \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
-      		srcs/errors/errors.c \
+      srcs/errors/errors.c \
+			srcs/execute/add_builtin.c \
 			srcs/utils/expand_variables.c \
 			srcs/utils/expand_variables_utils.c 
 

@@ -40,11 +40,6 @@ static int	copy_env(t_vec *env, char **envp)
 	while (envp[i])
 	{
 		temp = ft_strdup(envp[i]);
-		if (vec_push(env, &temp) < 0)
-		{
-			vec_free(env);
-			return (-1);
-		}
 		// printf("env: %s\n", *(char **)vec_get(env, i));
 		// printf("temp:%s\n", temp);
 		if (vec_push(env, &temp) < 0)
@@ -69,6 +64,7 @@ int	miniloop(char *buf, t_shell *arg)
 				exit (1);
 			}
 			parse_input(arg, buf);
+			//execute(arg, env);
 			if (buf && *buf)
 				add_history(buf);
 			free(buf);
@@ -85,7 +81,7 @@ int minishell(char **envp)
 	t_shell	arg;
 
 	buf = NULL;
-	ft_memset(&arg, 0 , sizeof(t_shell));
+	ft_memset(&arg, 0, sizeof(t_shell));
 	copy_env(&arg.env, envp);
 	miniloop(buf, &arg);
 	free(buf);

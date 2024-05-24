@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/21 13:38:35 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/23 12:43:13 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define MINISHELL_H
 
 # include "../libft/includes/libft.h"
-# include "builtins.h"
-# include "utils.h"
 # define PATH_MAX 4096
+# define INT_MIN -2147483647
 
 /****************************************
 *	Standard output formatting: printf	*
@@ -99,6 +98,7 @@
 /************************************
 *			SHELL STRUCT			*
 *************************************/
+
 typedef struct s_shell
 {
 	t_vec	cmd;
@@ -110,13 +110,19 @@ typedef struct s_shell
 	size_t	gl_count;
 	size_t	i;
 	int		j;
-	int		join_flag;
+	int		*pids;
+	t_vec	exe;
+  int		join_flag;
 	int		end_flag;
 	int		expand_flag;
 	int		joinrd_flag;
 	int		endrd_flag;
 	int		expandrd_flag;
 }	t_shell;
+
+# include "utils.h"
+# include "execute.h"
+# include "builtins.h"
 
 typedef struct s_vecjoin
 {
