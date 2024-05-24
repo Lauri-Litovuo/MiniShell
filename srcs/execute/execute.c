@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 12:11:24 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:55:14 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,6 @@
 // 		for(size_t i = 0; i < vec->len; i++)
 // 			printf("ex_env: %s\n", *(char **)vec_get(vec, i));
 // }
-
-static int	create_pipes(size_t pipe_count, t_shell *arg)
-{
-	size_t	i;
-	int		*fd;
-	t_exec	*exe;
-
-	i = 0;
-	while (i < pipe_count)
-	{
-		exe = &arg[i].exe;
-		if (exe->redir.pipe_out || exe->redir.pipe_in)
-		fd = malloc(sizeof(fd) * 2);
-		if (!fd || pipe(fd) < 0)
-			return (-1);
-		exe->pipe_fd = fd;
-	}
-	return (0);
-}
 
 static int	wait_children(int *pids, size_t cmd_count)
 {
@@ -57,6 +38,8 @@ static int	wait_children(int *pids, size_t cmd_count)
 	return (WEXITSTATUS(exitcode));
 }
 
+
+
 static int	piping(t_shell *arg, t_vec *env)
 {
 	int		i;
@@ -64,20 +47,16 @@ static int	piping(t_shell *arg, t_vec *env)
 	int		stat_fd[2];
 
 	i = 0;
-
-	if (create_pipes(arg->pipe_count, &arg) < 0)
-		return (-1); //
-	i = 0;
 	arg->pids = calloc (arg->count, sizeof(int));
 	while (i < arg->count)
 	{
-		exe = &arg[i].exe;
+		exe = arg->exe[i];
 		if (i == 0)
-			arg->pids[i] = first_run(&exe, &env);
+			arg->pids[i] = first_run(exe, &env, &arg);
 		else if (i == arg->count - 1)
-			arg->pids[i] = last_run(exe, env);
+			arg->pids[i] = last_run(exe, env, &arg);
 		else
-			arg->pids[i] = middle_run(exe, env);
+			arg->pids[i] = middle_run(exe, env, &arg);
 		if (arg->pids[i] < 0)
 			return (-1);
 		i++;
@@ -85,17 +64,47 @@ static int	piping(t_shell *arg, t_vec *env)
 	return (0);
 }
 
+static int	create_pipes(size_t pipe_count, t_shell *arg)
+{
+	size_t	i;
+	int		*fd;
+	t_exec	*exe;
+
+	i = 0;
+	while (i < pipe_count)
+	{
+		exe = arg->exe[i];
+		if (exe->redir.pipe_out == YES || exe->redir.pipe_in == YES)
+			fd = malloc(sizeof(fd) * 2);
+		if (!fd || pipe(fd) < 0)
+			return (-1);
+		exe->pipe_fd = fd;
+	}
+	return (0);
+}
+
 int	execute(t_shell *arg, t_vec *env)
 {
 	int	ret;
-	if (!arg || &arg[0].cmd == NULL)
-		return (0);
-	ret = setup_exe(&arg);
-	print_exec(arg);
-	// if (ret != 42)
-	// 	return (ret);
-	// if (piping(arg, env) < -1)
-	// 	return (-1);
-	// wait_children(&arg->pids, arg->count);
-	return (0);
+
+	ret = setup_exe(arg);
+	if (ret == -1)
+		return (ret);
+	print_exec(arg->exe); //
+	if (create_pipes < -1)
+	{
+		ft_fprintf(2, "minishell: pipe creation failed");
+		return (-1);
+	}
+	if (arg->pipe_count == 0 && check_files_and_fd(arg->exe[0]->redir) == YES)
+	{
+		do_redirects(arg->exe[0]);
+		ret = launch_builtin(env, arg, &arg->exe[0]->redir);
+		reset_fds(arg->exe[0]->redir);
+	}
+	if (ret != 42)
+	if (piping(arg, env) < -1)
+	 	return (-1);
+	ret = wait_children(&arg->pids, arg->count);
+	return (ret);
 }

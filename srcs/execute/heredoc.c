@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 12:26:35 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:06:23 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,30 @@ static char	*get_hdfile_name(char *str, int i)
 static int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
 {
 	t_vec	temp;
-	int		check;
 
-	if (buf == NULL || ft_strncmp(buf, hd_lim, ft_strlen(buf) + 1) == '\n')
+	if (buf == NULL || ft_strncmp(*buf, hd_lim, ft_strlen(*buf) + 1) == '\n')
 	{
-		*ret = -1;
+		*ret = 0;
 		return (-1);
 	}
-	// if (ft_strchr(buf, '$') != NULL)
-	// {
-	// 	if (vec_new(&temp, 1, sizeof(char *)) < -1
-	// 		|| vec_push(&temp, &buf) < -1)
-	// 	{
-	// 		*ret = -1;
-	// 		return (-1);
-	// 	}
-	// 	if (expand_variables(&env, &temp, 0) != -1) // check this!
-	// 	{
-	// 		if (*buf == NULL)
-	// 		{
-	// 			*ret = -1;
-	// 			return (-1);
-	// 		}
-	// 	}
+	if (ft_strchr(*buf, '$') != NULL)
+	{
+		if (vec_new(&temp, 1, sizeof(char *)) < -1
+			|| vec_push(&temp, &buf) < -1)
+		{
+			*ret = -1;
+			return (-1);
+		}
+		if (expand_variables(env, &temp, 0) != -1)
+		{
+			if (*buf == NULL)
+			{
+				*ret = -1;
+				return (-1);
+			}
+		}
+	}
+	*buf = *(char **)vec_get(&temp, 0);
 	return (0);
 }
 
@@ -68,7 +69,7 @@ static void	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
 		buf = get_next_line(STDIN_FILENO);
 		if (buf == NULL)
 			exit (EXIT_FAILURE);
-		if (validate_line(&buf, redir->hd_lim, &ret, &env) < 0)
+		if (validate_line(&buf, redir->hd_lim, ret, env) < 0)
 			break ;
 		ft_putstr_fd(buf, fd);
 		free(buf);
@@ -78,10 +79,9 @@ static void	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
 }
 
 
-int	handle_heredoc(t_vec *rdrct, t_redir *redir, int pos, t_vec *env)
+static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_vec *env)
 {
 	int		fd;
-	char	*buf;
 	int		ret;
 
 	while (pos < rdrct->len)
@@ -94,7 +94,7 @@ int	handle_heredoc(t_vec *rdrct, t_redir *redir, int pos, t_vec *env)
 			fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd < 0)
 				return (-1);
-			heredoc_loop(redir, &ret, fd, &env);
+			heredoc_loop(redir, &ret, fd, env);
 		}
 		pos++;
 	}
@@ -118,7 +118,7 @@ int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_vec *env, size_t count)
 			redir->hd_pos = i;
 			i++;
 			if (handle_heredoc(rdrct, redir, i, env) < ERRO)
-				redir->hd_in == ERRO;
+				redir->hd_in = ERRO;
 		}
 		i++;
 	}

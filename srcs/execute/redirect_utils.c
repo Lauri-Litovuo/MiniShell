@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:05:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/23 13:33:12 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 16:38:24 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int	check_files_and_fd(t_redir *redir)
 {
+	if (!redir || (!redir->infile && !redir->outfile))
+		return (YES);
 	if ((redir->infile && redir->fd_in == ERR)
 		|| (redir->outfile && redir->fd_out == ERR))
 		return (ERR);
-	return (0);
+	return (YES);
 }
 
 void	close_pipe_fds(t_shell *arg, t_exec *exe, size_t pos)

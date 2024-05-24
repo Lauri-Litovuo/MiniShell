@@ -6,41 +6,11 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:26:52 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 12:26:14 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:51:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-static char	**split_env_paths(t_vec *env);
-int			prepare_ex_env(t_vec *paths, int *cmd_pos, t_shell *arg, \
-char **paths_env);
-static void	add_path(t_vec *paths, char *cmd, char **paths_env);
-static char	*find_path(char *cmd, char **env_paths);
-
-char	*get_exec_path(char *cmd, t_vec *env)
-{
-	char	**paths_env;
-	char	*temp;
-
-	if (isit_builtin(cmd, 1) == INT_MIN)
-	{
-		temp = ft_strdup(cmd);
-		if (!temp)
-			return (NULL);
-		return (temp);
-	}
-	paths_env = split_env_paths(env);
-	temp = find_path(cmd, paths_env);
-	if (!temp)
-	{
-		temp = ft_strdup(cmd);
-		if (!temp)
-			return (NULL);
-	}
-	free(paths_env);
-	return (temp);
-}
 
 static char	**split_env_paths(t_vec *env)
 {
@@ -95,4 +65,28 @@ static char	*find_path(char *cmd, char **env_paths)
 	}
 	free(temp);
 	return (NULL);
+}
+
+char	*get_exec_path(char *cmd, t_vec *env)
+{
+	char	**paths_env;
+	char	*temp;
+
+	if (isit_builtin(cmd, 1) == INT_MIN)
+	{
+		temp = ft_strdup(cmd);
+		if (!temp)
+			return (NULL);
+		return (temp);
+	}
+	paths_env = split_env_paths(env);
+	temp = find_path(cmd, paths_env);
+	if (!temp)
+	{
+		temp = ft_strdup(cmd);
+		if (!temp)
+			return (NULL);
+	}
+	free(paths_env);
+	return (temp);
 }
