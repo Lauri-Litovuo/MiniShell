@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aidaneitenbach <aidaneitenbach@student.    +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/19 21:06:10 by aidaneitenb      ###   ########.fr       */
+/*   Updated: 2024/05/24 12:41:30 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	miniloop(char *buf, t_shell *arg)
 				exit (1);
 			}
 			parse_input(arg, buf);
-			//execute(arg, env);
+			execute(arg, &arg->env);
 			if (buf && *buf)
 				add_history(buf);
 			free(buf);
@@ -75,7 +75,7 @@ int	miniloop(char *buf, t_shell *arg)
 	return (0);
 }
 
-int minishell(char **envp)
+int	minishell(char **envp)
 {
 	char	*buf;
 	t_shell	arg;
