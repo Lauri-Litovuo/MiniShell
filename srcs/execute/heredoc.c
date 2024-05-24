@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 10:29:57 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:26:35 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_vec *env, size_t count)
 		{
 			redir->hd_pos = i;
 			i++;
-			if (handle_heredoc(rdrct, redir, i, env) < ERR)
-				redir->hd_in == ERR;
+			if (handle_heredoc(rdrct, redir, i, env) < ERRO)
+				redir->hd_in == ERRO;
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/23 12:01:23 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:25:54 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef enum e_pipe
 {
 	YES = 1,
 	NO = 0,
-	ERR = -1
+	ERRO = (-1)
 }	t_pipe;
 
 typedef struct s_redir

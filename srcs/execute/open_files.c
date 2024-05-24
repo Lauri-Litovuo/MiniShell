@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 12:17:47 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:26:58 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	open_infiles(t_vec *rdrct, t_redir *redir, int pos)
 	redir->infile = filename; // remove if uneccessary
 	if (redir->re_pos > redir->hd_pos)
 		redir->fd_in = temp;
-	redir->file_in = ERR;
-	if (temp == ERR)
+	redir->file_in = ERRO;
+	if (temp == ERRO)
 		return (ft_fprintf(2, "minishell : %s: Permission denied.", filename), -1); //
 	redir->file_in = YES;
 	return (0);
@@ -64,8 +64,8 @@ int	get_fdout(t_vec *rdrct, t_redir *redir, int pos)
 		}
 	}
 	redir->fd_out = redir->i;
-	redir->file_out = ERR;
-	if (redir->i == ERR)
+	redir->file_out = ERRO;
+	if (redir->i == ERRO)
 		return (ft_fprintf(2, "minishell : %s: Permission denied.", redir->outfile), -1); //
 	redir->file_out = YES;
 	return (0);

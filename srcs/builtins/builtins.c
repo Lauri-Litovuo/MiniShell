@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/17 10:37:49 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:28:43 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	launch_builtin(t_vec *env, t_vec *cmd, t_redir *redir)
 {
 	char	**arg_strs;
 
+	(void)redir;
 	if (!cmd->memory)
 		return (1);
 	arg_strs = (char **)cmd->memory;
