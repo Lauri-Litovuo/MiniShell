@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/23 14:15:33 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:29:57 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,27 @@ static int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
 	t_vec	temp;
 	int		check;
 
-	if (buf == NULL)
+	if (buf == NULL || ft_strncmp(buf, hd_lim, ft_strlen(buf) + 1) == '\n')
 	{
 		*ret = -1;
 		return (-1);
 	}
-	if (ft_strncmp(buf, hd_lim, ft_strlen(buf) + 1) == '\n')
-	{
-		*ret = 0;
-		return (-1);
-	}
-	if (ft_strchr(buf, '$') != NULL)
-	{
-		if (vec_new(&temp, 1, sizeof(char *)) < -1
-			|| vec_push(&temp, &buf) < -1)
-		{
-			*ret = -1;
-			return (-1);
-		}
-		if (expand_variables(&env, &temp, 0) != -1)
-		{
-			if (*buf == NULL)
-			{
-				*ret = -1;
-				return (-1);
-			}
-		}
-	}
+	// if (ft_strchr(buf, '$') != NULL)
+	// {
+	// 	if (vec_new(&temp, 1, sizeof(char *)) < -1
+	// 		|| vec_push(&temp, &buf) < -1)
+	// 	{
+	// 		*ret = -1;
+	// 		return (-1);
+	// 	}
+	// 	if (expand_variables(&env, &temp, 0) != -1) // check this!
+	// 	{
+	// 		if (*buf == NULL)
+	// 		{
+	// 			*ret = -1;
+	// 			return (-1);
+	// 		}
+	// 	}
 	return (0);
 }
 
@@ -92,13 +86,17 @@ int	handle_heredoc(t_vec *rdrct, t_redir *redir, int pos, t_vec *env)
 
 	while (pos < rdrct->len)
 	{
-		redir->hd_lim = *(char **)vec_get(rdrct, pos);
-		redir->hd_file = get_hdfile_name(redir->hd_lim, pos);
-		fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (fd < 0)
-			write_file_error("heredoc", "open failed"); //
-			return (-1);
-		heredoc_loop(redir, &ret, fd, &env);
+		if (ft_strncmp(*(char **)vec_get(rdrct, pos), "<<", 3) == 0)
+		{
+			pos++;
+			redir->hd_lim = *(char **)vec_get(rdrct, pos);
+			redir->hd_file = get_hdfile_name(redir->hd_lim, pos);
+			fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			if (fd < 0)
+				return (-1);
+			heredoc_loop(redir, &ret, fd, &env);
+		}
+		pos++;
 	}
 	if (redir->hd_pos > redir->re_pos)
 		redir->fd_in = open (redir->hd_file, O_RDONLY);

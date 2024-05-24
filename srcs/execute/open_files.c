@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/23 13:39:45 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:07:16 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,20 @@ int	setup_and_open_files(t_vec *rdrct, t_redir *redir)
 	return (0);
 }
 
-int	open_files(t_vec *rdrct, t_redir *redir, t_exec *pre, t_vec *env)
+int	open_files(t_vec *rdrct, t_redir *redir, t_vec *env)
 {
 	if (rdrct->len != 0)
 	{
-		check_for_heredoc(rdrct, redir, env);
-		setup_and_open_files(rdrct, redir);
+		if (check_for_heredoc(rdrct, redir, env) < 0)
+			return (ft_fprintf(2, "minishell :heredoc failed."), -1);
+		if (setup_and_open_files(rdrct, redir) < 0)
+			return (-1);
 	}
 	if (redir->file_in == 0 && redir->hd_in == 0)
 		redir->pipe_in = 1;
 	if (redir->file_out == 0)
 		redir->pipe_out = 1;
+	return (0);
 }
 
 

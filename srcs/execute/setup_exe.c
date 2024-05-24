@@ -6,21 +6,16 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/23 13:39:38 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:30:37 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	setup_fds(t_vec *rdrct, t_redir *redir, t_exec *pre, t_vec *env)
-{
-
-}
-
 void	init_redir(t_redir *redir)
 {
-	redir->fd_in = -42; //
-	redir->fd_out = -42; //
+	redir->fd_in = -42;
+	redir->fd_out = -42;
 	dup2(redir->orig_fdin, STDIN_FILENO);
 	dup2(redir->orig_fdout, STDOUT_FILENO);
 	redir->hd_pos = -42;
@@ -55,10 +50,7 @@ static int	setup_exe(t_shell *arg)
 			return (-1);
 		exe.ret = 0;
 		init_redir(&exe.redir);
-		if (i == 0)
-			open_files(&arg[i].rdrct, exe.redir, NULL);
-		else
-			open_files(&arg[i].rdrct, exe.redir, (t_exec *)vec_get(&arg->exe, i - 1));
+		open_files(&arg[i].rdrct, exe.redir, &arg->env);
 		if (vec_push(&arg->exe, &exe) < 0)
 			return (-1);
 	}
