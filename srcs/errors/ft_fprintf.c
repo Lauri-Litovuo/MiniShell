@@ -6,13 +6,13 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:08:42 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 10:14:08 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/24 13:07:31 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	put_string(char *str, int *ret, int fd)
+static void	put_string(char *str, int *ret, int fd)
 {
 	if (!str)
 		str = "(null)";
@@ -23,11 +23,11 @@ void	put_string(char *str, int *ret, int fd)
 	}
 }
 
-void	put_digit(long long int num, int base, int *ret, int fd)
+static void	put_digit(long long int num, int base, int *ret, int fd)
 {
-	char	hex[16];
+	char	*hex;
 
-	*hex = "0123456789abcdef";
+	hex = "0123456789abcdef";
 	if (num < 0)
 	{
 		num *= -1;
