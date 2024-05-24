@@ -27,7 +27,11 @@ SOURCES = \
 			srcs/parsing/split.c \
 			srcs/parsing/split_quotes.c \
 			srcs/parsing/split_redirects.c \
+			srcs/parsing/redirect_utils.c \
+			srcs/parsing/redirect_utils2.c \
 			srcs/parsing/split_utils.c \
+			srcs/parsing/vec_join.c \
+			srcs/parsing/vec_utils.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
@@ -37,9 +41,11 @@ SOURCES = \
 			srcs/builtins/ft_cd.c \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
-      		srcs/errors/errors.c \
-			srcs/execute/add_builtin.c 
-			
+      srcs/errors/errors.c \
+			srcs/execute/add_builtin.c \
+			srcs/utils/expand_variables.c \
+			srcs/utils/expand_variables_utils.c 
+
 OBJECTS = $(SOURCES:.c=.o)
 
 CFLAGS =  -Wall -Wextra -Werror -I$(RLHEAD) #-g  -fsanitize=address

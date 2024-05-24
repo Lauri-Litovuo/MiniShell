@@ -89,6 +89,8 @@
 *****************************/
 # define SYNTX "minishell: syntax error near unexpected token "
 # define SUBSTR "minishell: substr error\n"
+# define STRDUP "minishell: strdup error\n"
+# define STRJOIN "minishell: strjoin error\n"
 # define VECPUSH "minishell: vec_push error\n"
 # define VECNEW "minishell: vec_new error\n"
 # define UNMATCH "minishell: unexpected EOF while looking for matching "
@@ -110,17 +112,35 @@ typedef struct s_shell
 	int		j;
 	int		*pids;
 	t_vec	exe;
+  int		join_flag;
+	int		end_flag;
+	int		expand_flag;
+	int		joinrd_flag;
+	int		endrd_flag;
+	int		expandrd_flag;
 }	t_shell;
 
 # include "utils.h"
 # include "execute.h"
 # include "builtins.h"
 
+typedef struct s_vecjoin
+{
+	char	*base;
+	char	*add;
+	char	*fin;
+	char	*remainder;
+	size_t	base_len;
+	size_t	add_len;
+	size_t	fin_len;
+    int		index;
+}	t_vecjoin;
+
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
 int		error_msg_free(int flag, char *str, char *specifier, t_vec *larg);
 int		error_triple_msg(int flag, char *first, char *sec, char *third);
-/*		scan_utils		*/
+/*		scan utils		*/
 int		handle_start(char *buf, int i);
 int		handle_q(char *buf, int i);
 int		handle_qq(char *buf, int i);
@@ -128,8 +148,6 @@ int		handle_pipe(char *buf, int i);
 int		handle_lessgreat(char *buf, int i);
 int		skip_spaces(char *buf, int i);
 /*		split utils		*/
-/*t_shell	split_regular(char *buf, t_shell *arg, size_t pos);
-t_shell	split_by_pipe(char *buf, t_shell *arg, size_t pos);*/
 int		split_input(char *buf, t_shell *arg, size_t pos, int i);
 int		split_rest(char *buf, t_shell *arg, size_t pos);
 int		store_q(char *buf, t_shell *arg, size_t pos, int i);
@@ -141,12 +159,15 @@ int		rdrct_q(char *buf, t_shell *arg, size_t pos, int i);
 int		rdrct_qq(char *buf, t_shell *arg, size_t pos, int i);
 int		store_double(char *buf, t_shell *arg, size_t pos, int i);
 int		store_single(char *buf, t_shell *arg, size_t pos, int i);
-int		execute(t_shell *arg, t_vec *env);
-int		get_exec_paths(t_vec *paths, int *cmd_pos, t_shell *arg, t_vec *env);
-int		prepare_ex_env(t_vec *paths, int *cmd_pos, t_shell *arg, \
-char **paths_env);
-int		isit_builtin(char *cmd, int pos);
-int		add_builtin(t_vec *paths, char *cmd);
-
+int		push_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
+int		push_to_vector(char *buf, t_shell *arg, size_t pos, int i);
+int		vec_join(t_shell *arg, size_t pos);
+int		vec_replace_special(t_vec *dst, void *src, size_t index);
+void	check_join(char *buf, t_shell *arg, size_t pos, int i);
+void	check_joinrd(char *buf, t_shell *arg, size_t pos, int i);
+int		store_specialrd_cmd(char *buf, t_shell *arg, size_t pos, int i);
+int		push_redirect_vector(char *buf, t_shell *arg, size_t pos, int i);
+int 	push_rdrct_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
+void	print_vectors(t_shell *arg);	//delete
 
 #endif

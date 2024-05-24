@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 11:49:09 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/21 13:37:10 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec)
+int	expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec, int index)
 {
 	char	*dupped;
 
 	s->expanded = malloc (ft_strlen(*(char **)vec_get(env, s->var_index)) \
 	- s->var_len - 1);
+	if (!s->expanded)
+		return (-1);
 	ft_strlcpy(s->expanded, \
 	(*(char **)vec_get(env, s->var_index) + s->var_len + 1), PATH_MAX);
 	s->exp_len = ft_strlen(s->expanded);
 	s->new = malloc((s->total_len - s->var_len + s->exp_len) * 1);
+	if (!s->new)
+		return (-1);
 	s->new = ft_substr(s->str, 0, s->pre_len);
 	if (!s->new)
 		return (-1);
 	ft_strlcat(s->new, s->expanded, (s->total_len - s->var_len + s->exp_len));
-	if (!s->new)
-		return (-1);
-	ft_strlcat(s->new, s->str + (s->ds + s->var_len), \
+	ft_strlcat(s->new, s->str + (s->ds + s->var_len + 1), \
 	(s->total_len - s->var_len + s->exp_len));
-	if (!s->new)
-		return (-1);
 	dupped = ft_strdup(s->new);
 	if (!dupped)
 		return (-1);
-	vec_replace_str(vec, dupped, s->index);
+	vec_replace_str(vec, dupped, index);
 	return (0);
 }
 
-int	expand_to_empty(t_expd *s, t_vec *vec)
+int	expand_to_empty(t_expd *s, t_vec *vec, int index)
 {
 	char	*dupped;
 
@@ -52,7 +52,7 @@ int	expand_to_empty(t_expd *s, t_vec *vec)
 	dupped = ft_strdup(s->new);
 	if (!dupped)
 		return (-1);
-	vec_replace_str(vec, dupped, s->index);
+	vec_replace_str(vec, dupped, index);
 	return (0);
 }
 
@@ -61,7 +61,7 @@ int	expand_to_exit_status(t_expd *s, t_vec *vec)
 	char	*dupped;
 
 	s->exp_len = ft_strlen(s->expanded);
-	s->expanded = ft_itoa(g_exit_status);
+	s->expanded = ft_itoa(007);	//changed from: g_exit_status because "undefined symbol for architecture when compiling"
 	s->exp_len = ft_strlen(s->expanded);
 	s->new = malloc((s->total_len + s->exp_len - 2) * 1);
 	s->new = ft_substr(s->str, 0, s->pre_len);
