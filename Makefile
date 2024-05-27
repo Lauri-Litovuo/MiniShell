@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/24 12:40:05 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/05/27 11:11:08 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,15 +32,6 @@ SOURCES = \
 			srcs/parsing/split_utils.c \
 			srcs/parsing/vec_join.c \
 			srcs/parsing/vec_utils.c \
-			srcs/builtins/builtin_functions.c \
-			srcs/builtins/builtins.c \
-			srcs/builtins/ft_export.c \
-			srcs/builtins/ft_export_utils.c \
-			srcs/builtins/builtin_utils.c \
-			srcs/builtins/ft_echo.c \
-			srcs/builtins/ft_cd.c \
-			srcs/builtins/cd_utils.c \
-			srcs/builtins/cd_utils2.c \
      		srcs/errors/errors.c \
 			srcs/execute/add_builtin.c \
 			srcs/utils/expand_variables.c \
@@ -52,6 +43,15 @@ SOURCES = \
 			srcs/execute/heredoc.c \
 			srcs/errors/debug.c \
 			srcs/errors/ft_fprintf.c \
+			# srcs/builtins/builtin_functions.c \
+			# srcs/builtins/builtins.c \
+			# srcs/builtins/ft_export.c \
+			# srcs/builtins/ft_export_utils.c \
+			# srcs/builtins/builtin_utils.c \
+			# srcs/builtins/ft_echo.c \
+			# srcs/builtins/ft_cd.c \
+			# srcs/builtins/cd_utils.c \
+			# srcs/builtins/cd_utils2.c \
 
 OBJECTS = $(SOURCES:.c=.o)
 
