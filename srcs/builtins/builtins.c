@@ -6,32 +6,32 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 16:58:12 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:20:45 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	launch_builtin(t_vec *env, t_exec *exe)
+int	launch_builtin(t_vec *env, t_exec *exe, t_shell *arg)
 {
+	int	ret;
 
-	if (!cmd->memory)
-		return (1);
-	if (ft_strncmp(exe->cmd, "env", ft_strlen(exe->cmd) + 1) == 0)
-		ft_env(env, cmd);
-	else if (ft_strncmp(exe->cmd, "pwd", ft_strlen(exe->cmd) + 1) == 0)
+	ret = -42;
+	if (!exe->cmd)
+		return (ret);
+	if (ft_strncmp(exe->cmd, "env", 4) == 0)
+		ft_env(env, exe);
+	else if (ft_strncmp(exe->cmd, "pwd", 4) == 0)
 		ft_pwd(env);
-	else if (ft_strncmp(exe->cmd, "unset", ft_strlen(exe->cmd) + 1) == 0)
-		ft_unset(env, cmd);
-	else if (ft_strncmp(exe->cmd, "export", ft_strlen(exe->cmd) + 1) == 0)
-		ft_export(env, cmd);
-	else if (ft_strncmp(exe->cmd, "echo", ft_strlen(exe->cmd) + 1) == 0)
-		ft_echo(cmd);
-	else if (ft_strncmp(exe->cmd, "cd", ft_strlen(exe->cmd) + 1) == 0)
-		ft_cd(env, cmd);
-	// else if (ft_strncmp(args, "exit", ft_strlen(args)) == 0)
-	// 	ft_exit();
-	else
-		return (42);
-	return (0);
+	else if (ft_strncmp(exe->cmd, "unset", 6) == 0)
+		ft_unset(env, &arg[exe->pos].cmd);
+	else if (ft_strncmp(exe->cmd, "export", 7) == 0)
+		ft_export(env, &arg[exe->pos].cmd);
+	else if (ft_strncmp(exe->cmd, "echo", 5) == 0)
+		ft_echo(&arg[exe->pos].cmd);
+	else if (ft_strncmp(exe->cmd, "cd", 3) == 0)
+		ft_cd(env, &arg[exe->pos].cmd);
+	else if (ft_strncmp(exe->cmd, "exit", 5) == 0)
+	 	ft_exit(exe, arg);
+	return (ret);
 }

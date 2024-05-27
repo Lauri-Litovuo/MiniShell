@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 16:55:14 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:41:13 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,21 @@ static int	piping(t_shell *arg, t_vec *env)
 {
 	int		i;
 	t_exec	*exe;
+	int		ret;
 
 	i = 0;
 	arg->pids = calloc (arg->count, sizeof(int));
-	while (i < arg->count)
+	while (i < arg->count && arg->pids)
 	{
-		exe = arg->exe[i];
-		if (i == 0)
-			arg->pids[i] = first_run(exe, &env, &arg);
-		else if (i == arg->count - 1)
-			arg->pids[i] = last_run(exe, env, &arg);
-		else
-			arg->pids[i] = middle_run(exe, env, &arg);
-		if (arg->pids[i] < 0)
-			return (-1);
+		arg->pids[i] = fork();
+		if (arg->pids[i] == -1)
+			return (-1); // fork failed
+		else if (arg->pids[i] == 0)
+			run_command(arg, arg->exe[i]);
 		i++;
 	}
-	wait_children(arg->pids, arg->count);
-	return (0);
+	ret = wait_children(arg->pids, arg->count);
+	return (ret);
 }
 
 static int	create_pipes(size_t pipe_count, t_shell *arg)
@@ -74,7 +71,7 @@ static int	create_pipes(size_t pipe_count, t_shell *arg)
 	while (i < pipe_count)
 	{
 		exe = arg->exe[i];
-		if (exe->redir.pipe_out == YES || exe->redir.pipe_in == YES)
+		if (exe->redir.pipe_out == YES && exe->redir.pipe_in == YES)
 			fd = malloc(sizeof(fd) * 2);
 		if (!fd || pipe(fd) < 0)
 			return (-1);
@@ -88,6 +85,7 @@ int	execute(t_shell *arg, t_vec *env)
 	int	ret;
 
 	ret = setup_exe(arg);
+	(void)env;
 	if (ret == -1)
 		return (ret);
 	print_exec(arg->exe); //
@@ -98,13 +96,13 @@ int	execute(t_shell *arg, t_vec *env)
 	}
 	if (arg->pipe_count == 0 && check_files_and_fd(arg->exe[0]->redir) == YES)
 	{
-		do_redirects(arg->exe[0]);
+		set_fds(arg->exe[0]->redir);
 		ret = launch_builtin(env, arg, &arg->exe[0]->redir);
 		reset_fds(arg->exe[0]->redir);
 	}
 	if (ret != 42)
+		return (ret);
 	if (piping(arg, env) < -1)
 	 	return (-1);
-	ret = wait_children(&arg->pids, arg->count);
 	return (ret);
 }

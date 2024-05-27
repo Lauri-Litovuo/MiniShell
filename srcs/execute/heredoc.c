@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 13:06:23 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 10:59:06 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,6 @@ int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_vec *env, size_t count)
 		}
 		i++;
 	}
+	//open
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/23 13:25:58 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 12:35:04 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-int	set_fds(t_redir *redir, t_vec *rdrct, int *pipe_fd)
+int	set_fds(t_redir *redir)
 {
 	int	ret;
 
@@ -39,10 +39,10 @@ int	set_fds(t_redir *redir, t_vec *rdrct, int *pipe_fd)
 
 int	set_pipe_fds(t_exec *exe, t_shell *arg)
 {
-	t_exec *pre;
+	t_exec	*pre;
 	int		prepos;
 
-	prepos = exe.pos - 1;
+	prepos = exe->pos - 1;
 	pre = arg->exe[prepos];
 	if (!exe)
 		return (ERR);
