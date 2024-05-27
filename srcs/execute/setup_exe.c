@@ -16,8 +16,6 @@ void	init_redir(t_redir *redir)
 {
 	redir->fd_in = -42;
 	redir->fd_out = -42;
-	redir->orig_fdin = dup(STDIN_FILENO);
-	redir->orig_fdout = dup(STDOUT_FILENO);
 	redir->hd_pos = -42;
 	redir->re_pos = -42;
 	redir->pipe_out = NO;

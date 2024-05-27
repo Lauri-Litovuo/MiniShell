@@ -33,11 +33,17 @@ int	set_fds(t_redir *redir, t_vec *rdrct, int *pipe_fd)
 	if (redir->fd_out != -1)
 		if (dup2(redir->fd_out, STDOUT_FILENO) == -1)
 			ret = error_triple_msg(3, "minishell :", "dup2 :", redir->outfile); //
+	
 	return (ret);
 }
 
-int	set_pipe_fds(t_exec *exe, t_exec *pre, t_shell *arg)
+int	set_pipe_fds(t_exec *exe, t_shell *arg)
 {
+	t_exec *pre;
+	int		prepos;
+
+	prepos = exe.pos - 1;
+	pre = arg->exe[prepos];
 	if (!exe)
 		return (ERR);
 	if (pre && pre->redir.pipe_out)

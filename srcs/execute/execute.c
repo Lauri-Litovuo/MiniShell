@@ -44,7 +44,6 @@ static int	piping(t_shell *arg, t_vec *env)
 {
 	int		i;
 	t_exec	*exe;
-	int		stat_fd[2];
 
 	i = 0;
 	arg->pids = calloc (arg->count, sizeof(int));
@@ -61,6 +60,7 @@ static int	piping(t_shell *arg, t_vec *env)
 			return (-1);
 		i++;
 	}
+	wait_children(arg->pids, arg->count);
 	return (0);
 }
 
