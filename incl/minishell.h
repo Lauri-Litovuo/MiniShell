@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 12:29:06 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:23:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@
 # include <curses.h>
 
 # include <limits.h>
+# include <errno.h>
 # include "../libft/includes/libft.h"
 # include "structs.h"
 # include "utils.h"
@@ -133,7 +134,8 @@ void	check_join(char *buf, t_shell *arg, size_t pos, int i);
 void	check_joinrd(char *buf, t_shell *arg, size_t pos, int i);
 int		store_specialrd_cmd(char *buf, t_shell *arg, size_t pos, int i);
 int		push_redirect_vector(char *buf, t_shell *arg, size_t pos, int i);
-int 	push_rdrct_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
+int		push_rdrct_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
 void	print_vectors(t_shell *arg);	//delete
+
 
 #endif

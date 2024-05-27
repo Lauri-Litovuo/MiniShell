@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:05:22 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 13:16:19 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:07:38 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ typedef struct s_cd
 
 void		init_struct(t_cd *data);
 int			launch_builtin(t_vec *env, t_exec *exe, t_shell *arg);
-int			ft_env(t_vec *env, t_exec *exe)
+int			ft_env(t_vec *env, t_exec *exe);
 int			ft_pwd(t_vec *env);
 int			ft_unset(t_vec *env, t_vec *args);
 int			ft_export(t_vec *env, t_vec *args);
 void		print_exports(t_vec *env);
 
 int			find_index_of_env(t_vec *src, char *str);
-char		*extract_env_var(char *arg);
 int			ft_echo(t_vec *args);
 
 int			ft_cd(t_vec *env, t_vec *args);

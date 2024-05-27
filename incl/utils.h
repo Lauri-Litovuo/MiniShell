@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:28:32 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 14:25:08 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:08:06 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ typedef struct s_expd
 
 extern int	g_exit_status;
 
-// int		expand_variables(t_vec *env, t_shell *arg);
 int		expand_variables(t_vec *env, t_vec *vec, int index);
-// int		expand_cmd_and_rdrct(t_vec *env, t_vec *vec);
+char	*extract_env_var(char *arg);
+int		check_if_exists(t_vec *env, t_expd *s);
 int		expand_string(t_vec *env, t_expd *s, t_vec *vec, int index);
 int		expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec, int index);
 int		expand_to_exit_status(t_expd *s, t_vec *vec);
 int		expand_to_empty(t_expd *s, t_vec *vec, int index);
 void	free_expd(t_expd *s);
+
 
 #endif
