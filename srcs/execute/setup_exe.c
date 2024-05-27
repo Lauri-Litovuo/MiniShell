@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 16:13:28 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:25:30 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ int	setup_exe(t_shell *arg)
 		exe[i]->ret = 0;
 		init_redir(&exe[i]->redir);
 		if (arg[i].rdrct.len != 0)
-			open_files(&arg[i].rdrct, &exe[i]->redir, &arg->env, arg->count); //
+			open_files(&arg[i].rdrct, exe[i], &arg->env); //
+		if (sub_exe->pos > 0 && sub_exe->redir.file_in == NO && sub_exe->redir.hd_in == NO)
+			sub_exe->redir.pipe_in = 1;
+		if (sub_exe->redir.file_out == NO && arg->count > 1 && sub_exe->pos != arg->count - 1)
+			sub_exe->redir.pipe_out = 1;
 		i++;
 	}
 	exe[i] = NULL;

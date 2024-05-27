@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 10:59:06 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 16:22:47 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,25 @@ static char	*get_hdfile_name(char *str, int i)
 {
 	char	*ret;
 	char	*temp;
+	char	*new;
 
-	ret = ft_strdup(".");
+	temp = ft_itoa(i);
+	ret = ft_strdup(str);
 	if (!ret)
 		return (NULL);
-	temp = ft_itoa(i);
-	if (ft_strjoin(ret, temp) == NULL)
+	new = ft_strjoin(ret, temp);
+	free(temp);
+	free(ret);
+	if (!new)
 		return (NULL);
-	free (temp);
-	if (ft_strjoin(ret, str) == NULL)
-		return (NULL);
-	return (ret);
+	return (new);
 }
 
 static int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
 {
 	t_vec	temp;
 
-	if (buf == NULL || ft_strncmp(*buf, hd_lim, ft_strlen(*buf) + 1) == '\n')
+	if (ft_strncmp(*buf, hd_lim, ft_strlen(*buf) + 1) == 0)
 	{
 		*ret = 0;
 		return (-1);
@@ -54,8 +55,8 @@ static int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
 				return (-1);
 			}
 		}
+		*buf = *(char **)vec_get(&temp, 0);
 	}
-	*buf = *(char **)vec_get(&temp, 0);
 	return (0);
 }
 
@@ -65,8 +66,7 @@ static void	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
 
 	while (1)
 	{
-		printf(">");
-		buf = get_next_line(STDIN_FILENO);
+		buf = readline(">");
 		if (buf == NULL)
 			exit (EXIT_FAILURE);
 		if (validate_line(&buf, redir->hd_lim, ret, env) < 0)
@@ -90,7 +90,7 @@ static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_vec *env)
 		{
 			pos++;
 			redir->hd_lim = *(char **)vec_get(rdrct, pos);
-			redir->hd_file = get_hdfile_name(redir->hd_lim, pos);
+			redir->hd_file = get_hdfile_name(redir->hd_lim, (int)pos);
 			fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd < 0)
 				return (-1);
@@ -116,7 +116,7 @@ int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_vec *env, size_t count)
 			&& redir->hd_in == NO)
 		{
 			redir->hd_pos = i;
-			i++;
+			redir->hd_in = YES;
 			if (handle_heredoc(rdrct, redir, i, env) < ERRO)
 				redir->hd_in = ERRO;
 		}
