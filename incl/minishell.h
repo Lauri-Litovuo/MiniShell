@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 17:23:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:21:28 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	check_joinrd(char *buf, t_shell *arg, size_t pos, int i);
 int		store_specialrd_cmd(char *buf, t_shell *arg, size_t pos, int i);
 int		push_redirect_vector(char *buf, t_shell *arg, size_t pos, int i);
 int		push_rdrct_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
+void	set_signals(void);
 void	print_vectors(t_shell *arg);	//delete
-
 
 #endif
