@@ -6,13 +6,13 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/13 10:24:09 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:08:31 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_exit(t_vec *args)
+int	ft_exit(t_exec *exe, t_shell *arg)
 {
 	int	ret;
 

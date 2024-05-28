@@ -6,33 +6,32 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 12:28:43 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:13:44 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	launch_builtin(t_vec *env, t_vec *cmd, t_redir *redir)
+int	launch_builtin(t_vec *env, t_exec *exe, t_shell *arg)
 {
-	char	**arg_strs;
+	int	ret;
 
-	(void)redir;
-	if (!cmd->memory)
-		return (1);
-	arg_strs = (char **)cmd->memory;
-	if (ft_strncmp(arg_strs[0], "env", ft_strlen(arg_strs[0]) + 1) == 0)
-		ft_env(env, cmd);
-	else if (ft_strncmp(arg_strs[0], "pwd", ft_strlen(arg_strs[0]) + 1) == 0)
+	ret = -42;
+	if (!exe->cmd)
+		return (ret);
+	if (ft_strncmp(exe->cmd, "env", 4) == 0)
+		ft_env(env, exe);
+	else if (ft_strncmp(exe->cmd, "pwd", 4) == 0)
 		ft_pwd(env);
-	else if (ft_strncmp(arg_strs[0], "unset", ft_strlen(arg_strs[0]) + 1) == 0)
-		ft_unset(env, cmd);
-	else if (ft_strncmp(arg_strs[0], "export", ft_strlen(arg_strs[0]) + 1) == 0)
-		ft_export(env, cmd);
-	else if (ft_strncmp(arg_strs[0], "echo", ft_strlen(arg_strs[0]) + 1) == 0)
-		ft_echo(cmd);
-	else if (ft_strncmp(arg_strs[0], "cd", ft_strlen(arg_strs[0]) + 1) == 0)
-		ft_cd(env, cmd);
-	// else if (ft_strncmp(args, "exit", ft_strlen(args)) == 0)
-	// 	ft_exit();
-	return (0);
+	else if (ft_strncmp(exe->cmd, "unset", 6) == 0)
+		ft_unset(env, &arg[exe->pos].cmd);
+	else if (ft_strncmp(exe->cmd, "export", 7) == 0)
+		ft_export(env, &arg[exe->pos].cmd);
+	else if (ft_strncmp(exe->cmd, "echo", 5) == 0)
+		ft_echo(&arg[exe->pos].cmd);
+	else if (ft_strncmp(exe->cmd, "cd", 3) == 0)
+		ft_cd(env, &arg[exe->pos].cmd);
+	// else if (ft_strncmp(exe->cmd, "exit", 5) == 0)
+	 	// ft_exit(exe, arg);
+	return (ret);
 }

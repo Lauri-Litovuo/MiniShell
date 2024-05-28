@@ -6,14 +6,12 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/23 12:43:13 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:23:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# include "../libft/includes/libft.h"
 # define PATH_MAX 4096
 # define INT_MIN -2147483647
 
@@ -83,6 +81,12 @@
 # include <curses.h>
 
 # include <limits.h>
+# include <errno.h>
+# include "../libft/includes/libft.h"
+# include "structs.h"
+# include "utils.h"
+# include "execute.h"
+# include "builtins.h"
 
 /****************************
 *			MACROS			*
@@ -98,43 +102,6 @@
 /************************************
 *			SHELL STRUCT			*
 *************************************/
-
-typedef struct s_shell
-{
-	t_vec	cmd;
-	t_vec	rdrct;
-	t_vec	env;
-	char	*temp;
-	size_t	count;
-	size_t	pipe_count;
-	size_t	gl_count;
-	size_t	i;
-	int		j;
-	int		*pids;
-	t_vec	exe;
-  int		join_flag;
-	int		end_flag;
-	int		expand_flag;
-	int		joinrd_flag;
-	int		endrd_flag;
-	int		expandrd_flag;
-}	t_shell;
-
-# include "utils.h"
-# include "execute.h"
-# include "builtins.h"
-
-typedef struct s_vecjoin
-{
-	char	*base;
-	char	*add;
-	char	*fin;
-	char	*remainder;
-	size_t	base_len;
-	size_t	add_len;
-	size_t	fin_len;
-    int		index;
-}	t_vecjoin;
 
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
@@ -167,7 +134,8 @@ void	check_join(char *buf, t_shell *arg, size_t pos, int i);
 void	check_joinrd(char *buf, t_shell *arg, size_t pos, int i);
 int		store_specialrd_cmd(char *buf, t_shell *arg, size_t pos, int i);
 int		push_redirect_vector(char *buf, t_shell *arg, size_t pos, int i);
-int 	push_rdrct_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
+int		push_rdrct_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
 void	print_vectors(t_shell *arg);	//delete
+
 
 #endif

@@ -6,28 +6,28 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/06 16:06:07 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:12:51 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	ft_env(t_vec *env, t_vec *args)
+int	ft_env(t_vec *env, t_exec *exe)
 {
 	int	i;
 
 	i = 0;
 	printf("trying to print %zu vars\n", env->len);
-	if (args->len > 1)
+	if (exe->cmd_argv[1] != NULL)
 	{
-		printf("env: No options or arguments possible\n"); //errmngm
+		ft_fprintf(2, "Minishell : env: too many arguments");
 		return (-1);
 	}
 	while ((size_t)i < env->len)
 	{
 		if (vec_get(env, i) == NULL)
 		{
-			printf("vec_get failed\n"); //errmng
+			ft_printf("Minishell: vec_get: failed");
 			return (1);
 		}
 		printf("%s\n", *(char **)vec_get(env, i));
@@ -79,11 +79,11 @@ int	ft_unset(t_vec *env, t_vec *args)
 		{
 			index = find_index_of_env(env, env_var);
 			if (index == -1)
-				return (-1); // err_mngmt
+				return (ft_putstr_fd("Minishell: unset", 2), -1);
 			free (env_var);
 			env_var = vec_get(env, index);
 			if (vec_remove_str(env, index) < 0)
-				return (-1); //err_mngmnt
+				return (ft_putstr_fd("Minishell: unset", 2), -1);
 		}
 		i++;
 	}

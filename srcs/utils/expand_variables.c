@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/21 13:34:53 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/27 14:10:47 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	init_expd_struct(t_expd *s);
 int			expand_string(t_vec *env, t_expd *s, t_vec *vec, int index);
-static int	check_if_exists(t_vec *env, t_expd *s);
+int			check_if_exists(t_vec *env, t_expd *s);
+static void	check_extra_expand(t_expd *s, char *str);
 
 int	expand_variables(t_vec *env, t_vec *vec, int index)
 {
@@ -82,7 +83,7 @@ int	expand_string(t_vec *env, t_expd *s, t_vec *vec, int index)
 	return (0);
 }
 
-void	check_extra_expand(t_expd *s, char *str)
+static void	check_extra_expand(t_expd *s, char *str)
 {
 	int	i;
 
@@ -95,7 +96,7 @@ void	check_extra_expand(t_expd *s, char *str)
 	}
 }
 
-static int	check_if_exists(t_vec *env, t_expd *s)
+int	check_if_exists(t_vec *env, t_expd *s)
 {
 	s->i = s->ds + 1;
 	while (s->str[s->i] && s->str[s->i] != '\'' && \
