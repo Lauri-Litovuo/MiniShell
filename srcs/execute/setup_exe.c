@@ -6,18 +6,24 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 16:25:30 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:01:52 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-void	init_redir(t_redir *redir)
+int	init_redir(t_redir *redir)
 {
-	redir->fd_in = -42;
-	redir->fd_out = -42;
+	redir->fd_in = -1;
+	redir->fd_out = -1;
 	redir->hd_pos = -42;
 	redir->re_pos = -42;
+	redir->orig_fdin = dup(STDIN_FILENO);
+	if (redir->orig_fdin == -1)
+		return (perror("dup to in failed"), -1);
+	redir->orig_fdout = dup(STDOUT_FILENO);
+	if (redir->orig_fdout == -1)
+		return (perror("dup to out failed"), -1);
 	redir->pipe_out = NO;
 	redir->pipe_in = NO;
 	redir->file_in = NO;
@@ -28,6 +34,7 @@ void	init_redir(t_redir *redir)
 	redir->hd_lim = NULL;
 	redir->hd_file = NULL;
 	redir->i = -42;
+	return (0);
 }
 
 int	setup_exe(t_shell *arg)

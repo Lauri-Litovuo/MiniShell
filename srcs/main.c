@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 17:47:32 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/28 12:45:23 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,18 @@ int	miniloop(char *buf, t_shell *arg)
 	while (1)
 	{
 		init_index(arg);
-		if (isatty(STDIN_FILENO) == 1)
+		buf = readline("minishell> ");
+		if (!buf)
 		{
-			buf = readline("minishell> ");
-			if (!buf)
-			{
-				exit (1);
-			}
-			parse_input(arg, buf);
-			execute(arg);
-			if (buf && *buf)
-				add_history(buf);
-			free(buf);
+			printf("this exxit\n");//
+			exit (1);
 		}
-		else
-			printf ("is not interactive with terminal\n");
+		parse_input(arg, buf);
+		execute(arg);
+		if (buf && *buf)
+			add_history(buf);
+		free(buf);
+		//free_arg(arg, NO);
 	}
 	return (0);
 }
