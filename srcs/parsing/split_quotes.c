@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/21 09:30:40 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:08:05 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 	arg->j = i;
 	i++;
 	if (buf[i] == '\'')
+	{
+		i++;
+		check_join(buf, arg, pos, i);
+		return (i);
+	}
 		return (i + 1);
 	while (buf[i] && buf[i] != '\'')
 	{
@@ -91,7 +96,11 @@ int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 	arg->j = i;
 	i++;
 	if (buf[i] == '\"')
-		return (i + 1);
+	{
+		i++;
+		check_join(buf, arg, pos, i);
+		return (i);
+	}
 	while (buf[i] && buf[i] != '\"')
 	{
 		if (buf[i] == '>' || buf[i] == '<')

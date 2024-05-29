@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/29 15:09:49 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/29 18:10:46 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,6 @@ int	split(char *buf, t_shell *arg)
 			if (split_rest(buf, arg, arg->i) < 0)
 				return (-1);
 		}
-		// printf("joinRD flag: %d\n", arg->joinrd_flag);
-		// printf("endRD flag: %d\n", arg->endrd_flag);
 		if (arg->end_flag > 0 || arg->endrd_flag > 0)
 			if (vec_join(arg, arg->i) < 0)
 				return (-1);
