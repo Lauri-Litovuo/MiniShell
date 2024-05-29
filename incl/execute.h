@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 18:06:32 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:36:58 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	set_pipe_fds(t_exec *exe, t_shell *arg);
 int		check_files_and_fd(t_redir *redir);
 void	close_other_pipe_fds(t_shell *arg, size_t pos);
 int		reset_fds(t_redir *redir);
-int		exit_child(t_shell *arg, int ret);
+void	free_arg(t_shell *arg, int del_hist);
+void	close_fds(t_exec *exe, int reset);
+void	close_fds_exit(t_shell *arg, int ret);
+void	close_all(t_shell *arg);
+
 
 
 #endif

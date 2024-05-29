@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:05:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 18:00:07 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:21:05 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,8 @@ int	check_files_and_fd(t_redir *redir)
 		return (YES);
 	if ((redir->infile && redir->fd_in == ERRO)
 		|| (redir->outfile && redir->fd_out == ERRO))
-		return (ERR);
+		return (ERRO);
 	return (YES);
-}
-
-void	close_other_pipe_fds(t_shell *arg, size_t pos)
-{
-	size_t	i;
-	t_exec	*temp;
-
-	i = 0;
-	while (i < arg->count)
-	{
-		temp = arg->exe[i];
-		if (i != pos && temp->pipe_fd != 0)
-		{
-			close (temp->pipe_fd[0]);
-			close (temp->pipe_fd[1]);
-		}
-		i++;
-	}
 }
 
 int	reset_fds(t_redir *redir)
@@ -56,7 +38,7 @@ int	reset_fds(t_redir *redir)
 	}
 	if (redir->orig_fdout != -1)
 	{
-		if (dup2(redir->orig_fdout, STDIN_FILENO) == -1)
+		if (dup2(redir->orig_fdout, STDOUT_FILENO) == -1)
 			ret = -1;
 		close (redir->orig_fdout);
 		redir->orig_fdout = -1;
@@ -64,10 +46,46 @@ int	reset_fds(t_redir *redir)
 	return (ret);
 }
 
-void	write_file_error(char *filename, char *errno)
+void	close_fds(t_exec *exe, int reset)
 {
-	write (2, "minishell: ", 7);
-	ft_putstr_fd (filename, 2);
-	write (2, ": ", 2);
-	ft_putstr_fd (errno, 2);
+	t_redir	*redir;
+
+	redir = &exe->redir;
+	if (redir)
+	{
+		if (redir->fd_in != -1)
+			close (redir->fd_in);
+		if (redir->fd_out != -1)
+			close (redir->fd_out);
+		if (reset == YES)
+			reset_fds(redir);
+	}
+}
+
+void	close_all(t_shell *arg)
+{
+	size_t	i;
+	t_exec	*exe;
+
+	i = 0;
+	if (arg)
+	{
+		while (i < arg->count)
+		{
+			exe = arg->exe[i];
+			if (exe)
+				close_fds(exe, NO);
+			if (i == 0)
+				reset_fds(&exe->redir);
+			else
+			{
+				close (exe->redir.orig_fdin);
+				exe->redir.orig_fdin = -1;
+				close (exe->redir.orig_fdout);
+				exe->redir.orig_fdout = -1;
+			}
+			i++;
+		}
+		close_other_pipe_fds(arg, -5);
+	}
 }

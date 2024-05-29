@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 18:04:54 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:04:49 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ int	execute_cmd(t_exec *exe, t_shell *arg)
 
 	envp = (char **)arg->env.memory;
 	if (!exe->cmd || *exe->cmd == '\0')
-		return (42);
+		return (-42);
 	if (check_if_dir(exe->cmd) == YES)
 		return (DIRECTORY);
-	execve(exe->path, exe->cmd_argv, envp);
-	ft_fprintf(2, "Minishell: execve: failed!");
-	exit (1);
+	if (execve(exe->path, exe->cmd_argv, envp) == -1)
+		perror(exe->cmd);
+	printf("execve failed\n"); //
+	return (-1);
 }
 
 int	run_command(t_shell *arg, t_exec *exe)
@@ -49,17 +50,14 @@ int	run_command(t_shell *arg, t_exec *exe)
 		exit(1);
 	if (check_files_and_fd(&exe->redir) == ERRO)
 		exit (1);
-	if (set_pipe_fds(exe, arg) == -1)
-		exit(1);
-	if (set_fds(&exe->redir) == -1)
-		exit (1);
-	close_other_pipe_fds(arg, exe->pos);
-	ret = launch_builtin(&arg->env, exe, arg);
-	if (ret != 42)
-		exit_child(arg, ret);
+	set_pipe_fds(exe, arg);
+	set_fds(&exe->redir);
+	close_fds(exe, NO);
+	if (isit_builtin(exe->cmd, exe->pos) == INT_MIN)
+	{
+		ret = launch_builtin(&arg->env, exe, arg);
+		close_fds_exit(arg, ret);
+	}
 	ret = execute_cmd(exe, arg);
-	if (ret != 42)
-		exit_child(arg, ret);
-	exit_child(arg, ret);
 	return (ret);
 }

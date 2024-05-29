@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 13:40:29 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:04:44 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_shell
 	size_t	gl_count;
 	size_t	i;
 	int		j;
-	int		*pids;
+	pid_t	pids;
 	t_exec	**exe;
 	int		join_flag;
 	int		end_flag;

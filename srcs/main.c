@@ -40,12 +40,8 @@ static int	copy_env(t_vec *env, char **envp)
 	while (envp[i])
 	{
 		temp = ft_strdup(envp[i]);
-		// printf("env: %s\n", *(char **)vec_get(env, i));
-		// printf("temp:%s\n", temp);
 		if (vec_push(env, &temp) < 0)
 			return (error_msg_free(1, VECPUSH, NULL, env));
-		// printf("env: %s\n", *(char **)vec_get(env, i));
-		// free(temp);
 		i++;
 	}
 	return (0);
@@ -56,21 +52,18 @@ int	miniloop(char *buf, t_shell *arg)
 	while (1)
 	{
 		init_index(arg);
-		if (isatty(STDIN_FILENO) == 1)
+		buf = readline("minishell> ");
+		if (!buf)
 		{
-			buf = readline("minishell> ");
-			if (!buf)
-			{
-				exit (1);
-			}
-			parse_input(arg, buf);
-			execute(arg);
-			if (buf && *buf)
-				add_history(buf);
-			free(buf);
+			printf("this exxit\n");//
+			exit (1);
 		}
-		else
-			printf ("is not interactive with terminal\n");
+		parse_input(arg, buf);
+		execute(arg);
+		if (buf && *buf)
+			add_history(buf);
+		free(buf);
+		//free_arg(arg, NO);
 	}
 	return (0);
 }

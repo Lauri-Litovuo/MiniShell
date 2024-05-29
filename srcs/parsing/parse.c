@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/21 13:42:52 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:07:36 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,6 @@ int	parse_input(t_shell *arg, char *buf)
 	init_count(buf, arg);
 	if (split(buf, arg) == -1)
 		return (-1);
-	print_vectors(arg);
+	//print_vectors(arg);
 	return (1);
 }

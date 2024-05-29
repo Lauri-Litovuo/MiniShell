@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:34:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 14:00:51 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:11:48 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_exec(t_exec **exe)
 	t_redir	*redir;
 
 	i = 0;
-	while (exe[i] != NULL)
+	while (exe[i])
 	{
 		k = 0;
 		temp = exe[i];

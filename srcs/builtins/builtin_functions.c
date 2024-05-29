@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 14:12:51 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/28 09:08:33 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_env(t_vec *env, t_exec *exe)
 	int	i;
 
 	i = 0;
-	printf("trying to print %zu vars\n", env->len);
 	if (exe->cmd_argv[1] != NULL)
 	{
 		ft_fprintf(2, "Minishell : env: too many arguments");
