@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 17:09:20 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:42:05 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	miniloop(char *buf, t_shell *arg)
 		buf = readline("minishell> ");
 		if (!buf)
 		{
-			printf("this exxit\n");//
+			printf("exit\n");//
 			exit (1);
 		}
 		parse_input(arg, buf);

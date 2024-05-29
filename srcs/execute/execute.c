@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 12:31:05 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:38:26 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	wait_children(t_shell *arg)
 	i = 0;
 	wait_pid = 0;
 	temp = 0;
+	signal(SIGQUIT, SIG_IGN);
 	close_other_pipe_fds(arg, -5);
 	while (i < arg->count)
 	{
@@ -53,6 +54,7 @@ static int	wait_children(t_shell *arg)
 			temp = status;
 		continue ;
 	}
+	set_signals();
 	if (WIFSIGNALED(temp) != 0)
 		status = 128 + WTERMSIG(temp);
 	else if (WIFEXITED(temp) != 0)

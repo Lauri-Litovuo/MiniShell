@@ -6,7 +6,7 @@
 #    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/29 10:14:11 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/05/29 12:41:31 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ SOURCES = \
 			srcs/builtins/ft_cd.c \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
-			srcs/utils/free.c
+			srcs/utils/free.c \
 			srcs/signals.c
 
 OBJECTS = $(SOURCES:.c=.o)
