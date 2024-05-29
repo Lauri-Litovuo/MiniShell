@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 17:47:32 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:09:20 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	minishell(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+	signal(SIGQUIT, SIG_IGN);
+	set_signals();
 	if (argc == 1 && argv && envp && *envp)
 		return (minishell(envp));
 	else
