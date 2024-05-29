@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:59:39 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/28 12:02:23 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 09:35:30 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,13 @@ int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
 	if (vec)
 		vec_free(vec);
 	return (-1);
+}
+
+void	write_file_error(char *filename, char *errno)
+{
+	write (2, "minishell: ", 7);
+	ft_putstr_fd (filename, 2);
+	write (2, ": ", 2);
+	ft_putstr_fd (errno, 2);
 }
 

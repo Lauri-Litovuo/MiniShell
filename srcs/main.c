@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 12:45:23 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 09:30:02 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,8 @@ static int	copy_env(t_vec *env, char **envp)
 	while (envp[i])
 	{
 		temp = ft_strdup(envp[i]);
-		// printf("env: %s\n", *(char **)vec_get(env, i));
-		// printf("temp:%s\n", temp);
 		if (vec_push(env, &temp) < 0)
 			return (error_msg_free(1, VECPUSH, NULL, env));
-		// printf("env: %s\n", *(char **)vec_get(env, i));
-		// free(temp);
 		i++;
 	}
 	return (0);

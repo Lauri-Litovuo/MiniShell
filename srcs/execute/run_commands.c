@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 15:07:02 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:04:49 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execute_cmd(t_exec *exe, t_shell *arg)
 		return (DIRECTORY);
 	if (execve(exe->path, exe->cmd_argv, envp) == -1)
 		perror(exe->cmd);
-	printf("execve failed\n");
+	printf("execve failed\n"); //
 	return (-1);
 }
 
@@ -50,17 +50,13 @@ int	run_command(t_shell *arg, t_exec *exe)
 		exit(1);
 	if (check_files_and_fd(&exe->redir) == ERRO)
 		exit (1);
-	if (set_pipe_fds(exe, arg) == -1)
-		exit(1);
-	if (set_fds(&exe->redir) == -1)
-		exit (1);
+	set_pipe_fds(exe, arg);
+	set_fds(&exe->redir);
 	close_fds(exe, NO);
-	close_other_pipe_fds(arg, -1);
 	if (isit_builtin(exe->cmd, exe->pos) == INT_MIN)
 	{
 		ret = launch_builtin(&arg->env, exe, arg);
-		if (ret != -42)
-			close_fds_exit(arg, ret);
+		close_fds_exit(arg, ret);
 	}
 	ret = execute_cmd(exe, arg);
 	return (ret);

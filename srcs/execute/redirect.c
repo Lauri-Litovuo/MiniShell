@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 14:00:00 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:18:34 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,38 @@ int	set_fds(t_redir *redir)
 	return (ret);
 }
 
+void	close_other_pipe_fds(t_shell *arg, size_t pos)
+{
+	size_t	i;
+	t_exec	*temp;
+
+	i = 0;
+	while (i < arg->count)
+	{
+		temp = arg->exe[i];
+		if (i != pos && temp->pipe_fd)
+		{
+			close (temp->pipe_fd[0]);
+			close (temp->pipe_fd[1]);
+		}
+		i++;
+	}
+}
+
 int	set_pipe_fds(t_exec *exe, t_shell *arg)
 {
 	t_exec	*pre;
 	int		prepos;
 
 	prepos = exe->pos - 1;
-	if (exe->redir.pipe_in == YES)
+	if (prepos >= 0)
 	{
 		pre = arg->exe[prepos];
-		dup2(pre->pipe_fd[0], STDIN_FILENO);
+		if (pre->redir.pipe_out == YES)
+			dup2(pre->pipe_fd[0], STDIN_FILENO);
 	}
 	if (exe->redir.pipe_out == YES)
 		dup2(exe->pipe_fd[1], STDOUT_FILENO);
+	close_other_pipe_fds(arg, exe->pos);
 	return (YES);
 }
