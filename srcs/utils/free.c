@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 09:33:51 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 15:54:46 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:41:19 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	free_arg(t_shell *arg, int del_hist)
 		return ;
 	while (i < arg->count)
 	{
-		if (&arg[i].cmd != NULL && arg[i].cmd.len != 0)
+		if (arg[i].cmd.len != 0)
 			vec_free_str(&arg[i].cmd);
-		if (&arg[i].rdrct != NULL && arg[i].rdrct.len != 0)
+		if (arg[i].rdrct.len != 0)
 			vec_free_str(&arg[i].rdrct);
 		if (arg->exe && arg->exe[i])
 			free_exec(arg->exe[i]);
