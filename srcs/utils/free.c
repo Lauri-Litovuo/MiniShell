@@ -6,18 +6,45 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 09:33:51 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 09:35:33 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:54:46 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+void	free_exec(t_exec *exe)
+{
+	if (exe->cmd_argv)
+		free_2d_array(exe->cmd_argv);
+	if (exe->pipe_fd)
+		free(exe->pipe_fd);
+	if (exe->redir.hd_in == YES)
+		unlink (exe->redir.hd_file);
+	free (exe);
+}
+
 void	free_arg(t_shell *arg, int del_hist)
 {
-	free (arg);
-	if (del_hist == 1)
+	size_t	i;
+
+	i = 0;
+	if (!arg || arg->count == 0)
+		return ;
+	while (i < arg->count)
 	{
-		//remove history;
+		if (&arg[i].cmd != NULL && arg[i].cmd.len != 0)
+			vec_free_str(&arg[i].cmd);
+		if (&arg[i].rdrct != NULL && arg[i].rdrct.len != 0)
+			vec_free_str(&arg[i].rdrct);
+		if (arg->exe && arg->exe[i])
+			free_exec(arg->exe[i]);
+		i++;
+	}
+	free(arg->exe);
+	if (del_hist == YES)
+	{
+		vec_free_str(&arg->env);
+		rl_clear_history();
 	}
 }
 
