@@ -54,6 +54,7 @@ static int	wait_children(t_shell *arg)
 			temp = status;
 		continue ;
 	}
+	set_signals();
 	if (WIFSIGNALED(temp) != 0)
 		status = 128 + WTERMSIG(temp);
 	else if (WIFEXITED(temp) != 0)

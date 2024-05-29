@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
 /*   Updated: 2024/05/29 16:04:24 by aneitenb         ###   ########.fr       */
@@ -56,6 +56,7 @@ int	miniloop(char *buf, t_shell *arg)
 		if (!buf)
 		{
 			printf("exit\n");//
+			free_arg(arg, YES);
 			exit (1);
 		}
 		if (*buf != '\0')
@@ -66,8 +67,9 @@ int	miniloop(char *buf, t_shell *arg)
 				add_history(buf);	
 		}
 		free(buf);
-		//free_arg(arg, NO);
+		free_arg(arg, NO);
 	}
+	free_arg(arg, YES);
 	return (0);
 }
 
