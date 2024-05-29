@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 17:09:20 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:04:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,19 @@ int	miniloop(char *buf, t_shell *arg)
 	while (1)
 	{
 		init_index(arg);
-		buf = readline("minishell> ");
+		buf = readline("la_shell> ");
 		if (!buf)
 		{
-			printf("this exxit\n");//
+			printf("exit\n");//
 			exit (1);
 		}
-		parse_input(arg, buf);
-		execute(arg);
-		if (buf && *buf)
-			add_history(buf);
+		if (*buf != '\0')
+		{
+			parse_input(arg, buf);
+			execute(arg);
+			if (buf && *buf)
+				add_history(buf);	
+		}
 		free(buf);
 		//free_arg(arg, NO);
 	}
@@ -77,7 +80,6 @@ int	minishell(char **envp)
 	ft_memset(&arg, 0, sizeof(t_shell));
 	copy_env(&arg.env, envp);
 	miniloop(buf, &arg);
-	free(buf);
 	return (0);
 }
 

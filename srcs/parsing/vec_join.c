@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:03:03 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/05/21 14:15:18 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:47:56 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	join_rdrct_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 			return (-1);
 		arg->joinrd_flag++;
 	}
+	free(s->base);
 	if (vec_replace_special(&arg[pos].rdrct, s->fin, (size_t)s->index) < 0)
 		return (-1);
 	s->index++;
@@ -53,7 +54,6 @@ int	join_rdrct_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 		vec_remove_str(&arg[pos].rdrct, i);
 		s->index++;
 	}
-	init_s(s);
 	return (0);
 }
 
@@ -74,6 +74,7 @@ int	join_cmd_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 			return (-1);
 		arg->join_flag++;
 	}
+	free(s->base);
 	if (vec_replace_special(&arg[pos].cmd, s->fin, (size_t)s->index) < 0)
 		return (-1);
 	s->index++;
@@ -82,7 +83,6 @@ int	join_cmd_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 		vec_remove_str(&arg[pos].cmd, i);
 		s->index++;
 	}
-	init_s(s);
 	return (0);
 }
 
@@ -93,9 +93,15 @@ int	vec_join(t_shell *arg, size_t pos)
 
 	init_s(&s);
 	if (arg->join_flag > -1)
+	{
 		ret = join_cmd_vector(arg, pos, &s);
+		init_s(&s);
+	}
 	if (arg->joinrd_flag > -1)
+	{
 		ret = join_rdrct_vector(arg, pos, &s);
+		init_s(&s);
+	}
 	reset_flags(arg);
 	return (0);
 }

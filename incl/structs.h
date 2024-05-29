@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 10:04:44 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:44:19 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,7 @@ typedef struct s_shell
 typedef struct s_vecjoin
 {
 	char	*base;
-	char	*add;
 	char	*fin;
-	char	*remainder;
-	size_t	base_len;
-	size_t	add_len;
-	size_t	fin_len;
 	int		index;
 }	t_vecjoin;
 
