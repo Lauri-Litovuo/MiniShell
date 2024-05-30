@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 14:36:58 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:36:49 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ typedef enum e_pipe
 	YES = 1,
 	NO = 0,
 	ERRO = (-1),
-	DIRECTORY = 126
+	DIRECTORY = 555,
+	PERMISSION = 126,
+	CMD_NOT_FOUND = 127,
+	NO_FILE = 444,
 }	t_pipe;
 
 int		isit_builtin(char *cmd, int pos);
@@ -43,6 +46,7 @@ void	free_arg(t_shell *arg, int del_hist);
 void	close_fds(t_exec *exe, int reset);
 void	close_fds_exit(t_shell *arg, int ret);
 void	close_all(t_shell *arg);
+int		execve_error(t_exec *exe, char *err_msg, int ret);
 
 
 
