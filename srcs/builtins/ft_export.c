@@ -6,15 +6,12 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/08 10:07:39 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/30 10:16:52 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-// Should be tested if export works otherwise than as a first argument in bash.
-//for some reason += is not working correctly but adds JEE+=SMTHN.
-//add ft_isaldigit if expandable variable is used.
 static int	check_export_syntax(char *arg);
 static int	export_variable(t_vec *env, char *arg);
 static int	export_env_var(char *env_var, char *arg, t_vec *env);
@@ -33,10 +30,12 @@ int	ft_export(t_vec *env, t_vec *args)
 		print_exports(env);
 		return (0);
 	}
+	i++;
 	while (i < args->len)
 	{
-		if (export_variable(env, arg_strs[++i]) < 0)
-			printf("error in export2\n"); //change to error mngmt
+		if (export_variable(env, arg_strs[i]) < 0)
+			return (1);
+		i++;
 	}
 	return (0);
 }
@@ -52,11 +51,15 @@ static int	export_variable(t_vec *env, char *arg)
 		if (env_var == NULL)
 			return (-1);
 		if (check_export_syntax(env_var) < 0)
-			printf("bash error\n"); //exitcode 1;
-		else
 		{
-			if (export_env_var(env_var, arg, env) < 0)
-				return (-1);
+			ft_fprintf(2, \
+			"la_shell: export: %s: is not a valid identifier\n", env_var);
+			return (-1);
+		}
+		else if (export_env_var(env_var, arg, env) < 0)
+		{
+			ft_fprintf(2, "la_shell: export: failed to export\n");
+			return (-1);
 		}
 		free(env_var);
 	}
