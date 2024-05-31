@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 15:44:19 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:44:27 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_shell
 	int		joinrd_flag;
 	int		endrd_flag;
 	int		expandrd_flag;
+	int		exit_code;
 }	t_shell;
 
 typedef struct s_vecjoin

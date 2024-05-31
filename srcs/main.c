@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/31 11:33:03 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:53:15 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_index(t_shell *arg)
 	arg->joinrd_flag = -1;
 	arg->endrd_flag = 0;
 	arg->expandrd_flag = 0;
+	arg->exit_code = 0;
 }
 
 static int	copy_env(t_vec *env, char **envp)
@@ -49,15 +50,21 @@ static int	copy_env(t_vec *env, char **envp)
 
 int	miniloop(char *buf, t_shell *arg)
 {
+	int	g_signal_code = 0;
+	
 	while (1)
 	{
 		init_index(arg);
+		signals_default();
 		buf = readline("la_shell> ");
+		if (g_signal_code == 2)
+			arg->exit_code = 1;
+	
 		if (!buf)
 		{
 			printf("exit\n");//
 			free_arg(arg, YES);
-			exit (1);
+			exit (arg->exit_code);
 		}
 		if (*buf != '\0')
 		{
@@ -69,6 +76,7 @@ int	miniloop(char *buf, t_shell *arg)
 		}
 		free(buf);
 		free_arg(arg, NO);
+		set_after_termios();//why?
 	}
 	free_arg(arg, YES);
 	return (0);
@@ -88,8 +96,6 @@ int	minishell(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	signal(SIGQUIT, SIG_IGN);
-	set_signals();
 	if (argc == 1 && argv && envp && *envp)
 		return (minishell(envp));
 	else

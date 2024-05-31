@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 15:55:20 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:19:45 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
 
 	while (1)
 	{
+		signals_heredoc();
 		buf = readline(">");
 		if (buf == NULL)
 			exit (EXIT_FAILURE);

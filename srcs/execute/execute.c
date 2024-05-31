@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 14:43:16 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:02:37 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	wait_children(t_shell *arg)
 			temp = status;
 		continue ;
 	}
-	set_signals();
+	signals_default();
 	if (WIFSIGNALED(temp) != 0)
 		status = 128 + WTERMSIG(temp);
 	else if (WIFEXITED(temp) != 0)
@@ -76,7 +76,10 @@ static int	piping(t_shell *arg)
 		if (arg->pids == -1)
 			return (-1);
 		else if (arg->pids == 0)
+		{
+			signals_child();
 			run_command(arg, arg->exe[i]);
+		}
 		i++;
 	}
 	return (wait_children(arg));
