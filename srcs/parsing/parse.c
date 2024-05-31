@@ -130,6 +130,8 @@ int	split(char *buf, t_shell *arg)
 			if (split_rest(buf, arg, arg->i) < 0)
 				return (-1);
 		}
+		// printf("joinRD flag: %d\n", arg->joinrd_flag);
+		// printf("endRD flag: %d\n", arg->endrd_flag);
 		if (arg->end_flag > 0 || arg->endrd_flag > 0)
 			if (vec_join(arg, arg->i) < 0)
 				return (-1);

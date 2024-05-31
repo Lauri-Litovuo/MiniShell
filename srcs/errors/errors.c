@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:59:39 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/29 09:35:30 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:06:59 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,16 @@ int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
 	return (-1);
 }
 
-void	write_file_error(char *filename, char *errno)
+int	execve_error(t_exec *exe, char *err_msg, int ret)
 {
-	write (2, "minishell: ", 7);
-	ft_putstr_fd (filename, 2);
-	write (2, ": ", 2);
-	ft_putstr_fd (errno, 2);
+	ft_putstr_fd("la_shell: ", STDERR_FILENO);
+	ft_putstr_fd(exe->cmd, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	if (ret == 2 && access(exe->path, F_OK) == -1)
+		ft_putstr_fd("command not found", STDERR_FILENO);
+	else
+		ft_putstr_fd(err_msg, STDERR_FILENO);
+	write(STDERR_FILENO, "\n", 1);
+	return (ret);
 }
 

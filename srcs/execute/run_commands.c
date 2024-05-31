@@ -6,24 +6,26 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 12:04:49 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:38:20 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	check_if_dir(char *cmd)
+int	check_if_dir(char *cmd)
 {
 	DIR	*direc;
 
+	if (!cmd)
+		return (-1);
 	direc = opendir(cmd);
 	if (direc != NULL)
 	{
-		closedir (direc);
-		return (YES);
+		closedir(direc);
+		return (DIRECTORY);
 	}
-	if (errno == ENOTDIR)
-		return (NO);
+	else if (errno == ENOTDIR)
+		return (0);
 	return (ERRO);
 }
 
@@ -33,12 +35,11 @@ int	execute_cmd(t_exec *exe, t_shell *arg)
 
 	envp = (char **)arg->env.memory;
 	if (!exe->cmd || *exe->cmd == '\0')
-		return (-42);
-	if (check_if_dir(exe->cmd) == YES)
+		return (CMD_NOT_FOUND);
+	if (check_if_dir(exe->cmd) == DIRECTORY)
 		return (DIRECTORY);
 	if (execve(exe->path, exe->cmd_argv, envp) == -1)
-		perror(exe->cmd);
-	printf("execve failed\n"); //
+		return (execve_error(exe, strerror(errno), errno));
 	return (-1);
 }
 
@@ -56,8 +57,13 @@ int	run_command(t_shell *arg, t_exec *exe)
 	if (isit_builtin(exe->cmd, exe->pos) == INT_MIN)
 	{
 		ret = launch_builtin(&arg->env, exe, arg);
+		if (ret != 0)
+			error_triple_msg(2, exe->cmd, ": failed\n", NULL);
 		close_fds_exit(arg, ret);
 	}
 	ret = execute_cmd(exe, arg);
+	if (ret == DIRECTORY)
+		execve_error(exe, "is a directory", 126);
+	close_fds_exit(arg, ret);
 	return (ret);
 }

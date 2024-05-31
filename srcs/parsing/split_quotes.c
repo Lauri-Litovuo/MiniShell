@@ -95,11 +95,7 @@ int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 	arg->j = i;
 	i++;
 	if (buf[i] == '\"')
-	{
-		i++;
-		check_join(buf, arg, pos, i);
-		return (i);
-	}
+		return (i + 1);
 	while (buf[i] && buf[i] != '\"')
 	{
 		if (buf[i] == '>' || buf[i] == '<')

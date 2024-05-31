@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 09:33:51 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 16:41:19 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:12:31 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	close_fds_exit(t_shell *arg, int ret)
 				close_fds(exe, YES);
 			i++;
 		}
-		close_other_pipe_fds(arg, -1);
-		free_arg(arg, NO);
+		close_other_pipe_fds(arg, -5);
+		free_arg(arg, YES);
 	}
 	exit (ret);
 }
