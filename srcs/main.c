@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 16:04:24 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/31 11:33:03 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	miniloop(char *buf, t_shell *arg)
 		}
 		if (*buf != '\0')
 		{
-			parse_input(arg, buf);
+			if (parse_input(arg, buf) == -1)
+				continue ;
 			execute(arg);
 			if (buf && *buf)
 				add_history(buf);	
