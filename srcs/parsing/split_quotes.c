@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/21 09:30:40 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:15:50 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 	arg->temp = ft_substr(buf, arg->j + 1, (i - arg->j - 1));
 	if (arg->temp == NULL)
 	{
-		error_msg(1, SUBSTR, NULL);
+		error_msg(1, SUBSTR, NULL); //do I need to free buf? maybe in bigger parse
 		return (-2000);
 	}
 	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
@@ -64,7 +64,11 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 	arg->j = i;
 	i++;
 	if (buf[i] == '\'')
-		return (i + 1);
+	{
+		i++;
+		check_join(buf, arg, pos, i);
+		return (i);
+	}
 	while (buf[i] && buf[i] != '\'')
 	{
 		if (buf[i] == '>' || buf[i] == '<')

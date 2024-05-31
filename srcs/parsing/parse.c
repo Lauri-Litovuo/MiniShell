@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/29 15:09:49 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/05/31 12:16:43 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ int	scan_input(char *buf)
 			i = handle_lessgreat(buf, i);
 		else
 			i++;
+		if (i < 0)
+			return (-1);
 	}
-	if (i < 0)
-		return (-1);
 	return (0);
 }
 
@@ -147,6 +147,6 @@ int	parse_input(t_shell *arg, char *buf)
 	init_count(buf, arg);
 	if (split(buf, arg) == -1)
 		return (-1);
-	//print_vectors(arg);
+	// print_vectors(arg);
 	return (1);
 }
