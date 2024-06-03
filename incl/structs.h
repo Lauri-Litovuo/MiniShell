@@ -31,6 +31,7 @@ typedef struct s_redir
 	int		hd_pos;
 	int		re_pos;
 	int		i;
+	int		save_STDIN;
 }	t_redir;
 
 typedef struct s_exec
@@ -64,6 +65,7 @@ typedef struct s_shell
 	int		endrd_flag;
 	int		expandrd_flag;
 	int		exit_status;
+	int		exit_code;
 }	t_shell;
 
 typedef struct s_vecjoin

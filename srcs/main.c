@@ -6,11 +6,13 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/31 11:33:03 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:43:52 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+int	g_signal;
 
 void	init_index(t_shell *arg)
 {
@@ -25,6 +27,7 @@ void	init_index(t_shell *arg)
 	arg->joinrd_flag = -1;
 	arg->endrd_flag = 0;
 	arg->expandrd_flag = 0;
+	arg->exit_code = 0;
 }
 
 static int	copy_env(t_vec *env, char **envp)
@@ -51,24 +54,29 @@ int	miniloop(char *buf, t_shell *arg)
 {
 	while (1)
 	{
+		g_signal = 0;	
 		init_index(arg);
+		signals_default();
 		buf = readline("la_shell> ");
+		if (g_signal == 2)
+			arg->exit_code = 1;
 		if (!buf)
 		{
 			printf("exit\n");//
 			free_arg(arg, YES);
-			exit (1);
+			exit (arg->exit_code);
 		}
 		if (*buf != '\0')
 		{
 			if (parse_input(arg, buf) == -1)
 				continue ;
-			execute(arg);
+			execute(arg); //need to check for heredoc before execute to keep the main loop going in case of heredoc exit signals
 			if (buf && *buf)
 				add_history(buf);	
 		}
 		free(buf);
 		free_arg(arg, NO);
+		// enabled_termios();//why?
 	}
 	free_arg(arg, YES);
 	return (0);
@@ -78,18 +86,25 @@ int	minishell(char **envp)
 {
 	char	*buf;
 	t_shell	arg;
+	int		save_STDIN;
 
+	g_signal = 0;
+	save_STDIN = STDIN_FILENO;
 	buf = NULL;
 	ft_memset(&arg, 0, sizeof(t_shell));
 	copy_env(&arg.env, envp);
 	miniloop(buf, &arg);
+	if (g_signal == -42)
+	{
+		free(buf);
+		free_arg(&arg, NO);
+		miniloop(buf, &arg);
+	}
 	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	signal(SIGQUIT, SIG_IGN);
-	set_signals();
 	if (argc == 1 && argv && envp && *envp)
 		return (minishell(envp));
 	else

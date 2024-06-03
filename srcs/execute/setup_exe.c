@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 14:01:52 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:07:33 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+int	g_signal;
 
 int	init_redir(t_redir *redir)
 {
@@ -66,7 +68,10 @@ int	setup_exe(t_shell *arg)
 		exe[i]->ret = 0;
 		init_redir(&exe[i]->redir);
 		if (arg[i].rdrct.len != 0)
-			open_files(&arg[i].rdrct, exe[i], &arg->env); //
+			if (open_files(&arg[i].rdrct, exe[i], &arg->env) < 0)//
+				return (-1);//
+		if (g_signal == 2)
+			arg->exit_code = 1;
 		if (sub_exe->pos > 0 && sub_exe->redir.file_in == NO && sub_exe->redir.hd_in == NO)
 			sub_exe->redir.pipe_in = 1;
 		if (sub_exe->redir.file_out == NO && arg->count > 1 && sub_exe->pos != arg->count - 1)

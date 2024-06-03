@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 17:21:28 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:41:50 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,7 @@
 # define VECNEW "minishell: vec_new error\n"
 # define UNMATCH "minishell: unexpected EOF while looking for matching "
 
-/************************************
-*			SHELL STRUCT			*
-*************************************/
+extern int	g_signal;
 
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);
@@ -135,7 +133,13 @@ void	check_joinrd(char *buf, t_shell *arg, size_t pos, int i);
 int		store_specialrd_cmd(char *buf, t_shell *arg, size_t pos, int i);
 int		push_redirect_vector(char *buf, t_shell *arg, size_t pos, int i);
 int		push_rdrct_expand_vector(char *buf, t_shell *arg, size_t pos, int i);
-void	set_signals(void);
+void	signals_default(void);
+void	signals_child(void);
+void	signals_heredoc(void);
+void	d_handler(int sig);
+void	h_handler(int sig);
+void	disabled_termios(void);
+void	enabled_termios(void);
 void	print_vectors(t_shell *arg);	//delete
 
 #endif

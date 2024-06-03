@@ -57,11 +57,12 @@ SOURCES = \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
 			srcs/utils/free.c \
-			srcs/signals.c
+			srcs/signals/signals.c \
+			srcs/signals/termios.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror -I$(RLHEAD) #-g  -fsanitize=address
+CFLAGS =  -Wall -Wextra -Werror -I$(RLHEAD) -g  -fsanitize=address
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 
