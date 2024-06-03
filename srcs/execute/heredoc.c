@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/31 17:19:45 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/02 17:19:13 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static void	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
 		ft_putstr_fd(buf, fd);
 		free(buf);
 	}
+	signals_default();
 	free(buf);
 	close(fd);
 }

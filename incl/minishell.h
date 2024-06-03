@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/31 17:53:12 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/02 16:56:45 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,9 @@ void	signals_default(void);
 void	signals_child(void);
 void	signals_heredoc(void);
 void	d_handler(int sig);
-void	c_handler(int sig);
 void	h_handler(int sig);
-void	default_termios(void);
-void	set_after_termios(void);
+void	disabled_termios(void);
+void	enabled_termios(void);
 void	print_vectors(t_shell *arg);	//delete
 
 #endif

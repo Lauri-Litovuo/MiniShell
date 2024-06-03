@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/31 17:53:15 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:46:54 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	miniloop(char *buf, t_shell *arg)
 		buf = readline("la_shell> ");
 		if (g_signal_code == 2)
 			arg->exit_code = 1;
-	
 		if (!buf)
 		{
 			printf("exit\n");//
@@ -76,7 +75,7 @@ int	miniloop(char *buf, t_shell *arg)
 		}
 		free(buf);
 		free_arg(arg, NO);
-		set_after_termios();//why?
+		// enabled_termios();//why?
 	}
 	free_arg(arg, YES);
 	return (0);
