@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/31 12:12:40 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:39:36 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
 *****************************************************************/
 int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 {
-	printf("inside store_norm)\n");
 	arg->j = i;
 	while (buf[i] && buf[i] != ' ' && buf[i] != '$' && buf[i] != '<'
 		&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' && buf[i] != '\"'
