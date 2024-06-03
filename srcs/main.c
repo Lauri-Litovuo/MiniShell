@@ -6,11 +6,13 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/02 15:46:54 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:43:52 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minishell.h"
+
+int	g_signal;
 
 void	init_index(t_shell *arg)
 {
@@ -50,14 +52,13 @@ static int	copy_env(t_vec *env, char **envp)
 
 int	miniloop(char *buf, t_shell *arg)
 {
-	int	g_signal_code = 0;
-	
 	while (1)
 	{
+		g_signal = 0;	
 		init_index(arg);
 		signals_default();
 		buf = readline("la_shell> ");
-		if (g_signal_code == 2)
+		if (g_signal == 2)
 			arg->exit_code = 1;
 		if (!buf)
 		{
@@ -69,7 +70,7 @@ int	miniloop(char *buf, t_shell *arg)
 		{
 			if (parse_input(arg, buf) == -1)
 				continue ;
-			execute(arg);
+			execute(arg); //need to check for heredoc before execute to keep the main loop going in case of heredoc exit signals
 			if (buf && *buf)
 				add_history(buf);	
 		}
@@ -85,11 +86,20 @@ int	minishell(char **envp)
 {
 	char	*buf;
 	t_shell	arg;
+	int		save_STDIN;
 
+	g_signal = 0;
+	save_STDIN = STDIN_FILENO;
 	buf = NULL;
 	ft_memset(&arg, 0, sizeof(t_shell));
 	copy_env(&arg.env, envp);
 	miniloop(buf, &arg);
+	if (g_signal == -42)
+	{
+		free(buf);
+		free_arg(&arg, NO);
+		miniloop(buf, &arg);
+	}
 	return (0);
 }
 

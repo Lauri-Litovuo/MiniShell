@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/31 15:44:27 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:21:50 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_redir
 	int		hd_pos;
 	int		re_pos;
 	int		i;
+	int		save_STDIN;
 }	t_redir;
 
 typedef struct s_exec

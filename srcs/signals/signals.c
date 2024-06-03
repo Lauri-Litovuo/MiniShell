@@ -6,31 +6,31 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:08:35 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/02 17:04:57 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:22:06 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+int	g_signal;
+
 void	h_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		// g_signal_code = 2;
+		g_signal = 2;
 		write(2, "\n", 1);
-		// rl_replace_line("",0);
-		// rl_on_new_line();
-		rl_redisplay();
+		close(STDIN_FILENO);
 	}
 }
 
 void	signals_heredoc(void)
 {
-	struct sigaction	hsig;
+	struct sigaction	hact;
 
 	disabled_termios();
-	hsig.sa_handler = &h_handler;
-	sigaction(SIGINT, &hsig, NULL);
+	hact.sa_handler = &h_handler;
+	sigaction(SIGINT, &hact, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -46,7 +46,7 @@ void	signals_child(void)
 
 void	d_handler(int sig)
 {
-	// g_signal_code = 2;
+	g_signal = 2;
 	if (sig == SIGINT)
 	{
 		write(2, "\n", 1);

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/02 16:56:45 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:41:50 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@
 # define VECNEW "minishell: vec_new error\n"
 # define UNMATCH "minishell: unexpected EOF while looking for matching "
 
-extern int	g_signal_code;
+extern int	g_signal;
 
 int		parse_input(t_shell *arg, char *buf);
 int		error_msg(int flag, char *str, char *specifier);

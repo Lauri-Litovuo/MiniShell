@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/02 16:54:54 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:13:47 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	execute(t_shell *arg)
 	int	ret;
 
 	ret = setup_exe(arg);
-	if (ret == -1)
+	if (ret < 0)
 		return (ret);
 	if (create_pipes(arg->pipe_count, arg) < -1)
 	{
