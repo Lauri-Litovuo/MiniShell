@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/03 15:39:36 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:44:48 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
 		check_join(buf, arg, pos, i);
 	}
 	i = push_expand_vector(buf, arg, pos, i);
-	if (expand_variables(&arg->env, &arg[pos].cmd, \
+	if (expand_variables(arg->exit_code, &arg->env, &arg[pos].cmd, \
 		arg[pos].cmd.len - 1) < 0)
 		return (-1);
 	check_join(buf, arg, pos, i);
