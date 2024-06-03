@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 15:55:20 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:20:33 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+int	g_signal;
 
 static char	*get_hdfile_name(char *str, int i)
 {
@@ -57,22 +59,40 @@ static int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
 	return (0);
 }
 
-static void	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
+static int	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
 {
 	char	*buf;
 
+	buf = NULL;
+	redir->save_STDIN = STDIN_FILENO;
+	signals_heredoc();
+	set_fds(redir);
 	while (1)
 	{
-		buf = readline(">");
+		buf = readline("> ");
+		if (g_signal == 2)
+		{
+			signals_default();
+			close(fd);
+			reset_fds(redir);
+			return (EXIT_FAILURE);
+		}
 		if (buf == NULL)
-			exit (EXIT_FAILURE);
+		{
+			signals_default();
+			close(fd);
+			return (EXIT_FAILURE);
+		}
 		if (validate_line(&buf, redir->hd_lim, ret, env) < 0)
 			break ;
 		ft_putstr_fd(buf, fd);
 		free(buf);
 	}
-	free(buf);
+	signals_default();
+	if (buf)
+		free(buf);
 	close(fd);
+	return (0);
 }
 
 
@@ -94,7 +114,8 @@ static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_vec *env)
 			fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd < 0)
 				return (unlink (redir->hd_file), -1);
-			heredoc_loop(redir, &ret, fd, env);
+			if (heredoc_loop(redir, &ret, fd, env) == 1)
+				return (unlink (redir->hd_file), -1);
 		}
 		pos++;
 	}
@@ -113,8 +134,12 @@ int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_vec *env, size_t count)
 		{
 			redir->hd_pos = i;
 			redir->hd_in = YES;
-			if (handle_heredoc(rdrct, redir, i, env) < ERRO)
+			if (handle_heredoc(rdrct, redir, i, env) < 0)
+			{
 				redir->hd_in = ERRO;
+				//free(redir);
+				return (-1);
+			}
 		}
 		i++;
 	}

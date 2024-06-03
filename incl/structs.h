@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 15:44:19 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:21:50 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_redir
 	int		hd_pos;
 	int		re_pos;
 	int		i;
+	int		save_STDIN;
 }	t_redir;
 
 typedef struct s_exec
@@ -63,6 +64,7 @@ typedef struct s_shell
 	int		joinrd_flag;
 	int		endrd_flag;
 	int		expandrd_flag;
+	int		exit_code;
 }	t_shell;
 
 typedef struct s_vecjoin

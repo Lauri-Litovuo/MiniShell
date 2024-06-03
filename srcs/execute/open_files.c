@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 15:28:02 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 13:45:30 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,11 @@ int	open_files(t_vec *rdrct, t_exec *exe, t_vec *env)
 	(void)env; //
 	if (rdrct->len != 0)
 	{
-		 if (check_for_heredoc(rdrct, redir, env, rdrct->len) < 0)
-		 	return (ft_fprintf(2, "minishell : heredoc failed."), -1); //
+		if (check_for_heredoc(rdrct, redir, env, rdrct->len) < 0)
+		 	return (-1);
 		if (setup_and_open_files(rdrct, redir) < 0)
 			return (-1);
 	}
-
 	return (0);
 }
 
