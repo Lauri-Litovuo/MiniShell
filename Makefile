@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
+#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/05/29 14:41:46 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/06/03 15:28:41 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SOURCES = \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
 			srcs/builtins/ft_export_utils.c \
+			srcs/builtins/ft_exit.c \
 			srcs/builtins/builtin_utils.c \
 			srcs/builtins/ft_echo.c \
 			srcs/builtins/ft_cd.c \
