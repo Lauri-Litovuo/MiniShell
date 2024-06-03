@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:46:11 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/05/21 13:45:29 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:45:11 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	store_specialrd_cmd(char *buf, t_shell *arg, size_t pos, int i)
 		check_joinrd(buf, arg, pos, i);
 	}
 	i = push_rdrct_expand_vector(buf, arg, pos, i);
-	if (expand_variables(&arg->env, &arg[pos].rdrct, \
+	if (expand_variables(arg->exit_code, &arg->env, &arg[pos].rdrct, \
 		arg[pos].rdrct.len - 1) < 0)
 		return (-1);
 	check_joinrd(buf, arg, pos, i);

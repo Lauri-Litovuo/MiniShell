@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 14:20:33 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:48:17 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static char	*get_hdfile_name(char *str, int i)
 	return (new);
 }
 
-static int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
+static int	validate_line(char **buf, char *hd_lim, t_redir *redir, t_vec *env)
 {
 	t_vec	temp;
 
 	if (ft_strncmp(*buf, hd_lim, ft_strlen(*buf) + 1) == 0)
 	{
-		*ret = 0;
+		redir->exit_code = 0;
 		return (-1);
 	}
 	if (ft_strchr(*buf, '$') != NULL)
@@ -46,12 +46,12 @@ static int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
 		if (vec_new(&temp, 1, sizeof(char *)) < -1
 			|| vec_push(&temp, &buf) < -1)
 		{
-			*ret = ERRO;
+			redir->exit_code = ERRO;
 			return (-1);
 		}
-		if (expand_variables(env, &temp, 0) == -1 || *buf == NULL)
+		if (expand_variables(redir->exit_code, env, &temp, 0) == -1 || *buf == NULL)
 		{
-			*ret = ERRO;
+			redir->exit_code = ERRO;
 			return (ERRO);
 		}
 		*buf = *(char **)vec_get(&temp, 0);
@@ -59,12 +59,11 @@ static int	validate_line(char **buf, char *hd_lim, int *ret, t_vec *env)
 	return (0);
 }
 
-static int	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
+static int	heredoc_loop(t_redir *redir, int fd, t_vec *env)
 {
 	char	*buf;
 
 	buf = NULL;
-	redir->save_STDIN = STDIN_FILENO;
 	signals_heredoc();
 	set_fds(redir);
 	while (1)
@@ -83,7 +82,7 @@ static int	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
 			close(fd);
 			return (EXIT_FAILURE);
 		}
-		if (validate_line(&buf, redir->hd_lim, ret, env) < 0)
+		if (validate_line(&buf, redir->hd_lim, redir, env) < 0)
 			break ;
 		ft_putstr_fd(buf, fd);
 		free(buf);
@@ -114,7 +113,7 @@ static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_vec *env)
 			fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd < 0)
 				return (unlink (redir->hd_file), -1);
-			if (heredoc_loop(redir, &ret, fd, env) == 1)
+			if (heredoc_loop(redir, fd, env) == 1)
 				return (unlink (redir->hd_file), -1);
 		}
 		pos++;

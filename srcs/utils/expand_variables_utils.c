@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/21 13:37:10 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:12:52 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,14 @@ int	expand_to_empty(t_expd *s, t_vec *vec, int index)
 	return (0);
 }
 
-int	expand_to_exit_status(t_expd *s, t_vec *vec)
+int	expand_to_exit_status(int exit_code, t_expd *s, t_vec *vec, int index)
 {
-	char	*dupped;
-
 	s->exp_len = ft_strlen(s->expanded);
-	s->expanded = ft_itoa(007);	//changed from: g_exit_status because "undefined symbol for architecture when compiling"
-	s->exp_len = ft_strlen(s->expanded);
-	s->new = malloc((s->total_len + s->exp_len - 2) * 1);
-	s->new = ft_substr(s->str, 0, s->pre_len);
-	if (!s->new)
+	s->expanded = ft_itoa(exit_code);
+	if (s->expanded == NULL)
 		return (-1);
-	ft_strlcat(s->new, s->expanded, (s->total_len + s->exp_len - 2));
-	if (!s->new)
-		return (-1);
-	ft_strlcat(s->new, s->str + (s->ds + 2), \
-	(s->total_len + s->exp_len - 2));
-	if (!s->new)
-		return (-1);
-	dupped = ft_strdup(s->new);
-	if (!dupped)
-		return (-1);
-	vec_replace_str(vec, dupped, s->index);
-	s->str = *(char **)vec_get(vec, s->index);
+	vec_replace_str(vec, s->expanded, index);
+	s->str = *(char **)vec_get(vec, index);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 13:45:30 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:48:46 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,3 @@ int	open_files(t_vec *rdrct, t_exec *exe, t_vec *env)
 	}
 	return (0);
 }
-
-

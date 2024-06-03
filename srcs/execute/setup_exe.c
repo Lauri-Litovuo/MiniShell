@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 14:07:33 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:30:28 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_signal;
 
-int	init_redir(t_redir *redir)
+int	init_redir(t_shell *arg, t_redir *redir)
 {
 	redir->fd_in = -1;
 	redir->fd_out = -1;
@@ -36,6 +36,7 @@ int	init_redir(t_redir *redir)
 	redir->hd_lim = NULL;
 	redir->hd_file = NULL;
 	redir->i = -42;
+	redir->exit_code = arg->exit_code;
 	return (0);
 }
 
@@ -66,7 +67,8 @@ int	setup_exe(t_shell *arg)
 		if (exe[i]->path == NULL)
 			return (-1);
 		exe[i]->ret = 0;
-		init_redir(&exe[i]->redir);
+		exe[i]->exit_code = arg->exit_code;
+		init_redir(arg, &exe[i]->redir);
 		if (arg[i].rdrct.len != 0)
 			if (open_files(&arg[i].rdrct, exe[i], &arg->env) < 0)//
 				return (-1);//

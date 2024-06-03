@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 13:43:52 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:02:46 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	miniloop(char *buf, t_shell *arg)
 		{
 			if (parse_input(arg, buf) == -1)
 				continue ;
-			execute(arg); //need to check for heredoc before execute to keep the main loop going in case of heredoc exit signals
+			execute(arg);
 			if (buf && *buf)
 				add_history(buf);	
 		}
@@ -86,12 +86,11 @@ int	minishell(char **envp)
 {
 	char	*buf;
 	t_shell	arg;
-	int		save_STDIN;
 
 	g_signal = 0;
-	save_STDIN = STDIN_FILENO;
 	buf = NULL;
 	ft_memset(&arg, 0, sizeof(t_shell));
+	arg.exit_code = 0;
 	copy_env(&arg.env, envp);
 	miniloop(buf, &arg);
 	if (g_signal == -42)

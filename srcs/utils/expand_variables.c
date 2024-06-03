@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/27 14:10:47 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:58:16 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			expand_string(t_vec *env, t_expd *s, t_vec *vec, int index);
 int			check_if_exists(t_vec *env, t_expd *s);
 static void	check_extra_expand(t_expd *s, char *str);
 
-int	expand_variables(t_vec *env, t_vec *vec, int index)
+int	expand_variables(int exit_code, t_vec *env, t_vec *vec, int index)
 {
 	t_expd	s;
 
@@ -32,7 +32,7 @@ int	expand_variables(t_vec *env, t_vec *vec, int index)
 		{
 			s.pre_len = s.ds;
 			if (s.str[s.ds] == '$' && s.str[s.ds + 1] == '?')
-				s.ret = expand_to_exit_status(&s, vec);
+				s.ret = expand_to_exit_status(exit_code, &s, vec, index);
 			else
 				s.ret = expand_string(env, &s, vec, index);
 			//free_expd(&s);
