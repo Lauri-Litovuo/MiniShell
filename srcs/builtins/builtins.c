@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 15:26:44 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:26:08 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	launch_builtin(t_vec *env, t_exec *exe, t_shell *arg)
 	else if (ft_strncmp(exe->cmd, "cd", 3) == 0)
 		ret = ft_cd(env, &arg[exe->pos].cmd);
 	else if (ft_strncmp(exe->cmd, "exit", 5) == 0)
-	 	 ft_exit(exe, arg);
+		ret = ft_exit(exe, arg);
 	return (ret);
 }

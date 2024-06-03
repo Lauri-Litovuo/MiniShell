@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 15:32:20 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:27:40 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	check_if_numeric(t_vec *arg_cmd)
 	{
 		if (ft_isdigit(ptr[i]) == 0)
 		{
-			error_triple_msg(3, "minishell: exit: ", ptr, \
+			error_triple_msg(3, "la_shell: exit: ", ptr, \
 			": numeric argument required\n");
 			return (255);
 		}

@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/30 10:16:52 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:26:46 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ static int	export_variable(t_vec *env, char *arg)
 			return (-1);
 		if (check_export_syntax(env_var) < 0)
 		{
-			ft_fprintf(2, \
+			ft_fprintf(STDERR_FILENO, \
 			"la_shell: export: %s: is not a valid identifier\n", env_var);
 			return (-1);
 		}
 		else if (export_env_var(env_var, arg, env) < 0)
 		{
-			ft_fprintf(2, "la_shell: export: failed to export\n");
+			ft_fprintf(STDERR_FILENO, "la_shell: export: failed to export\n");
 			return (-1);
 		}
 		free(env_var);
@@ -100,7 +100,7 @@ static int	export_env_var(char *env_var, char *arg, t_vec *env)
 			return (-1);
 		temp = ft_strdup(arg);
 		if (vec_replace_str(env, temp, index) < -1)
-			return (-1); //errmngm
+			return (-1);
 	}
 	return (0);
 }
