@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:16:15 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/07 10:48:14 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 12:45:06 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,10 @@ int	goto_root(t_vec *env)
 		if (update_pwd_env(env, "PWD=/") < 0)
 			return (-1);
 	}
-
 	return (0);
 }
 
-int	get_parent(t_cd *data)
+int	get_parent(t_cd *data, int parent_nbr)
 {
 	int		i;
 	char	**temp;
@@ -71,12 +70,12 @@ int	get_parent(t_cd *data)
 	while (temp[len] != NULL)
 		len++;
 	ft_strlcpy(data->target, "/", PATH_MAX);
-	if (len <= 1)
+	if (len <= 1 || len <= parent_nbr)
 	{
 		free_2d_array(temp);
 		return (0);
 	}
-	while (i < len - 1)
+	while (i < len - parent_nbr)
 	{
 		ft_strlcat(data->target, temp[i], PATH_MAX);
 		ft_strlcat(data->target, "/", PATH_MAX);
