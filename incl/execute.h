@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/30 15:36:49 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:30:16 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,16 @@ typedef enum e_pipe
 int		isit_builtin(char *cmd, int pos);
 int		add_builtin(t_vec *paths, char *cmd);
 int		execute(t_shell *arg);
-int		check_for_heredoc(t_vec *rdrct, t_redir *redir, t_vec *env, size_t count);
+int		check_for_heredoc(t_vec *rdrct, \
+t_redir *redir, t_vec *env, size_t count);
 void	print_exec(t_exec **exe);
 int		ft_fprintf(int fd, const char *fmt, ...);
 int		setup_exe(t_shell *arg);
 char	*get_exec_path(char *cmd, t_vec *env);
 int		open_files(t_vec *rdrct, t_exec *exe, t_vec *env);
 int		run_command(t_shell *arg, t_exec *exe);
-
-int	set_fds(t_redir *redir);
-int	set_pipe_fds(t_exec *exe, t_shell *arg);
-
+int		set_fds(t_redir *redir);
+int		set_pipe_fds(t_exec *exe, t_shell *arg);
 int		check_files_and_fd(t_redir *redir);
 void	close_other_pipe_fds(t_shell *arg, size_t pos);
 int		reset_fds(t_redir *redir);
@@ -47,7 +46,5 @@ void	close_fds(t_exec *exe, int reset);
 void	close_fds_exit(t_shell *arg, int ret);
 void	close_all(t_shell *arg);
 int		execve_error(t_exec *exe, char *err_msg, int ret);
-
-
 
 #endif

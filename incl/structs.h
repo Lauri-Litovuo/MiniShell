@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 15:32:06 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:33:53 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_redir
 	int		hd_pos;
 	int		re_pos;
 	int		i;
-	int		save_STDIN;
+	int		save_stdin;
 }	t_redir;
 
 typedef struct s_exec
@@ -74,5 +74,24 @@ typedef struct s_vecjoin
 	char	*fin;
 	int		index;
 }	t_vecjoin;
+
+typedef struct s_expd
+{
+	char	*temp;
+	char	*str;
+	char	*expanded;
+	char	*env_var;
+	char	*new;
+	int		ret;
+	int		flag;
+	size_t	var_len;
+	size_t	exp_len;
+	size_t	pre_len;
+	size_t	total_len;
+	size_t	index;
+	size_t	ds;
+	size_t	i;
+	size_t	var_index;
+}		t_expd;
 
 #endif
