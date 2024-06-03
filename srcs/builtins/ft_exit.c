@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 12:47:12 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:27:40 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+static int	check_if_numeric(t_vec *arg_cmd)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	ptr = *(char **)vec_get(arg_cmd, 1);
+	while (ptr[i])
+	{
+		if (ft_isdigit(ptr[i]) == 0)
+		{
+			error_triple_msg(3, "la_shell: exit: ", ptr, \
+			": numeric argument required\n");
+			return (255);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int	ft_exit(t_exec *exe, t_shell *arg)
 {
@@ -20,39 +40,20 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 	printf("exit\n");
 	if (arg->count == 1)
 	{
-		free_all(arg);
+		close_fds_exit(arg, 0);
 		return (0);
 	}
 	ret = check_if_numeric(&arg[exe->pos].cmd);
 	if (ret != 0)
 	{
-		free_all(arg);
+		close_fds_exit(arg, ret);
 		return (ret);
 	}
 	if (arg->count > 2)
 	{
-		set_return_to(1);
-		error_msg(2, "minishell: exit: ", "too many arguments\n");
+		arg->exit_status = 1;
+		error_msg(2, "la_shell: exit: ", "too many arguments\n");
 		return (-1);
-	}
-	return (0);
-}
-
-int	check_if_numeric(t_vec *arg_cmd)
-{
-	int		i;
-	char	*ptr;
-
-	ptr = *(char **)vec_get(arg_cmd, 1);
-	while (ptr[i])
-	{
-		if (ft_isdigit(ptr[i]) == 0)
-		{
-			error_triple_msg(3, "minishell: exit: ", ptr, \
-			": numeric argument required\n");
-			return (255);
-		}
-		i++;
 	}
 	return (0);
 }

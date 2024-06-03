@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:05:22 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/30 09:56:10 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 15:28:09 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void		print_exports(t_vec *env);
 
 int			find_index_of_env(t_vec *src, char *str);
 int			ft_echo(t_vec *args);
+int			ft_exit(t_exec *exe, t_shell *arg);
 
 int			ft_cd(t_vec *env, t_vec *args);
 int			goto_path(t_vec *env, t_vec *args, t_cd *data);
@@ -44,7 +45,7 @@ int			expand_relative_paths(t_cd *data);
 int			copy_homedir(t_vec *env, t_cd *data);
 int			goto_home(t_vec *env, t_cd *data);
 int			goto_root(t_vec *env);
-int			get_parent(t_cd *data);
+int			get_parent(t_cd *data, int parent_nbr);
 int			expand_home(t_cd *data);
 int			goto_dir(t_cd *data, t_vec *env);
 void		free_2d_array(char **arr);

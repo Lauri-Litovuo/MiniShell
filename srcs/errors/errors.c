@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:59:39 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/30 16:06:59 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:28:26 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,3 @@ int	execve_error(t_exec *exe, char *err_msg, int ret)
 	write(STDERR_FILENO, "\n", 1);
 	return (ret);
 }
-

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:28:32 by llitovuo          #+#    #+#             */
 /*   Updated: 2024/06/03 15:58:31 by aneitenb         ###   ########.fr       */
@@ -40,6 +40,5 @@ int		expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec, int index);
 int		expand_to_exit_status(int exit_code, t_expd *s, t_vec *vec, int index);
 int		expand_to_empty(t_expd *s, t_vec *vec, int index);
 void	free_expd(t_expd *s);
-
 
 #endif

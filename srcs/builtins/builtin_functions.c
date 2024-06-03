@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 09:08:33 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:25:20 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,11 @@ int	ft_env(t_vec *env, t_exec *exe)
 
 	i = 0;
 	if (exe->cmd_argv[1] != NULL)
-	{
-		ft_fprintf(2, "Minishell : env: too many arguments");
 		return (-1);
-	}
 	while ((size_t)i < env->len)
 	{
 		if (vec_get(env, i) == NULL)
-		{
-			ft_printf("Minishell: vec_get: failed");
-			return (1);
-		}
+			return (-1);
 		printf("%s\n", *(char **)vec_get(env, i));
 		i++;
 	}
@@ -78,11 +72,11 @@ int	ft_unset(t_vec *env, t_vec *args)
 		{
 			index = find_index_of_env(env, env_var);
 			if (index == -1)
-				return (ft_putstr_fd("Minishell: unset", 2), -1);
+				return (-1);
 			free (env_var);
 			env_var = vec_get(env, index);
 			if (vec_remove_str(env, index) < 0)
-				return (ft_putstr_fd("Minishell: unset", 2), -1);
+				return (-1);
 		}
 		i++;
 	}

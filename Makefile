@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
+#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
 #    Updated: 2024/06/03 16:56:34 by aneitenb         ###   ########.fr        #
@@ -50,6 +50,7 @@ SOURCES = \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
 			srcs/builtins/ft_export_utils.c \
+			srcs/builtins/ft_exit.c \
 			srcs/builtins/builtin_utils.c \
 			srcs/builtins/ft_echo.c \
 			srcs/builtins/ft_cd.c \
