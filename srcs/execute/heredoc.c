@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 14:20:33 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:34:27 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	heredoc_loop(t_redir *redir, int *ret, int fd, t_vec *env)
 	char	*buf;
 
 	buf = NULL;
-	redir->save_STDIN = STDIN_FILENO;
+	redir->save_stdin = STDIN_FILENO;
 	signals_heredoc();
 	set_fds(redir);
 	while (1)
