@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:05:18 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/06 12:25:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/03 16:18:16 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	ft_echo(t_vec *args)
 	i = 1;
 	op_n = 0;
 	strs = (char **)args->memory;
-	if (!strs[1])
+	if (args->len == 1)
 	{
 		if (write(1, "\n", 1) < 0)
-			return (printf("write failed in echo"), -1);
+			return (-1);
 		return (0);
 	}
-	if (ft_strncmp(strs[i], "-n", 3) == 0)
+	if (ft_strncmp(strs[1], "-n", 3) == 0)
 	{
 		op_n = 1;
 		i++;
@@ -48,21 +48,12 @@ static int	print_strings(t_vec *args, size_t i, int op_n)
 	while (i < args->len)
 	{
 		ft_putstr(strs[i], &check);
-		if (check < 0)
-			return (-1); //errmngmt
 		if (i < args->len - 1)
-		{
 			ft_putstr(" ", &check);
-			if (check < 0)
-				return (-1); //errmngmt
-		}
 		i++;
 	}
-	if (op_n == 0)
-	{
-		ft_putstr("\n", &check);
-		if (check < 0)
-			return (-1); //errmngmt
-	}
+	if (op_n == 1)
+		return (0);
+	ft_putstr("\n", &check);
 	return (0);
 }
