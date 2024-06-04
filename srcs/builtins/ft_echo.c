@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:05:18 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 14:32:53 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:40:25 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ static int	print_strings(t_vec *args, size_t i, int op_n)
 	strs = (char **)args->memory;
 	while (i < args->len)
 	{
-		printf("trying to print: %s\n", strs[i]);
 		quote = check_for_quotes(strs[i]);
-		printf("quote: %d\n", quote);
 		if (quote == 0)
 			ft_putstr(strs[i], &check);
 		else
