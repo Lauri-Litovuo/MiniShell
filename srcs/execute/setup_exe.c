@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 15:30:28 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:04:19 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,21 @@ int	setup_exe(t_shell *arg)
 			j++;
 		}
 		exe[i]->cmd_argv[j] = NULL;
-		exe[i]->cmd = *(char **)vec_get(&arg[i].cmd, 0);
-		exe[i]->path = get_exec_path(exe[i]->cmd, &arg->env);
-		if (exe[i]->path == NULL)
-			return (-1);
+		if (arg[i].cmd.len != 0)
+		{
+			exe[i]->cmd = *(char **)vec_get(&arg[i].cmd, 0);
+			exe[i]->path = get_exec_path(exe[i]->cmd, &arg->env);
+			if (exe[i]->path == NULL)
+				return (-1);
+		}
 		exe[i]->ret = 0;
 		exe[i]->exit_code = arg->exit_code;
 		init_redir(arg, &exe[i]->redir);
 		if (arg[i].rdrct.len != 0)
+		{
 			if (open_files(&arg[i].rdrct, exe[i], &arg->env) < 0)//
 				return (-1);//
+		}
 		if (g_signal == 2)
 			arg->exit_code = 1;
 		if (sub_exe->pos > 0 && sub_exe->redir.file_in == NO && sub_exe->redir.hd_in == NO)

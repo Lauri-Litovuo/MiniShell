@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 15:48:17 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:52:22 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static int	validate_line(char **buf, char *hd_lim, t_redir *redir, t_vec *env)
 {
 	t_vec	temp;
 
+	if (*buf == NULL)
+		return (-1);
 	if (ft_strncmp(*buf, hd_lim, ft_strlen(*buf) + 1) == 0)
 	{
 		redir->exit_code = 0;
@@ -64,33 +66,28 @@ static int	heredoc_loop(t_redir *redir, int fd, t_vec *env)
 	char	*buf;
 
 	buf = NULL;
-	signals_heredoc();
 	set_fds(redir);
 	while (1)
 	{
+		signals_heredoc();
 		buf = readline("> ");
+		signals_default();
 		if (g_signal == 2)
 		{
-			signals_default();
 			close(fd);
 			reset_fds(redir);
-			return (EXIT_FAILURE);
-		}
-		if (buf == NULL)
-		{
-			signals_default();
-			close(fd);
 			return (EXIT_FAILURE);
 		}
 		if (validate_line(&buf, redir->hd_lim, redir, env) < 0)
 			break ;
 		ft_putstr_fd(buf, fd);
 		free(buf);
+		ft_putstr_fd("\n", fd);
 	}
-	signals_default();
 	if (buf)
 		free(buf);
 	close(fd);
+	reset_fds(redir);
 	return (0);
 }
 

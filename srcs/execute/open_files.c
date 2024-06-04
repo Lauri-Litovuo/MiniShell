@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 14:48:46 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:35:30 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int	open_files(t_vec *rdrct, t_exec *exe, t_vec *env)
 	t_redir	*redir;
 
 	redir = &exe->redir;
-	(void)env; //
 	if (rdrct->len != 0)
 	{
 		if (check_for_heredoc(rdrct, redir, env, rdrct->len) < 0)
