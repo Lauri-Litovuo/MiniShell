@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 17:01:15 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:13:08 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,17 +124,18 @@ int	execute(t_shell *arg)
 	if (ret < 0)
 		return (ret);
 	if (create_pipes(arg->pipe_count, arg) < -1)
-	{
-		ft_fprintf(2, "minishell: pipe creation failed");
 		return (-1);
-	}
-	if (arg->count == 1 && isit_builtin(arg->exe[0]->cmd, 0) != 0
-		&& check_files_and_fd(&arg->exe[0]->redir) == YES)
+	if (arg->count == 1 && check_files_and_fd(&arg->exe[0]->redir) == YES)
 	{
-		set_fds(&arg->exe[0]->redir);
-		ret = launch_builtin(&arg->env, arg->exe[0], arg);
-		close_fds(arg->exe[0], YES);
-		return (ret);
+		if (isit_builtin(arg->exe[0]->cmd, 0) == -1)
+			return (0);
+		else if (isit_builtin(arg->exe[0]->cmd, 0) == INT_MIN)
+		{
+			set_fds(&arg->exe[0]->redir);
+			ret = launch_builtin(&arg->env, arg->exe[0], arg);
+			close_fds(arg->exe[0], YES);
+			return (ret);
+		}
 	}
 	if (piping(arg) < -1)
 		return (-1);

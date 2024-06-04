@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/02 16:01:23 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:51:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	execute_cmd(t_exec *exe, t_shell *arg)
 int	run_command(t_shell *arg, t_exec *exe)
 {
 	int	ret;
-	
+
 	if (!exe || !exe->cmd || !exe->cmd_argv)
 		exit(1);
 	if (check_files_and_fd(&exe->redir) == ERRO)
