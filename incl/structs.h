@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 15:23:48 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:22:30 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ typedef struct s_expd
 	size_t	ds;
 	size_t	i;
 	size_t	var_index;
-}		t_expd;
+}	t_expd;
 
 #endif

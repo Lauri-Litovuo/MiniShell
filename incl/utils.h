@@ -6,31 +6,12 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:28:32 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 15:58:31 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 10:22:38 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
-
-typedef struct s_expd
-{
-	char	*temp;
-	char	*str;
-	char	*expanded;
-	char	*env_var;
-	char	*new;
-	int		ret;
-	int		flag;
-	size_t	var_len;
-	size_t	exp_len;
-	size_t	pre_len;
-	size_t	total_len;
-	size_t	index;
-	size_t	ds;
-	size_t	i;
-	size_t	var_index;
-}	t_expd;
 
 int		expand_variables(int exit_code, t_vec *env, t_vec *vec, int index);
 char	*extract_env_var(char *arg);
