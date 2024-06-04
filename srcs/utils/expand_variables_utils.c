@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 12:09:24 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:53:50 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,27 @@ int	expand_to_empty(t_expd *s, t_vec *vec, int index)
 
 int	expand_to_exit_status(int exit_code, t_expd *s, t_vec *vec, int index)
 {
-	s->exp_len = ft_strlen(s->expanded);
+	char	*dupped;
+
 	s->expanded = ft_itoa(exit_code);
 	if (s->expanded == NULL)
 		return (-1);
+	s->exp_len = ft_strlen(s->expanded);
+	s->new = malloc((s->total_len - 2 + s->exp_len) * 1);
+	if (!s->new)
+		return (-1);
+	s->new = ft_substr(s->str, 0, s->pre_len);
+	if (!s->new)
+		return (-1);
+	s->join = ft_strjoin(s->new, s->expanded);
+	free(s->new);
+	s->new = ft_substr(s->str, (s->ds + 2), ft_strlen(s->str));
+	free(s->expanded);
+	dupped = ft_strjoin(s->join, s->new);
+	free(s->new);
+	free(s->join);
+	vec_replace_str(vec, dupped, index);
+	return (0);
 	vec_replace_str(vec, s->expanded, index);
 	s->str = *(char **)vec_get(vec, index);
 	return (0);
