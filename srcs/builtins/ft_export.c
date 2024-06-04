@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 16:26:46 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:21:06 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	export_variable(t_vec *env, char *arg)
 	char	*env_var;
 
 	env_var = NULL;
-	if (ft_strchr(arg, '=') != NULL && arg[1] != '=')
+	if (ft_strchr(arg, '=') != NULL && ft_strncmp(arg, "=", 2) != 0)
 	{
 		env_var = extract_env_var(arg);
 		if (env_var == NULL)
@@ -53,7 +53,7 @@ static int	export_variable(t_vec *env, char *arg)
 		if (check_export_syntax(env_var) < 0)
 		{
 			ft_fprintf(STDERR_FILENO, \
-			"la_shell: export: %s: is not a valid identifier\n", env_var);
+			"la_shell: export: `%s': not a valid identifier\n", env_var);
 			return (-1);
 		}
 		else if (export_env_var(env_var, arg, env) < 0)
@@ -63,6 +63,9 @@ static int	export_variable(t_vec *env, char *arg)
 		}
 		free(env_var);
 	}
+	if (ft_strncmp(arg, "=", 2) == 0)
+		return (ft_putendl_fd("la_shell: export: `=': not a valid identifier", \
+		STDERR_FILENO), -1);
 	return (0);
 }
 

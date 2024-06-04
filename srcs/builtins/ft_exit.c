@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 16:27:40 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/04 15:35:22 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,26 @@ static int	check_if_numeric(t_vec *arg_cmd)
 int	ft_exit(t_exec *exe, t_shell *arg)
 {
 	int	ret;
+	int	count;
 
 	ret = 0;
+	count = arg[exe->pos].cmd.len;
 	printf("exit\n");
-	if (arg->count == 1)
+	if (count == 1)
 	{
 		close_fds_exit(arg, 0);
 		return (0);
+	}
+	if (arg->count > 2)
+	{
+		arg->exit_status = 1;
+		return (ft_putendl_fd("la_shell: exit: too many arguments", 2), -1);
 	}
 	ret = check_if_numeric(&arg[exe->pos].cmd);
 	if (ret != 0)
 	{
 		close_fds_exit(arg, ret);
 		return (ret);
-	}
-	if (arg->count > 2)
-	{
-		arg->exit_status = 1;
-		error_msg(2, "la_shell: exit: ", "too many arguments\n");
-		return (-1);
 	}
 	return (0);
 }
