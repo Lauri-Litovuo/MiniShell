@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:05:18 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 14:40:25 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/04 14:48:00 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ static int	check_for_quotes(char *str)
 			count_double++;
 		str++;
 	}
-	if (count_single % 2 == 0)
+	if (count_single != 0 && count_single % 2 == 0)
 		return (1);
-	else if (count_double % 2 == 0)
+	else if (count_double != 0 && count_double % 2 == 0)
 		return (2);
 	else
 		return (0);
