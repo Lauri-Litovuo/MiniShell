@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 11:41:50 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 11:52:28 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# define PATH_MAX 4096
-# define INT_MIN -2147483647
 
 /****************************************
 *	Standard output formatting: printf	*
@@ -79,8 +77,9 @@
 *	tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs	*
 *********************************************************/
 # include <curses.h>
+# define PATH_MAX 4096
+# define INT_MIN -2147483647
 
-# include <limits.h>
 # include <errno.h>
 # include "../libft/includes/libft.h"
 # include "structs.h"
@@ -98,6 +97,7 @@
 # define VECPUSH "minishell: vec_push error\n"
 # define VECNEW "minishell: vec_new error\n"
 # define UNMATCH "minishell: unexpected EOF while looking for matching "
+
 
 extern int	g_signal;
 

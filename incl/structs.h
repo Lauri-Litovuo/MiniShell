@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 10:22:30 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:03:19 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_expd
 	char	*expanded;
 	char	*env_var;
 	char	*new;
+	char	*join;
 	int		ret;
 	int		flag;
 	size_t	var_len;
