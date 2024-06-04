@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 11:52:28 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:36:27 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,13 @@
 /****************************
 *			MACROS			*
 *****************************/
-# define SYNTX "minishell: syntax error near unexpected token "
-# define SUBSTR "minishell: substr error\n"
-# define STRDUP "minishell: strdup error\n"
-# define STRJOIN "minishell: strjoin error\n"
-# define VECPUSH "minishell: vec_push error\n"
-# define VECNEW "minishell: vec_new error\n"
-# define UNMATCH "minishell: unexpected EOF while looking for matching "
+# define SYNTX "la_shell: syntax error near unexpected token "
+# define SUBSTR "la_shell: substr error\n"
+# define STRDUP "la_shell: strdup error\n"
+# define STRJOIN "la_shell: strjoin error\n"
+# define VECPUSH "la_shell: vec_push error\n"
+# define VECNEW "la_shell: vec_new error\n"
+# define UNMATCH "la_shell: unexpected EOF while looking for matching "
 
 
 extern int	g_signal;
