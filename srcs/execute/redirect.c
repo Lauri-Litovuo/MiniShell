@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 12:18:34 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/04 13:35:13 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	set_fds(t_redir *redir)
 		return (-1);
 	if (redir->fd_in != -1)
 		if (dup2(redir->fd_in, STDIN_FILENO) == -1)
-			ret = error_triple_msg(3, "minishell :", "dup2 :", redir->infile);
+			ret = error_triple_msg(3, "la_shell :", "dup2 :", redir->infile);
 	if (redir->fd_out != -1)
 		if (dup2(redir->fd_out, STDOUT_FILENO) == -1)
-			ret = error_triple_msg(3, "minishell :", "dup2 :", redir->outfile);
+			ret = error_triple_msg(3, "la_shell :", "dup2 :", redir->outfile);
 	return (ret);
 }
 
