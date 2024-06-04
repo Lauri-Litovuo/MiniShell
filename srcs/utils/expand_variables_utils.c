@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 16:12:52 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/04 12:09:24 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,21 @@ int	expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec, int index)
 	- s->var_len - 1);
 	if (!s->expanded)
 		return (-1);
-	ft_strlcpy(s->expanded, \
+	s->exp_len = ft_strlcpy(s->expanded, \
 	(*(char **)vec_get(env, s->var_index) + s->var_len + 1), PATH_MAX);
-	s->exp_len = ft_strlen(s->expanded);
 	s->new = malloc((s->total_len - s->var_len + s->exp_len) * 1);
 	if (!s->new)
 		return (-1);
 	s->new = ft_substr(s->str, 0, s->pre_len);
 	if (!s->new)
 		return (-1);
-	ft_strlcat(s->new, s->expanded, (s->total_len - s->var_len + s->exp_len));
-	ft_strlcat(s->new, s->str + (s->ds + s->var_len + 1), \
-	(s->total_len - s->var_len + s->exp_len));
-	dupped = ft_strdup(s->new);
-	if (!dupped)
-		return (-1);
+	s->join = ft_strjoin(s->new, s->expanded);
+	free(s->new);
+	s->new = ft_substr(s->str, (s->ds + s->var_len + 1), ft_strlen(s->str));
+	free(s->expanded);
+	dupped = ft_strjoin(s->join, s->new);
+	free(s->new);
+	free(s->join);
 	vec_replace_str(vec, dupped, index);
 	return (0);
 }
