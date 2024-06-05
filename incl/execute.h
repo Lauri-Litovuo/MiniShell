@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 16:30:16 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:37:51 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	close_fds(t_exec *exe, int reset);
 void	close_fds_exit(t_shell *arg, int ret);
 void	close_all(t_shell *arg);
 int		execve_error(t_exec *exe, char *err_msg, int ret);
+void	file_error(char *filename, char *err_msg);
 
 #endif

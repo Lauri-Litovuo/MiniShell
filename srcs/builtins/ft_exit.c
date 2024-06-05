@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 15:35:22 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:04:37 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,35 @@ static int	check_if_numeric(t_vec *arg_cmd)
 	{
 		if (ft_isdigit(ptr[i]) == 0)
 		{
-			error_triple_msg(3, "la_shell: exit: ", ptr, \
-			": numeric argument required\n");
-			return (255);
+			if ((ptr[i] != '+' && ptr[i] != '-'))
+			{
+				error_triple_msg(3, "la_shell: exit: ", ptr, \
+				": numeric argument required\n");
+				return (255);
+			}
 		}
 		i++;
 	}
 	return (0);
+}
+
+static int	get_exit_nbr(t_vec *arg_cmd)
+{
+	char			*ptr;
+	long long int	ret;
+
+	ptr = *(char **)vec_get(arg_cmd, 1);
+	if (!ptr)
+		return (-1);
+	ret = ft_atoi(ptr);
+	if (ret < 0)
+	{
+		ret *= -1;
+		ret %= 256;
+		ret = 256 - ret;
+		return (ret);
+	}
+	return (ret % 256);
 }
 
 int	ft_exit(t_exec *exe, t_shell *arg)
@@ -53,8 +75,10 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 	ret = check_if_numeric(&arg[exe->pos].cmd);
 	if (ret != 0)
 	{
+		ret = 255;
 		close_fds_exit(arg, ret);
-		return (ret);
 	}
-	return (0);
+	ret = get_exit_nbr(&arg[exe->pos].cmd);
+	close_fds_exit(arg, ret);
+	return (ret);
 }
