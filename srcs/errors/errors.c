@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:59:39 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/03 16:28:26 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:23:41 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,17 @@ int	execve_error(t_exec *exe, char *err_msg, int ret)
 	ft_putstr_fd(exe->cmd, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	if (ret == 2 && access(exe->path, F_OK) == -1)
-		ft_putstr_fd("command not found", STDERR_FILENO);
+		ft_putstr_fd("command not found\n", STDERR_FILENO);
 	else
 		ft_putstr_fd(err_msg, STDERR_FILENO);
-	write(STDERR_FILENO, "\n", 1);
 	return (ret);
+}
+
+void	file_error(char *filename, char *err_msg)
+{
+	ft_putstr_fd("la_shell: ", STDERR_FILENO);
+	ft_putstr_fd(filename, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
+	write(STDERR_FILENO, "\n", 1);
 }
