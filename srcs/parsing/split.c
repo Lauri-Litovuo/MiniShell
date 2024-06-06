@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/03 15:44:48 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:50:26 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 		&& buf[i] != '\t' && buf[i] != '\n')
 		i++;
 	if (buf[i] == '$')
+	{
+		arg->split_flag = 1;
 		i = store_special_cmd(buf, arg, pos, i);
+	}
 	else
 	{
 		arg->temp = ft_substr(buf, arg->j, (i - arg->j));
