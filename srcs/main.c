@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:29:34 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:51:15 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_index(t_shell *arg)
 	arg->endrd_flag = 0;
 	arg->expandrd_flag = 0;
 	arg->exit_code = 0;
+	arg->split_flag = 0;
 }
 
 static int	copy_env(t_vec *env, char **envp)
