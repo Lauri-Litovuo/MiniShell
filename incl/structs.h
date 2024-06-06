@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/05 13:08:13 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 15:49:56 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_shell
 	int		joinrd_flag;
 	int		endrd_flag;
 	int		expandrd_flag;
+	size_t	split_flag;
 	int		exit_status;
 	int		exit_code;
 }	t_shell;
