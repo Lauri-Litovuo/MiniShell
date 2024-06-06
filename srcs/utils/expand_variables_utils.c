@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 15:53:50 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:05:47 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	expand_to_env_var(t_vec *env, t_expd *s, t_vec *vec, int index)
+int	expand_to_env_var(t_shell *arg, t_expd *s, t_vec *vec, int index)
 {
 	char	*dupped;
 
-	s->expanded = malloc (ft_strlen(*(char **)vec_get(env, s->var_index)) \
+	s->expanded = malloc (ft_strlen(*(char **)vec_get(&arg->env, s->var_index)) \
 	- s->var_len - 1);
 	if (!s->expanded)
 		return (-1);
 	s->exp_len = ft_strlcpy(s->expanded, \
-	(*(char **)vec_get(env, s->var_index) + s->var_len + 1), PATH_MAX);
+	(*(char **)vec_get(&arg->env, s->var_index) + s->var_len + 1), PATH_MAX);
 	s->new = malloc((s->total_len - s->var_len + s->exp_len) * 1);
 	if (!s->new)
 		return (-1);
@@ -56,11 +56,11 @@ int	expand_to_empty(t_expd *s, t_vec *vec, int index)
 	return (0);
 }
 
-int	expand_to_exit_status(int exit_code, t_expd *s, t_vec *vec, int index)
+int	expand_to_exit_status(t_shell *arg, t_expd *s, t_vec *vec, int index)
 {
 	char	*dupped;
 
-	s->expanded = ft_itoa(exit_code);
+	s->expanded = ft_itoa(arg->exit_code);
 	if (s->expanded == NULL)
 		return (-1);
 	s->exp_len = ft_strlen(s->expanded);

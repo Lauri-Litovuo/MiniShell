@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/05 13:08:13 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:11:19 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_redir
 	int		hd_pos;
 	int		re_pos;
 	int		i;
-	int		exit_code;
 }	t_redir;
 
 typedef struct s_exec
@@ -42,7 +41,6 @@ typedef struct s_exec
 	char		*path;
 	int			ret;
 	int			*pipe_fd;
-	int			exit_code;
 	size_t		pos;
 }				t_exec;
 

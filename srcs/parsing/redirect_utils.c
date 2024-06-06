@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:47:25 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/03 15:45:01 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:10:17 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	rdrct_qq(char *buf, t_shell *arg, size_t pos, int i)
 		return (-2000);
 	if (arg->expandrd_flag > 0)
 	{
-		if (expand_variables(arg->exit_code, &arg->env, &arg[pos].rdrct, \
+		if (expand_variables(arg, &arg[pos].rdrct, \
 			arg[pos].rdrct.len - 1) < 0)
 			return (-1);
 	}

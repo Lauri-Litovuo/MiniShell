@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/05 10:51:50 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:51:28 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,14 @@ int	setup_and_open_files(t_vec *rdrct, t_redir *redir)
 	return (0);
 }
 
-int	open_files(t_vec *rdrct, t_exec *exe, t_vec *env)
+int	open_files(t_vec *rdrct, t_exec *exe, t_shell *arg)
 {
 	t_redir	*redir;
 
 	redir = &exe->redir;
 	if (rdrct->len != 0)
 	{
-		if (check_for_heredoc(rdrct, redir, env, rdrct->len) < 0)
+		if (check_for_heredoc(rdrct, redir, arg, rdrct->len) < 0)
 			return (-1);
 		if (setup_and_open_files(rdrct, redir) < 0)
 			return (-1);

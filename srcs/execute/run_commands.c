@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 12:51:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 17:34:05 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	execute_cmd(t_exec *exe, t_shell *arg)
 	return (-1);
 }
 
-int	run_command(t_shell *arg, t_exec *exe)
+int	 run_command(t_shell *arg, t_exec *exe)
 {
 	int	ret;
 
