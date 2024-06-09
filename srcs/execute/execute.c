@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/07 17:01:55 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:56:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ static int	wait_children(t_shell *arg)
 			printf("\n");
 	if (arg->exit_code == 131)
 			printf("Quit: 3\n");
-	printf("arg exit code after waiting: %d\n", arg->exit_code);
 	signals_default();
 	return (arg->exit_code);
 }
@@ -135,7 +134,6 @@ int	execute(t_shell *arg)
 		}
 	}
 	ret = piping(arg);
-	printf("return value after execute: %d\n", ret);
 	arg->exit_code = ret;
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 09:33:51 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/07 17:04:39 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:53:38 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	close_fds_exit(t_shell *arg, int ret)
 	t_exec	*exe;
 
 	i = 0;
-	printf("\n\nret in close_fds_exit: %d\n", ret);
 	if (arg)
 	{
 		while (i < arg->count)
