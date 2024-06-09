@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/06 17:34:05 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:32:06 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	execute_cmd(t_exec *exe, t_shell *arg)
 int	 run_command(t_shell *arg, t_exec *exe)
 {
 	int	ret;
-
+	
+	ret = 0;
 	if (!exe || !exe->cmd || !exe->cmd_argv)
 		exit(1);
 	if (check_files_and_fd(&exe->redir) == ERRO)
@@ -61,9 +62,10 @@ int	 run_command(t_shell *arg, t_exec *exe)
 			error_triple_msg(2, exe->cmd, ": failed\n", NULL);
 		close_fds_exit(arg, ret);
 	}
-	ret = execute_cmd(exe, arg);
+	execute_cmd(exe, arg);
 	if (ret == DIRECTORY)
 		execve_error(exe, "is a directory", 126);
+	printf("\n\nret value in run_command: %d\n", ret);
 	close_fds_exit(arg, ret);
 	return (ret);
 }

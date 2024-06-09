@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/06 17:05:47 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:22:12 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	expand_to_exit_status(t_shell *arg, t_expd *s, t_vec *vec, int index)
 	s->expanded = ft_itoa(arg->exit_code);
 	if (s->expanded == NULL)
 		return (-1);
+	printf("expanded exit code: %s\n", s->expanded);
 	s->exp_len = ft_strlen(s->expanded);
 	s->new = malloc((s->total_len - 2 + s->exp_len) * 1);
 	if (!s->new)

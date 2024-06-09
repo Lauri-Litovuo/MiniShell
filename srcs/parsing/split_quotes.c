@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/06 17:09:34 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:21:10 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL); //do I need to free buf? maybe in bigger parse
-		return (-2000);
+		return (-1);
 	}
 	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
-		return (-2000);
+		return (-1);
 	if (arg->expand_flag > 0)
 	{
 		if (expand_variables(arg, &arg[pos].cmd, \
@@ -40,10 +40,10 @@ int	include_quote(char *buf, t_shell *arg, size_t pos, int i)
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
-		return (-2000);
+		return (-1);
 	}
 	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
-		return (-2000);
+		return (-1);
 	i++;
 	check_join(buf, arg, pos, i);
 	return (i);

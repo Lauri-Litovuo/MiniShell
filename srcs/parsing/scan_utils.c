@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 21:00:48 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/29 15:24:40 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:41:18 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	handle_start(char *buf, int i)
 	{
 		free(buf);
 		error_msg(2, SYNTX, "`|'\n");
-		return (-2000);
+		return (-1);
 	}
 	return (i);
 }
@@ -48,7 +48,7 @@ int	handle_q(char *buf, int i)
 		{
 			free(buf);
 			error_msg(2, UNMATCH, "`''\n");
-			return (-2000);
+			return (-1);
 		}
 		i++;
 		return (skip_spaces(buf, i));
@@ -71,7 +71,7 @@ int	handle_qq(char *buf, int i)
 		{
 			free(buf);
 			error_msg(2, UNMATCH, "`\"'\n");
-			return (-2000);
+			return (-1);
 		}
 		i++;
 		return (skip_spaces(buf, i));
@@ -85,20 +85,20 @@ int	handle_pipe(char *buf, int i)
 	{
 		free(buf);
 		error_msg(2, SYNTX, "`|'\n");
-		return (-2000);
+		return (-1);
 	}
 	i = skip_spaces(buf, i);
 	if (buf[i] == '\0')
 	{
 		free(buf);
 		error_msg(2, SYNTX, "`newline'\n");
-		return (-2000);
+		return (-1);
 	}
 	if (buf[i] == '|')
 	{
 		free(buf);
 		error_msg(2, SYNTX, "`|'\n");
-		return (-2000);
+		return (-1);
 	}
 	return (i);
 }

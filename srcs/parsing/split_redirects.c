@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:09:17 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/31 12:15:58 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:25:11 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	store_less(char *buf, t_shell *arg, size_t pos, int i)
 		i = store_double(buf, arg, pos, i);
 	if (buf[i] == '<' && buf[i + 1] != '<')
 		i = store_single(buf, arg, pos, i);
+	if (i < 0)
+		return (-1);
 	i = skip_spaces(buf, i);
 	arg->j = i;
 	if (buf[i] == '\'')
@@ -48,6 +50,8 @@ int	store_great(char *buf, t_shell *arg, size_t pos, int i)
 		i = store_double(buf, arg, pos, i);
 	if (buf[i] == '>' && buf[i + 1] != '>')
 		i = store_single(buf, arg, pos, i);
+	if (i < 0)
+		return (-1);
 	i = skip_spaces(buf, i);
 	arg->j = i;
 	if (buf[i] == '\'')

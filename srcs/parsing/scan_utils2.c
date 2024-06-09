@@ -6,13 +6,13 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:39:34 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/13 12:07:30 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:26 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	last_red_error(char *buf, int i)
+static int	last_red_error(char *buf, int i)
 {
 	if (buf[i + 1] == '<')
 	{
@@ -35,7 +35,7 @@ int	last_red_error(char *buf, int i)
 	return (i);
 }
 
-int	redirect_error(char *buf, int i)
+static int	redirect_error(char *buf, int i)
 {
 	if (buf[i] == '>')
 	{
@@ -54,7 +54,7 @@ int	redirect_error(char *buf, int i)
 	return (i);
 }
 
-int	check_endofinput(char *buf, int i)
+static int	check_endofinput(char *buf, int i)
 {
 	int	ret;
 
@@ -77,7 +77,7 @@ int	check_endofinput(char *buf, int i)
 		return (ret);
 }
 
-int	handle_great(char *buf, int i)
+static int	handle_great(char *buf, int i)
 {
 	if (buf[i] == '>')
 	{
@@ -88,14 +88,14 @@ int	handle_great(char *buf, int i)
 			if (buf[i] == '<' || buf[i] == '>')
 			{
 				error_msg(2, SYNTX, "`>'\n");
-				return (-2000);
+				return (-1);
 			}
 		}
 		else if (buf[i] == '<')
 		{
 			free(buf);
 			error_msg(2, SYNTX, "`<'\n");
-			return (-2000);
+			return (-1);
 		}
 	}
 	i = skip_spaces(buf, i);
@@ -118,12 +118,12 @@ int	handle_lessgreat(char *buf, int i)
 			if (buf[i] == '<' || buf[i] == '>')
 			{
 				error_msg(2, SYNTX, "`newline'\n");
-				return (-2000);
+				return (-1);
 			}
 			if (buf[i] == '>')
 			{
 				error_msg(2, SYNTX, "`>'\n");
-				return (-2000);
+				return (-1);
 			}
 		}
 	}

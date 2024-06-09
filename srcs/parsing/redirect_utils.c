@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:47:25 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/06 17:10:17 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:24:29 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	store_single(char *buf, t_shell *arg, size_t pos, int i)
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
-		return (-2000);
+		return (-1);
 	}
 	if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
-		return (-2000);
+		return (-1);
 	return (i + 1);
 }
 
@@ -39,10 +39,10 @@ int	store_double(char *buf, t_shell *arg, size_t pos, int i)
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
-		return (-2000);
+		return (-1);
 	}
 	if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
-		return (-2000);
+		return (-1);
 	return (i + 2);
 }
 
@@ -63,10 +63,10 @@ int	rdrct_qq(char *buf, t_shell *arg, size_t pos, int i)
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
-		return (-2000);
+		return (-1);
 	}
 	if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
-		return (-2000);
+		return (-1);
 	if (arg->expandrd_flag > 0)
 	{
 		if (expand_variables(arg, &arg[pos].rdrct, \
@@ -91,10 +91,10 @@ int	rdrct_q(char *buf, t_shell *arg, size_t pos, int i)
 	if (arg->temp == NULL)
 	{
 		error_msg(1, SUBSTR, NULL);
-		return (-2000);
+		return (-1);
 	}
 	if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
-		return (-2000);
+		return (-1);
 	i++;
 	check_joinrd(buf, arg, pos, i);
 	return (i);
@@ -118,10 +118,10 @@ int	rdrct_file(char *buf, t_shell *arg, size_t pos, int i)
 		if (arg->temp == NULL)
 		{
 			error_msg(1, SUBSTR, NULL);
-			return (-2000);
+			return (-1);
 		}
 		if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
-			return (-2000);
+			return (-1);
 		check_joinrd(buf, arg, pos, i);
 	}
 	return (i);

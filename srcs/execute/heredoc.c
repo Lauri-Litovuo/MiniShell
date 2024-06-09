@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/06 17:43:45 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:44:19 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,14 @@ static int	validate_line(char **buf, char *hd_lim, t_shell *arg)
 	if (*buf == NULL)
 		return (-1);
 	if (ft_strncmp(*buf, hd_lim, ft_strlen(*buf) + 1) == 0)
-	{
-		arg->exit_code = 0;
 		return (-1);
-	}
 	if (ft_strchr(*buf, '$') != NULL)
 	{
 		if (vec_new(&temp, 1, sizeof(char *)) < -1
 			|| vec_push(&temp, &buf) < -1)
-		{
-			arg->exit_code = ERRO;
 			return (-1);
-		}
 		if (expand_variables(arg, &temp, 0) == -1 || *buf == NULL)
-		{
-			arg->exit_code = ERRO;
-			return (ERRO);
-		}
+			return (-1);
 		*buf = *(char **)vec_get(&temp, 0);
 	}
 	return (0);

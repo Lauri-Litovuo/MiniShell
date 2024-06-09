@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:29:34 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:31:10 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	init_index(t_shell *arg)
 	arg->joinrd_flag = -1;
 	arg->endrd_flag = 0;
 	arg->expandrd_flag = 0;
-	arg->exit_code = 0;
 }
 
 static int	copy_env(t_vec *env, char **envp)
@@ -54,12 +53,11 @@ int	miniloop(char *buf, t_shell *arg)
 {
 	while (1)
 	{
-		g_signal = 0;	
 		init_index(arg);
 		signals_default();
 		buf = readline("la_shell> ");
-		if (g_signal == 2)
-			arg->exit_code = 1;
+		enabled_termios();//why?
+		check_signal(arg);
 		if (!buf)
 		{
 			printf("exit\n");//
@@ -76,7 +74,6 @@ int	miniloop(char *buf, t_shell *arg)
 		}
 		free(buf);
 		free_arg(arg, NO);
-		// enabled_termios();//why?
 	}
 	free_arg(arg, YES);
 	return (0);
@@ -89,16 +86,10 @@ int	minishell(char **envp)
 
 	g_signal = 0;
 	buf = NULL;
-	ft_memset(&arg, 0, sizeof(t_shell));
 	arg.exit_code = 0;
+	ft_memset(&arg, 0, sizeof(t_shell));
 	copy_env(&arg.env, envp);
 	miniloop(buf, &arg);
-	if (g_signal == -42)
-	{
-		free(buf);
-		free_arg(&arg, NO);
-		miniloop(buf, &arg);
-	}
 	return (0);
 }
 
