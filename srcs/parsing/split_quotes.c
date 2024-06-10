@@ -6,13 +6,13 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/09 16:21:10 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:14:19 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
+static int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 {
 	arg->temp = ft_substr(buf, arg->j + 1, (i - arg->j - 1));
 	if (arg->temp == NULL)
@@ -34,21 +34,6 @@ int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 	return (i);
 }
 
-int	include_quote(char *buf, t_shell *arg, size_t pos, int i)
-{
-	arg->temp = ft_substr(buf, arg->j, (i - arg->j + 1));
-	if (arg->temp == NULL)
-	{
-		error_msg(1, SUBSTR, NULL);
-		return (-1);
-	}
-	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
-		return (-1);
-	i++;
-	check_join(buf, arg, pos, i);
-	return (i);
-}
-
 /****************************************************************
 *	Stores content between '' into vector. If the str includes	*
 *	redirections or $ the quotes will be included in the 		*
@@ -58,9 +43,6 @@ int	include_quote(char *buf, t_shell *arg, size_t pos, int i)
 *****************************************************************/
 int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 {
-	int	flag;
-
-	flag = 0;
 	arg->j = i;
 	i++;
 	if (buf[i] == '\'')
@@ -70,15 +52,8 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 		return (i);
 	}
 	while (buf[i] && buf[i] != '\'')
-	{
-		if (buf[i] == '>' || buf[i] == '<')
-			flag = 1;
 		i++;
-	}
-	if (flag == 1)
-		return (include_quote(buf, arg, pos, i));
-	else
-		return (exclude_quote(buf, arg, pos, i));
+	return (exclude_quote(buf, arg, pos, i));
 }
 
 /****************************************************************
@@ -89,23 +64,15 @@ int	store_q(char *buf, t_shell *arg, size_t pos, int i)
 *****************************************************************/
 int	store_qq(char *buf, t_shell *arg, size_t pos, int i)
 {
-	int	flag;
-
-	flag = 0;
 	arg->j = i;
 	i++;
 	if (buf[i] == '\"')
 		return (i + 1);
 	while (buf[i] && buf[i] != '\"')
 	{
-		if (buf[i] == '>' || buf[i] == '<')
-			flag = 1;
 		if (buf[i] == '$')
 			arg->expand_flag = 1;
 		i++;
 	}
-	if (flag == 1)
-		return (include_quote(buf, arg, pos, i));
-	else
-		return (exclude_quote(buf, arg, pos, i));
+	return (exclude_quote(buf, arg, pos, i));
 }
