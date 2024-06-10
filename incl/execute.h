@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/09 15:43:50 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:20:52 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ void	close_fds(t_exec *exe, int reset);
 void	close_fds_exit(t_shell *arg, int ret);
 void	close_all(t_shell *arg);
 int		execve_error(t_exec *exe, char *err_msg, int ret);
-void	file_error(char *filename, char *err_msg);
+void	file_error(char *filename, char *err_msg, t_redir *redir, int flag);
 
 #endif

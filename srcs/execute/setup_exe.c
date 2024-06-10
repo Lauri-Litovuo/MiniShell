@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/06 17:37:01 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:06:04 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 	{
 		j = 0;
 		count = 0;
-		if (ft_strchr(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ') == 0)
+		if ((*(char **)vec_get(&arg[exe->pos].cmd, i))[0] == '\0')
+		{
+			vec_remove_str(&arg[exe->pos].cmd, i);
+			i++;
+		}
+		else if (ft_strchr(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ') == 0)
 			i++;
 		else
 		{
@@ -69,8 +74,9 @@ int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 					vec_insert(&arg[exe->pos].cmd, &str, i + j);
 				j++;
 			}
+			i++;
 		}
-		i++;
+		holder = arg[exe->pos].cmd.len;
 	}
 	free(temp);
 	return (0);
@@ -111,8 +117,8 @@ int	setup_exe(t_shell *arg)
 		init_redir(&exe[i]->redir);
 		if (arg[i].rdrct.len != 0)
 		{
-			if (open_files(&arg[i].rdrct, exe[i], arg) < 0)//
-				return (-1);//
+			if (open_files(&arg[i].rdrct, exe[i], arg) < 0)
+				return (-1);
 		}
 		if (g_signal == 2)
 			arg->exit_code = 1;

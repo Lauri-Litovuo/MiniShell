@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/09 16:55:02 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:33:18 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_if_dir(char *cmd)
 {
 	DIR	*direc;
 
-	if (!cmd)
+	if (!cmd || ft_strchr(cmd, '/') == NULL)
 		return (-1);
 	direc = opendir(cmd);
 	if (direc != NULL)
@@ -43,15 +43,17 @@ int	execute_cmd(t_exec *exe, t_shell *arg)
 	return (-1);
 }
 
-int	 run_command(t_shell *arg, t_exec *exe)
+int	run_command(t_shell *arg, t_exec *exe)
 {
 	int	ret;
-	
+
 	ret = 0;
 	if (!exe || !exe->cmd || !exe->cmd_argv)
 		exit(1);
 	if (check_files_and_fd(&exe->redir) == ERRO)
 		exit (1);
+	if (exe->cmd[0] == '\0')
+		exit (0);
 	set_pipe_fds(exe, arg);
 	set_fds(&exe->redir);
 	close_fds(exe, NO);
@@ -64,7 +66,7 @@ int	 run_command(t_shell *arg, t_exec *exe)
 	}
 	ret = execute_cmd(exe, arg);
 	if (ret == DIRECTORY)
-		execve_error(exe, "is a directory", 126);
+		ret = execve_error(exe, "is a directory", 126);
 	close_fds_exit(arg, ret);
 	return (ret);
 }
