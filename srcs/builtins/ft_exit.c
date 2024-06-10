@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 12:44:39 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:59:31 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 	}
 	if (count > 2)
 	{
-		arg->exit_status = 1;
+		arg->exit_code = 1;
 		return (ft_putendl_fd("la_shell: exit: too many arguments", 2), -1);
 	}
 	ret = check_if_numeric(&arg[exe->pos].cmd);

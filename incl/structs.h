@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/06 17:11:19 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:00:23 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_shell
 	int		endrd_flag;
 	int		expandrd_flag;
 	size_t	split_flag;
-	int		exit_status;
 	int		exit_code;
 }	t_shell;
 
