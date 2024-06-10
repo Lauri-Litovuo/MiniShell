@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/09 16:56:24 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:47:35 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	execute(t_shell *arg)
 			set_fds(&arg->exe[0]->redir);
 			ret = launch_builtin(&arg->env, arg->exe[0], arg);
 			close_fds(arg->exe[0], YES);
+			arg->exit_code = ret;
 			return (ret);
 		}
 	}

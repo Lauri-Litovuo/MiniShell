@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 12:44:39 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:50:47 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	get_exit_nbr(t_vec *arg_cmd)
 
 	ptr = *(char **)vec_get(arg_cmd, 1);
 	if (!ptr)
-		return (-1);
+		return (1);
 	ret = ft_atoi(ptr);
 	if (ret < 0)
 	{
@@ -69,8 +69,8 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 	}
 	if (count > 2)
 	{
-		arg->exit_status = 1;
-		return (ft_putendl_fd("la_shell: exit: too many arguments", 2), -1);
+		arg->exit_code = 1;
+		return (ft_putendl_fd("la_shell: exit: too many arguments", 2), 1);
 	}
 	ret = check_if_numeric(&arg[exe->pos].cmd);
 	if (ret != 0)
