@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:05:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 10:21:05 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:49:50 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ void	close_all(t_shell *arg)
 			}
 			i++;
 		}
-		close_other_pipe_fds(arg, -5);
+		close_other_pipe_fds(arg, 3000);
 	}
 }

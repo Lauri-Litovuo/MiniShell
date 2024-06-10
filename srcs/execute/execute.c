@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:13:08 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:44:51 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,18 @@ static int	wait_children(t_shell *arg)
 	i = 0;
 	wait_pid = 0;
 	temp = 0;
-	close_other_pipe_fds(arg, -5);
 	while (i < arg->count)
 	{
 		exe = arg->exe[i];
 		close_fds(arg->exe[i], NO);
-		if (i == 0)
-			reset_fds(&exe->redir);
-		else
-		{
-			close (exe->redir.orig_fdin);
-			exe->redir.orig_fdin = -1;
-			close (exe->redir.orig_fdout);
-			exe->redir.orig_fdout = -1;
-		}
 		i++;
 	}
+	close_other_pipe_fds(arg, 4000);
+	signal(SIGINT, SIG_IGN);
 	while (wait_pid != -1 || errno != ECHILD)
 	{
 		wait_pid = waitpid(-1, &status, 0);
+		//printf("waitpid: %d\n", wait_pid);
 		if (wait_pid == arg->pids)
 			temp = status;
 		continue ;
@@ -57,17 +50,11 @@ static int	wait_children(t_shell *arg)
 		arg->exit_code = WEXITSTATUS(temp);
 	else if (WIFSIGNALED(temp))
 		arg->exit_code = 128 + WTERMSIG(temp);
-	if (arg->exit_code == 130)
-			printf("\n");
-	if (arg->exit_code == 131)
-			printf("Quit: 3\n");
+	// if (arg->exit_code == 130)
+	// 		printf("\n");
+	// if (arg->exit_code == 131)
+	// 		printf("Quit: 3\n");
 	signals_default();
-	// if (WIFSIGNALED(temp) != 0)
-	// 	arg->exit_code = 128 + WTERMSIG(temp);
-	// else if (WIFEXITED(temp) != 0)
-	// 	arg->exit_code = WEXITSTATUS(temp);
-	// else
-	// 	arg->exit_code = temp;
 	return (arg->exit_code);
 }
 
@@ -76,22 +63,21 @@ static int	piping(t_shell *arg)
 	size_t	i;
 
 	i = 0;
-	arg->pids = -1;
-	while (i < arg->count)
+	arg->pids = ft_memset(arg->pids, (-1), arg->count);
+	while (arg->pids[i] != 0 && i < arg->count)
 	{
 		arg->pids = fork();
-		if (arg->pids == -1)
+		if (arg->pids[i] == -1)
 			return (-1);
-		else if (arg->pids == 0)
+		else if (arg->pids[i] == 0)
 		{
 			signals_child();
 			run_command(arg, arg->exe[i]);
 		}
-		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		i++;
 	}
-	return (wait_children(arg));
+	return (0);
 }
 
 static int	create_pipes(size_t pipe_count, t_shell *arg)
@@ -101,10 +87,10 @@ static int	create_pipes(size_t pipe_count, t_shell *arg)
 	t_exec	*exe;
 
 	i = 0;
-	while (i < pipe_count + 1)
+	while (i < pipe_count)
 	{
 		exe = arg->exe[i];
-		fd = malloc(sizeof(fd) * 2);
+		fd = malloc(sizeof(int) * 2);
 		if (!fd || pipe(fd) < 0)
 		{
 			free_arg(arg, NO);
@@ -139,6 +125,7 @@ int	execute(t_shell *arg)
 	}
 	if (piping(arg) < -1)
 		return (-1);
+	ret = wait_children(arg);
 	arg->exit_code = ret;
 	return (ret);
 }

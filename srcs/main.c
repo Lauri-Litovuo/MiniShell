@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/06 15:51:15 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/06 20:34:23 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	miniloop(char *buf, t_shell *arg)
 		init_index(arg);
 		signals_default();
 		buf = readline("la_shell> ");
-		if (g_signal == 2)
-			arg->exit_code = 1;
 		if (!buf)
 		{
 			printf("exit\n");//
