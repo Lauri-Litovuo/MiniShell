@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 15:21:06 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:33:07 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	check_export_syntax(char *arg);
 static int	export_variable(t_vec *env, char *arg);
 static int	export_env_var(char *env_var, char *arg, t_vec *env);
+void		write_export_error(char *str, char *err_msg);
 
 int	ft_export(t_vec *env, t_vec *args)
 {
@@ -45,27 +46,27 @@ static int	export_variable(t_vec *env, char *arg)
 	char	*env_var;
 
 	env_var = NULL;
-	if (ft_strchr(arg, '=') != NULL && ft_strncmp(arg, "=", 2) != 0)
-	{
-		env_var = extract_env_var(arg);
-		if (env_var == NULL)
-			return (-1);
-		if (check_export_syntax(env_var) < 0)
-		{
-			ft_fprintf(STDERR_FILENO, \
-			"la_shell: export: `%s': not a valid identifier\n", env_var);
-			return (-1);
-		}
-		else if (export_env_var(env_var, arg, env) < 0)
-		{
-			ft_fprintf(STDERR_FILENO, "la_shell: export: failed to export\n");
-			return (-1);
-		}
-		free(env_var);
-	}
 	if (ft_strncmp(arg, "=", 2) == 0)
 		return (ft_putendl_fd("la_shell: export: `=': not a valid identifier", \
 		STDERR_FILENO), -1);
+	if (ft_strchr(arg, '=') == NULL)
+		env_var = ft_strdup(arg);
+	else
+		env_var = extract_env_var(arg);
+	if (env_var == NULL)
+		return (-1);
+	if (check_export_syntax(env_var) < 0)
+	{
+		write_export_error(env_var, "not a valid identifier");
+		return (-1);
+	}
+	else if (ft_strchr(arg, '=') != NULL
+		&& export_env_var(env_var, arg, env) < 0)
+	{
+		ft_putendl_fd("la_shell: export: failed", STDERR_FILENO);
+		return (-1);
+	}
+	free(env_var);
 	return (0);
 }
 
@@ -74,6 +75,8 @@ static int	check_export_syntax(char *arg)
 	int	i;
 
 	i = 0;
+	if (ft_isalpha(arg[i]) == 0 && arg[i] != '_')
+		return (-1);
 	while (arg[i])
 	{
 		if (ft_isalnum(arg[i]) == 0 && arg[i] != '_')
@@ -106,4 +109,13 @@ static int	export_env_var(char *env_var, char *arg, t_vec *env)
 			return (-1);
 	}
 	return (0);
+}
+
+void	write_export_error(char *str, char *err_msg)
+{
+	ft_putstr_fd("la_shell: export: `", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd("': ", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
+	write(STDERR_FILENO, "\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 12:44:39 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:48:28 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 	if (count > 2)
 	{
 		arg->exit_status = 1;
-		return (ft_putendl_fd("la_shell: exit: too many arguments", 2), -1);
+		ft_putendl_fd("la_shell: exit: too many arguments", 2);
+		return (1);
 	}
 	ret = check_if_numeric(&arg[exe->pos].cmd);
 	if (ret != 0)

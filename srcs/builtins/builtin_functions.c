@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 16:25:20 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:36:33 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ int	ft_unset(t_vec *env, t_vec *args)
 		{
 			index = find_index_of_env(env, env_var);
 			if (index == -1)
-				return (-1);
+				return (0);
 			free (env_var);
 			env_var = vec_get(env, index);
 			if (vec_remove_str(env, index) < 0)
-				return (-1);
+				return (1);
 		}
 		i++;
 	}
