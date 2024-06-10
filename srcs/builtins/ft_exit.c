@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/05 14:04:37 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 12:44:39 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 		close_fds_exit(arg, 0);
 		return (0);
 	}
-	if (arg->count > 2)
+	if (count > 2)
 	{
 		arg->exit_status = 1;
 		return (ft_putendl_fd("la_shell: exit: too many arguments", 2), -1);
