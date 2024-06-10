@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:16:15 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 12:45:06 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:13:04 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,10 @@ int	expand_home(t_cd *data)
 	ft_strlcpy(data->target, data->home, PATH_MAX);
 	ft_strlcat(data->target, "/", PATH_MAX);
 	return (0);
+}
+
+void	expand_cur_dir(t_cd *data)
+{
+	ft_bzero(data->target, PATH_MAX);
+	ft_strlcpy(data->target, data->cur_dir, PATH_MAX);
 }

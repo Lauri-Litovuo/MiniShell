@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 13:05:22 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 15:28:09 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:10:14 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int			goto_root(t_vec *env);
 int			get_parent(t_cd *data, int parent_nbr);
 int			expand_home(t_cd *data);
 int			goto_dir(t_cd *data, t_vec *env);
+void		expand_cur_dir(t_cd *data);
 void		free_2d_array(char **arr);
 void		free_cd_struct(t_cd *data);
 int			update_pwd_env(t_vec *env, char	*dir);

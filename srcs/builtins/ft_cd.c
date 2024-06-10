@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:27:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 14:39:45 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 20:09:21 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ int	ft_cd(t_vec *env, t_vec *args)
 	if (args->len == 1)
 		goto_home(env, data);
 	if (args->len > 1 && (ft_strncmp(*(char **)vec_get(args, 1), "/", 2) == 0
-			|| ft_strncmp(*(char **)vec_get(args, 1), "~", 2) == 0))
+			|| ft_strncmp(*(char **)vec_get(args, 1), "~", 2) == 0
+			|| ft_strncmp(*(char **)vec_get(args, 1), ".", 2) == 0))
 	{
 		if (ft_strncmp(*(char **)vec_get(args, 1), "~", 2) == 0)
 			goto_home(env, data);
-		else
+		else if (ft_strncmp(*(char **)vec_get(args, 1), "/", 2) == 0)
 			goto_root(env);
 		free_cd_struct(data);
 		return (0);
@@ -111,6 +112,8 @@ int	expand_relative_paths(t_cd *data)
 			get_parent(data, ++parent_nbr);
 		else if (ft_strncmp(data->split_path[i], "~", 2) == 0)
 			expand_home(data);
+		else if (ft_strncmp(data->split_path[i], ".", 2) == 0)
+			expand_cur_dir(data);
 		else
 		{
 			if (data->target[ft_strlen(data->target) - 1] != '/')
