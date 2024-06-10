@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:27:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 15:24:57 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 14:39:45 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_cd(t_vec *env, t_vec *args)
 	init_struct(data);
 	if (copy_homedir(env, data) < 0 || get_cur_dir(env, data) < 0
 		|| update_old_pwd(env, data) < -1)
-		return (free_cd_struct(data), -1);
+		return (free_cd_struct(data), 1);
 	if (args->len == 1)
 		goto_home(env, data);
 	if (args->len > 1 && (ft_strncmp(*(char **)vec_get(args, 1), "/", 2) == 0
@@ -34,7 +34,7 @@ int	ft_cd(t_vec *env, t_vec *args)
 		return (0);
 	}
 	if (args->len > 1 && goto_path(env, args, data) < 0)
-		return (free_cd_struct(data), -1);
+		return (free_cd_struct(data), 1);
 	free_cd_struct(data);
 	return (0);
 }
