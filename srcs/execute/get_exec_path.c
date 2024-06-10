@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:26:52 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/24 12:51:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:50:08 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*find_path(char *cmd, char **env_paths)
 	char	*full_path;
 
 	i = 0;
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, F_OK) == 0 || !env_paths || !env_paths[0])
 	{
 		full_path = ft_strdup(cmd);
 		return (full_path);
