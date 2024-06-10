@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 12:31:16 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/10 13:59:08 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	miniloop(char *buf, t_shell *arg)
 		if (buf && *buf)
 			add_history(buf);
 		if (*buf == '\0')
-			arg->exit_code = 127;
+			arg->exit_code = 0;
 		if (*buf != '\0')
 		{
 			if (parse_input(arg, buf) == -1)
