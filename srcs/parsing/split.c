@@ -49,7 +49,10 @@ int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 		&& buf[i] != '\t' && buf[i] != '\n')
 		i++;
 	if (buf[i] == '$')
+	{
+		arg->split_flag = 1;
 		i = store_special_cmd(buf, arg, pos, i);
+	}
 	else
 	{
 		arg->temp = ft_substr(buf, arg->j, (i - arg->j));

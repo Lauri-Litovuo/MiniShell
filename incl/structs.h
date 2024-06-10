@@ -63,6 +63,7 @@ typedef struct s_shell
 	int		joinrd_flag;
 	int		endrd_flag;
 	int		expandrd_flag;
+	size_t	split_flag;
 	int		exit_status;
 	int		exit_code;
 }	t_shell;

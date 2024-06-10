@@ -39,6 +39,43 @@ int	init_redir(t_redir *redir)
 	return (0);
 }
 
+int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
+{
+	size_t	holder;
+	char	**temp;
+	size_t	count;
+	char	*str;
+
+	holder = arg[exe->pos].cmd.len;
+	while (i < holder)
+	{
+		j = 0;
+		count = 0;
+		if (ft_strchr(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ') == 0)
+			i++;
+		else
+		{
+			temp = ft_split(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ');
+			if (!temp)
+				return (-1);
+			while (temp[count])
+				count++;
+			while (j < count)
+			{
+				str = ft_strdup(temp[j]);
+				if (j == 0)
+					vec_replace_str(&arg[exe->pos].cmd, str, i);
+				else
+					vec_insert(&arg[exe->pos].cmd, &str, i + j);
+				j++;
+			}
+		}
+		i++;
+	}
+	free(temp);
+	return (0);
+}
+
 int	setup_exe(t_shell *arg)
 {
 	size_t	i;
@@ -54,6 +91,8 @@ int	setup_exe(t_shell *arg)
 		exe[i] = sub_exe;
 		exe[i]->pos = i;
 		j = 0;
+		if (arg->split_flag == 1)
+			split_vec(exe[i], arg, 0, 0);
 		exe[i]->cmd_argv = malloc ((arg[i].cmd.len + 1) * sizeof(char *));
 		while (j < arg[i].cmd.len)
 		{
@@ -63,7 +102,7 @@ int	setup_exe(t_shell *arg)
 		exe[i]->cmd_argv[j] = NULL;
 		if (arg[i].cmd.len != 0)
 		{
-			exe[i]->cmd = *(char **)vec_get(&arg[i].cmd, 0);
+			exe[i]->cmd = exe[i]->cmd_argv[0];
 			exe[i]->path = get_exec_path(exe[i]->cmd, &arg->env);
 			if (exe[i]->path == NULL)
 				return (-1);

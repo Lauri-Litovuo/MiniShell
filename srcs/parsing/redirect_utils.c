@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:47:25 by aneitenb          #+#    #+#             */
 /*   Updated: 2024/06/09 16:24:29 by aneitenb         ###   ########.fr       */
@@ -56,7 +56,10 @@ int	rdrct_qq(char *buf, t_shell *arg, size_t pos, int i)
 	while (buf[i] && buf[i] != '\"')
 	{
 		if (buf[i] == '$')
+		{
+			arg->split_flag = 1;
 			arg->expandrd_flag = 1;
+		}
 		i++;
 	}
 	arg->temp = ft_substr(buf, arg->j + 1, (i - arg->j - 1));
@@ -111,7 +114,10 @@ int	rdrct_file(char *buf, t_shell *arg, size_t pos, int i)
 		& buf[i] != '\'' & buf[i] != '\"')
 		i++;
 	if (buf[i] == '$')
+	{
+		arg->split_flag = 1;	
 		i = store_specialrd_cmd(buf, arg, pos, i);
+	}
 	else
 	{
 		arg->temp = ft_substr(buf, arg->j, (i - arg->j));
