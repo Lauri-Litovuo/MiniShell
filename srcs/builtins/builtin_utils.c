@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 14:23:18 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/10 19:32:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	update_pwd_env(t_vec *env, char *dir)
 	temp = ft_strdup(dir);
 	if (temp == NULL)
 		return (-1);
-	if (vec_replace_str(env, temp, index) < -1)
+	if (vec_replace_str(env, temp, index) < 0)
 		return (-1);
 	return (0);
 }
