@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/06 16:51:28 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:19:15 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	open_infiles(t_vec *rdrct, t_redir *redir, size_t pos)
 	filename = *(char **)vec_get(rdrct, pos);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		file_error(filename, strerror(errno));
+		file_error(filename, strerror(errno), redir, 0);
 	while (fd != -1 && ++pos < rdrct->len)
 	{
 		if (ft_strncmp(*(char **)vec_get(rdrct, pos), "<", 2) == 0)
@@ -31,7 +31,7 @@ static int	open_infiles(t_vec *rdrct, t_redir *redir, size_t pos)
 			filename = *(char **)vec_get(rdrct, ++pos);
 			fd = open(filename, O_RDONLY);
 			if (fd == -1)
-				file_error(filename, strerror(errno));
+				file_error(filename, strerror(errno), redir, 0);
 		}
 	}
 	redir->infile = filename;
@@ -54,8 +54,8 @@ static int	loop_for_open(t_vec *rdrct, t_redir *redir, size_t *pos)
 		if (redir->i == -1)
 		{
 			redir->fd_out = redir->i;
+			return (file_error(redir->outfile, strerror(errno), redir, 1), -1);
 			redir->file_out = ERRO;
-			return (file_error(redir->outfile, strerror(errno)), -1);
 		}
 	}
 	else if (ft_strncmp(">>", *(char **)vec_get(rdrct, *pos), 3) == 0)
@@ -66,8 +66,8 @@ static int	loop_for_open(t_vec *rdrct, t_redir *redir, size_t *pos)
 		if (redir->i == -1)
 		{
 			redir->fd_out = redir->i;
+			return (file_error(redir->outfile, strerror(errno), redir, 1), -1);
 			redir->file_out = ERRO;
-			return (file_error(redir->outfile, strerror(errno)), -1);
 		}
 	}
 	return (0);
@@ -85,8 +85,8 @@ static int	open_outfiles(t_vec *rdrct, t_redir *redir, size_t pos)
 	if (redir->i == -1)
 	{
 		redir->fd_out = redir->i;
+		return (file_error(redir->outfile, strerror(errno), redir, 1), -1);
 		redir->file_out = ERRO;
-		return (file_error(redir->outfile, strerror(errno)), -1);
 	}
 	pos++;
 	while (pos < rdrct->len && redir->i != -1)
@@ -98,7 +98,7 @@ static int	open_outfiles(t_vec *rdrct, t_redir *redir, size_t pos)
 	redir->fd_out = redir->i;
 	redir->file_out = ERRO;
 	if (redir->i == ERRO)
-		return (file_error(redir->outfile, strerror(errno)), -1);
+		return (file_error(redir->outfile, strerror(errno), redir, 1), -1);
 	redir->file_out = YES;
 	return (YES);
 }
