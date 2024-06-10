@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:36:27 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:41:36 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void	d_handler(int sig);
 void	h_handler(int sig);
 void	disabled_termios(void);
 void	enabled_termios(void);
+void	check_signal(t_shell *arg);
 void	print_vectors(t_shell *arg);	//delete
 
 #endif

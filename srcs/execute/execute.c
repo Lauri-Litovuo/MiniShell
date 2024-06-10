@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:13:08 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:56:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,17 @@ static int	wait_children(t_shell *arg)
 			temp = status;
 		continue ;
 	}
-	if (WIFEXITED(temp) == 1)
-		arg->exit_code = WEXITSTATUS(temp);
-	else if (WIFSIGNALED(temp))
+	if (WIFSIGNALED(temp) != 0)
 		arg->exit_code = 128 + WTERMSIG(temp);
+	else if (WIFEXITED(temp) != 0)
+		arg->exit_code = WEXITSTATUS(temp);
+	else
+		arg->exit_code = temp;
 	if (arg->exit_code == 130)
 			printf("\n");
 	if (arg->exit_code == 131)
 			printf("Quit: 3\n");
 	signals_default();
-	// if (WIFSIGNALED(temp) != 0)
-	// 	arg->exit_code = 128 + WTERMSIG(temp);
-	// else if (WIFEXITED(temp) != 0)
-	// 	arg->exit_code = WEXITSTATUS(temp);
-	// else
-	// 	arg->exit_code = temp;
 	return (arg->exit_code);
 }
 
@@ -137,8 +133,7 @@ int	execute(t_shell *arg)
 			return (ret);
 		}
 	}
-	if (piping(arg) < -1)
-		return (-1);
+	ret = piping(arg);
 	arg->exit_code = ret;
 	return (ret);
 }

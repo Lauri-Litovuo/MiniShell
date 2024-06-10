@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:32:57 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:44:19 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,27 @@ static char	*get_hdfile_name(char *str, int i)
 	return (new);
 }
 
-static int	validate_line(char **buf, char *hd_lim, t_redir *redir, t_vec *env)
+static int	validate_line(char **buf, char *hd_lim, t_shell *arg)
 {
 	t_vec	temp;
 
 	if (*buf == NULL)
 		return (-1);
 	if (ft_strncmp(*buf, hd_lim, ft_strlen(*buf) + 1) == 0)
-	{
-		redir->exit_code = 0;
 		return (-1);
-	}
 	if (ft_strchr(*buf, '$') != NULL)
 	{
 		if (vec_new(&temp, 1, sizeof(char *)) < -1
 			|| vec_push(&temp, &buf) < -1)
-		{
-			redir->exit_code = ERRO;
 			return (-1);
-		}
-		if (expand_variables(redir->exit_code, env, &temp, 0) == -1 || *buf == NULL)
-		{
-			redir->exit_code = ERRO;
-			return (ERRO);
-		}
+		if (expand_variables(arg, &temp, 0) == -1 || *buf == NULL)
+			return (-1);
 		*buf = *(char **)vec_get(&temp, 0);
 	}
 	return (0);
 }
 
-static int	heredoc_loop(t_redir *redir, int fd, t_vec *env)
+static int	heredoc_loop(t_redir *redir, int fd, t_shell *arg)
 {
 	char	*buf;
 
@@ -78,7 +69,7 @@ static int	heredoc_loop(t_redir *redir, int fd, t_vec *env)
 			reset_fds(redir);
 			return (EXIT_FAILURE);
 		}
-		if (validate_line(&buf, redir->hd_lim, redir, env) < 0)
+		if (validate_line(&buf, redir->hd_lim, arg) < 0)
 			break ;
 		ft_putstr_fd(buf, fd);
 		free(buf);
@@ -91,7 +82,7 @@ static int	heredoc_loop(t_redir *redir, int fd, t_vec *env)
 }
 
 
-static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_vec *env)
+static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_shell *arg)
 {
 	int		fd;
 	int		ret;
@@ -109,7 +100,7 @@ static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_vec *env)
 			fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd < 0)
 				return (unlink (redir->hd_file), -1);
-			if (heredoc_loop(redir, fd, env) == 1)
+			if (heredoc_loop(redir, fd, arg) == 1)
 				return (unlink (redir->hd_file), -1);
 		}
 		pos++;
@@ -117,7 +108,7 @@ static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_vec *env)
 	return (ret);
 }
 
-int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_vec *env, size_t count)
+int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_shell *arg, size_t count)
 {
 	size_t	i;
 
@@ -129,7 +120,7 @@ int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_vec *env, size_t count)
 		{
 			redir->hd_pos = i;
 			redir->hd_in = YES;
-			if (handle_heredoc(rdrct, redir, i, env) < 0)
+			if (handle_heredoc(rdrct, redir, i, arg) < 0)
 			{
 				redir->hd_in = ERRO;
 				//free(redir);

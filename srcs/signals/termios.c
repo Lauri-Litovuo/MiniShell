@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:54:58 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/02 16:14:13 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/07 15:26:55 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,13 @@ void	disabled_termios(void)
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void	check_signal(t_shell *arg)
+{
+	if (g_signal == 2)
+	{
+		arg->exit_code = 1;
+		g_signal = 0;
+	}
 }

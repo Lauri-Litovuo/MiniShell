@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/05 10:37:51 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/09 15:43:50 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int		isit_builtin(char *cmd, int pos);
 int		add_builtin(t_vec *paths, char *cmd);
 int		execute(t_shell *arg);
 int		check_for_heredoc(t_vec *rdrct, \
-t_redir *redir, t_vec *env, size_t count);
+		t_redir *redir, t_shell *arg, size_t count);
 void	print_exec(t_exec **exe);
 int		ft_fprintf(int fd, const char *fmt, ...);
 int		setup_exe(t_shell *arg);
 char	*get_exec_path(char *cmd, t_vec *env);
-int		open_files(t_vec *rdrct, t_exec *exe, t_vec *env);
+int		open_files(t_vec *rdrct, t_exec *exe, t_shell *arg);
 int		run_command(t_shell *arg, t_exec *exe);
 int		set_fds(t_redir *redir);
 int		set_pipe_fds(t_exec *exe, t_shell *arg);
