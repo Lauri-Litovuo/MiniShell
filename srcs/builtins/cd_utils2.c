@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:14:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/03 12:17:22 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:05:34 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ int	goto_dir(t_cd *data, t_vec *env)
 	return (0);
 }
 
+void	expand_cur_dir(t_cd *data)
+{
+	ft_bzero(data->target, PATH_MAX);
+	ft_strlcpy(data->target, data->cur_dir, PATH_MAX);
+}
+
 void	init_struct(t_cd *data)
 {
 	ft_bzero(data->expand, PATH_MAX);
@@ -36,20 +42,6 @@ void	init_struct(t_cd *data)
 	ft_strlcpy(data->old_pwd, "OLDPWD=", PATH_MAX);
 	data->ptr = NULL;
 	data->split_path = NULL;
-}
-
-void	free_cd_struct(t_cd *data)
-{
-	ft_bzero(data->expand, PATH_MAX);
-	ft_bzero(data->home, PATH_MAX);
-	ft_bzero(data->path, PATH_MAX);
-	ft_bzero(data->target, PATH_MAX);
-	ft_bzero(data->cur_dir, PATH_MAX);
-	data->ptr = NULL;
-	if (data->split_path)
-		free_2d_array(data->split_path);
-	data->split_path = NULL;
-	free (data);
 }
 
 int	update_pwd_cd(t_vec *env, t_cd *data)
