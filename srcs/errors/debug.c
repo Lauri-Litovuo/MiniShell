@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 10:34:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/28 13:11:48 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:47:42 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	print_exec(t_exec **exe)
 		redir = &temp->redir;
 		printf("fd_in: %d\n", redir->fd_in);
 		printf("fd_out: %d\n", redir->fd_out);
-		printf("orig_fdin: %d\n", redir->orig_fdin);
-		printf("orig_fdout: %d\n", redir->orig_fdout);
+		// printf("orig_fdin: %d\n", redir->orig_fdin);
+		// printf("orig_fdout: %d\n", redir->orig_fdout);
 		printf("hd_pos: %d\n", redir->hd_pos);
 		printf("re_pos: %d\n", redir->re_pos);
 		printf("pipe_out: %d\n", redir->pipe_out);

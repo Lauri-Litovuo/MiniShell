@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:35:13 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:57:19 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,17 @@ int	set_fds(t_redir *redir)
 	if (!redir)
 		return (-1);
 	if (redir->fd_in != -1)
+	{
 		if (dup2(redir->fd_in, STDIN_FILENO) == -1)
 			ret = error_triple_msg(3, "la_shell :", "dup2 :", redir->infile);
+		close (redir->fd_in);
+	}
 	if (redir->fd_out != -1)
+	{
 		if (dup2(redir->fd_out, STDOUT_FILENO) == -1)
 			ret = error_triple_msg(3, "la_shell :", "dup2 :", redir->outfile);
+		close (redir->fd_out);
+	}
 	return (ret);
 }
 
@@ -34,7 +40,7 @@ void	close_other_pipe_fds(t_shell *arg, size_t pos)
 	t_exec	*temp;
 
 	i = 0;
-	while (i < arg->count)
+	while (i < arg->pipe_count)
 	{
 		temp = arg->exe[i];
 		if (i != pos && temp->pipe_fd)
@@ -49,17 +55,25 @@ void	close_other_pipe_fds(t_shell *arg, size_t pos)
 int	set_pipe_fds(t_exec *exe, t_shell *arg)
 {
 	t_exec	*pre;
-	int		prepos;
 
-	prepos = exe->pos - 1;
-	if (prepos >= 0)
+	if (exe->pos != 0)
 	{
-		pre = arg->exe[prepos];
-		if (pre->redir.pipe_out == YES)
-			dup2(pre->pipe_fd[0], STDIN_FILENO);
+		pre = arg->exe[exe->pos - 1];
+	}
+	else
+		close (exe->pipe_fd[0]);
+	if (exe->redir.pipe_in == YES)
+	{
+		dup2(pre->pipe_fd[0], STDIN_FILENO);
+		close (pre->pipe_fd[0]);
+		if (exe->pos != arg->count - 1)
+			close (exe->pipe_fd[0]);
 	}
 	if (exe->redir.pipe_out == YES)
+	{
 		dup2(exe->pipe_fd[1], STDOUT_FILENO);
+		close(exe->pipe_fd[1]);
+	}
 	close_other_pipe_fds(arg, exe->pos);
 	return (YES);
 }

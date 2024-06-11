@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 14:47:35 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:41:00 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,17 @@ static int	wait_children(t_shell *arg)
 	wait_pid = 0;
 	temp = 0;
 	close_other_pipe_fds(arg, -5);
-	while (i < arg->count)
+	while(i < arg->count)
 	{
-		exe = arg->exe[i];
-		close_fds(arg->exe[i], NO);
-		if (i == 0)
-			reset_fds(&exe->redir);
-		else
-		{
-			close (exe->redir.orig_fdin);
-			exe->redir.orig_fdin = -1;
-			close (exe->redir.orig_fdout);
-			exe->redir.orig_fdout = -1;
-		}
+		close_fds(arg->exe[i]);
 		i++;
 	}
+	i = 0;
+	signal(SIGINT, SIG_IGN);
 	while (wait_pid != -1 || errno != ECHILD)
 	{
 		wait_pid = waitpid(-1, &status, 0);
-		if (wait_pid == arg->pids)
+		if (wait_pid == arg->pids[i])
 			temp = status;
 		continue ;
 	}
@@ -72,18 +64,18 @@ static int	piping(t_shell *arg)
 	size_t	i;
 
 	i = 0;
-	arg->pids = -1;
+	arg->pids = ft_calloc(arg->count + 1, sizeof(int));
+	arg->pids[arg->count] = -1;
 	while (i < arg->count)
 	{
-		arg->pids = fork();
-		if (arg->pids == -1)
+		arg->pids[i] = fork();
+		if (arg->pids[i] == -1)
 			return (-1);
-		else if (arg->pids == 0)
+		else if (arg->pids[i] == 0)
 		{
 			signals_child();
 			run_command(arg, arg->exe[i]);
 		}
-		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		i++;
 	}
@@ -97,7 +89,7 @@ static int	create_pipes(size_t pipe_count, t_shell *arg)
 	t_exec	*exe;
 
 	i = 0;
-	while (i < pipe_count + 1)
+	while (i < pipe_count)
 	{
 		exe = arg->exe[i];
 		fd = malloc(sizeof(fd) * 2);
@@ -107,6 +99,7 @@ static int	create_pipes(size_t pipe_count, t_shell *arg)
 			return (-1);
 		}
 		exe->pipe_fd = fd;
+		printf("opened pipe fds for exe[%zu]: fd_in:%d fd_out: %d\n", i, fd[0], fd[1]);
 		i++;
 	}
 	return (0);
@@ -116,6 +109,8 @@ int	execute(t_shell *arg)
 {
 	int	ret;
 
+	arg->orig_fd[0] = dup(STDIN_FILENO);
+	arg->orig_fd[1] = dup(STDOUT_FILENO);
 	ret = setup_exe(arg);
 	if (ret < 0)
 		return (ret);
@@ -129,12 +124,14 @@ int	execute(t_shell *arg)
 		{
 			set_fds(&arg->exe[0]->redir);
 			ret = launch_builtin(&arg->env, arg->exe[0], arg);
-			close_fds(arg->exe[0], YES);
+			close_fds(arg->exe[0]);
+			reset_fds(arg->orig_fd);
 			arg->exit_code = ret;
 			return (ret);
 		}
 	}
 	ret = piping(arg);
+	reset_fds(arg->orig_fd);
 	arg->exit_code = ret;
 	return (ret);
 }

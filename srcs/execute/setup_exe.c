@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 14:34:48 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:49:45 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	g_signal;
 
 int	init_redir(t_redir *redir)
 {
@@ -20,12 +19,6 @@ int	init_redir(t_redir *redir)
 	redir->fd_out = -1;
 	redir->hd_pos = -42;
 	redir->re_pos = -42;
-	redir->orig_fdin = dup(STDIN_FILENO);
-	if (redir->orig_fdin == -1)
-		return (perror("dup to in failed"), -1);
-	redir->orig_fdout = dup(STDOUT_FILENO);
-	if (redir->orig_fdout == -1)
-		return (perror("dup to out failed"), -1);
 	redir->pipe_out = NO;
 	redir->pipe_in = NO;
 	redir->file_in = NO;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 15:26:29 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/12 00:36:50 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,14 @@ int	run_command(t_shell *arg, t_exec *exe)
 		exit (0);
 	set_pipe_fds(exe, arg);
 	set_fds(&exe->redir);
-	close_fds(exe, NO);
+	while (ret < arg->count && ret != exe->pos)
+	{
+		close_fds(arg->exe[ret]);
+		ret++;
+	}
+	close (arg->orig_fd[0]);
+	close (arg->orig_fd[1]);
+	ret = 0;
 	if (isit_builtin(exe->cmd, exe->pos) == INT_MIN)
 	{
 		ret = launch_builtin(&arg->env, exe, arg);
