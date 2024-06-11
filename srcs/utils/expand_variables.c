@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 15:13:43 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:21:29 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 				s.ret = expand_to_exit_status(arg, &s, vec, index);
 			else
 				s.ret = expand_string(arg, &s, vec, index);
-			//free_expd(&s);
 		}
 		if (s.ret < 0)
 			return (-1);
@@ -65,6 +64,7 @@ int	expand_string(t_shell *arg, t_expd *s, t_vec *vec, int index)
 		|| s->str[s->ds + 1] == ' ')
 		return (0);
 	s->ret = check_if_exists(arg, s);
+	free(s->env_var);
 	if (s->ret >= 0)
 	{
 		if (s->ret > 0)
@@ -116,9 +116,12 @@ int	check_if_exists(t_shell *arg, t_expd *s)
 		if (s->temp == NULL)
 			return (-1);
 		if (ft_strncmp(s->env_var, s->temp, s->var_len + 1) == 0)
+		{
+			free(s->temp);
 			return (1);
-		free (s->temp);
+		}
 		s->var_index++;
+		free(s->temp);
 	}
 	return (0);
 }

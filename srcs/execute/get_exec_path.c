@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_exec_path.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:26:52 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 19:50:08 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:57:23 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,13 @@ char	*get_exec_path(char *cmd, t_vec *env)
 	}
 	paths_env = split_env_paths(env);
 	temp = find_path(cmd, paths_env);
+	free_2d_array(paths_env);
+	paths_env = 0;
 	if (!temp)
 	{
 		temp = ft_strdup(cmd);
 		if (!temp)
 			return (NULL);
 	}
-	free(paths_env);
 	return (temp);
 }
