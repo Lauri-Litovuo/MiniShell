@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:08:35 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/03 14:22:06 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:47:01 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	signals_heredoc(void)
 	struct sigaction	hact;
 
 	disabled_termios();
+	ft_memset(&hact, 0, sizeof(hact));
+	sigemptyset(&hact.sa_mask);
 	hact.sa_handler = &h_handler;
 	sigaction(SIGINT, &hact, NULL);
 	signal(SIGQUIT, SIG_IGN);
@@ -39,6 +41,8 @@ void	signals_child(void)
 	struct sigaction	act;
 
 	enabled_termios();
+	ft_memset(&act, 0, sizeof(act));
+	sigemptyset(&act.sa_mask);
 	act.sa_handler = SIG_DFL;
 	sigaction(SIGINT, &act, NULL);
 	sigaction(SIGQUIT, &act, NULL);
@@ -61,6 +65,8 @@ void	signals_default(void)
 	struct sigaction	action;
 	
 	disabled_termios();
+	ft_memset(&action, 0, sizeof(action));
+	sigemptyset(&action.sa_mask);
 	action.sa_handler = &d_handler;
 	sigaction(SIGINT, &action, NULL);
 	signal(SIGQUIT, SIG_IGN);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 17:06:04 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:34:48 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 	char	*str;
 
 	holder = arg[exe->pos].cmd.len;
+	temp = NULL;
 	while (i < holder)
 	{
 		j = 0;
@@ -78,7 +79,7 @@ int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 		}
 		holder = arg[exe->pos].cmd.len;
 	}
-	free(temp);
+	free_2d_array(temp);
 	return (0);
 }
 
