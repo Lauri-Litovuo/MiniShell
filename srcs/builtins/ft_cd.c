@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:27:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 20:09:21 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/11 10:00:40 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ int	goto_path(t_vec *env, t_vec *args, t_cd *data)
 		return (-1);
 	if (access(data->target, F_OK) != 0)
 	{
-		error_triple_msg(3, "la_shell: cd: ", data->target, \
+		error_triple_msg(3, "la_shell: cd: ", *(char **)vec_get(args, 1), \
 		": No such file or directory\n");
 		return (-1);
 	}
 	if (access(data->target, X_OK) != 0)
 	{
-		error_triple_msg(3, "la_shell: cd: ", data->target, \
+		error_triple_msg(3, "la_shell: cd: ", *(char **)vec_get(args, 1), \
 		": Permission denied\n");
 		return (-1);
 	}

@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/03 16:56:34 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/06/11 10:06:57 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ SOURCES = \
 			srcs/builtins/cd_utils2.c \
 			srcs/utils/free.c \
 			srcs/signals/signals.c \
-			srcs/signals/termios.c
+			srcs/signals/termios.c \
+			srcs/errors/cleanup.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
