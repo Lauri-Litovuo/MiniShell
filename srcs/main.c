@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 17:01:59 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/11 11:21:52 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	miniloop(char *buf, t_shell *arg)
 	{
 		init_index(arg);
 		signals_default();
-		buf = readline("la_shell> ");
+		buf = readline("✨🐢✨la_shell> ");
 		enabled_termios();//why?
 		check_signal(arg);
 		if (!buf)
