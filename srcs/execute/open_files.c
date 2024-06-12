@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 17:36:55 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:16:45 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static int	loop_for_open(t_vec *rdrct, t_redir *redir, size_t *pos)
 	return (0);
 }
 
-
 static int	open_outfiles(t_vec *rdrct, t_redir *redir, size_t pos)
 {
 	redir->i = -42;
@@ -97,7 +96,6 @@ static int	open_outfiles(t_vec *rdrct, t_redir *redir, size_t pos)
 	redir->file_out = YES;
 	return (YES);
 }
-
 
 int	setup_and_open_files(t_vec *rdrct, t_redir *redir)
 {

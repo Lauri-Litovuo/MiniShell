@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 17:10:44 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:17:47 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static int	heredoc_loop(t_redir *redir, int fd, t_shell *arg)
 	close(fd);
 	return (0);
 }
-
 
 static int	handle_heredoc(t_vec *rdrct, \
 t_redir *redir, size_t pos, t_shell *arg)

@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 19:11:43 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:17:23 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	cleanup_exe(t_exec **exe, size_t count)
 void	setup_redirection(t_exec *exe, t_shell *arg, size_t i)
 {
 	init_redir(&exe->redir);
-
 	if (arg[i].rdrct.len != 0)
 	{
 		if (open_files(&arg[i].rdrct, exe, arg) < 0)
@@ -74,7 +73,6 @@ int	setup_cmd_argv(t_exec *exe, t_shell *arg)
 	exe->cmd_argv = (char **)malloc((arg->cmd.len + 1) * sizeof(char *));
 	if (!exe->cmd_argv)
 		return (-1);
-
 	j = 0;
 	while (j < arg->cmd.len)
 	{
@@ -89,7 +87,6 @@ int	setup_cmd_argv(t_exec *exe, t_shell *arg)
 	exe->cmd_argv[j] = NULL;
 	return (0);
 }
-
 
 int	setup_exe(t_shell *arg)
 {
