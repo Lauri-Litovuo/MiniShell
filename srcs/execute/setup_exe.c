@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 13:25:49 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:40:41 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,17 +106,14 @@ int	setup_exe(t_shell *arg)
 		j = 0;
 		if (arg->split_flag == 1)
 			split_vec(exe[i], arg, 0, 0);
-		printf("1\n");
 		exe[i]->cmd_argv = malloc ((arg[i].cmd.len + 1) * sizeof(char *));
 		if (!exe[i]->cmd_argv)
 			return (-1);
-		printf("2\n");
 		while (j < arg[i].cmd.len)
 		{
 			exe[i]->cmd_argv[j] = ft_strdup(*(char **)vec_get(&arg[i].cmd, j));
 			j++;
 		}
-		printf("3\n");
 		exe[i]->cmd_argv[j] = NULL;
 		if (arg[i].cmd.len != 0)
 		{

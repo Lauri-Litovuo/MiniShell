@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 09:33:51 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 12:21:18 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:39:35 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_exec(t_exec *exe)
 {
 	if (exe->cmd_argv)
 		free_2d_array(exe->cmd_argv);
-	if (exe->pipe_fd)
+	if (exe->redir.pipe_out == YES)
 		free(exe->pipe_fd);
 	if (exe->path)
 		free(exe->path);

@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/12 11:58:10 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/06/12 13:41:31 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SOURCES = \
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS =  -g -fsanitize=address -Wall -Wextra -Werror -I$(RLHEAD)
+CFLAGS =  -g -Wall -Wextra -Werror -I$(RLHEAD)
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 

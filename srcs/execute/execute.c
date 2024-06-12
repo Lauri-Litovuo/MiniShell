@@ -6,18 +6,11 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 11:53:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:24:42 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-// static void	print_vec(t_vec *vec) //del
-// {
-// 		for(size_t i = 0; i < vec->len; i++)
-// 			printf("ex_env: %s\n", *(char **)vec_get(vec, i));
-// }
-
 
 static int	wait_children(t_shell *arg)
 {
@@ -36,19 +29,19 @@ static int	wait_children(t_shell *arg)
 		i++;
 	}
 	i = 0;
-	while (wait_pid != -1 || errno != ECHILD)
+	while (arg->pids[i] != -1)
 	{
-		wait_pid = waitpid(-1, &status, 0);
-		if (wait_pid == arg->pids[i])
-			temp = status;
-		continue ;
+		wait_pid = waitpid(arg->pids[i], &status, 0);
+		if (wait_pid == -1)
+			continue ;
+		i++;
 	}
-	if (WIFSIGNALED(temp) != 0)
-		arg->exit_code = 128 + WTERMSIG(temp);
-	else if (WIFEXITED(temp) != 0)
-		arg->exit_code = WEXITSTATUS(temp);
+	if (WIFSIGNALED(status) != 0)
+		arg->exit_code = 128 + WTERMSIG(status);
+	else if (WIFEXITED(status) != 0)
+		arg->exit_code = WEXITSTATUS(status);
 	else
-		arg->exit_code = temp;
+		arg->exit_code = status;
 	if (arg->exit_code == 130)
 		printf("\n");
 	if (arg->exit_code == 131)
