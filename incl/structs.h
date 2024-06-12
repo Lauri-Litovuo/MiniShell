@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 14:39:32 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:27:00 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ typedef struct s_redir
 {
 	int		fd_in;
 	int		fd_out;
-	int		orig_fdin;
-	int		orig_fdout;
 	char	*infile;
 	char	*outfile;
 	char	*hd_lim;
@@ -55,8 +53,9 @@ typedef struct s_shell
 	size_t	gl_count;
 	size_t	i;
 	int		j;
-	pid_t	pids;
+	pid_t	*pids;
 	t_exec	**exe;
+	int		orig_fd[2];
 	int		join_flag;
 	int		end_flag;
 	int		expand_flag;

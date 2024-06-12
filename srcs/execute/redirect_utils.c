@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:05:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 10:21:05 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:30:56 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,21 @@ int	check_files_and_fd(t_redir *redir)
 	return (YES);
 }
 
-int	reset_fds(t_redir *redir)
+int	reset_fds(int orig_fd[2])
 {
 	int	ret;
 
 	ret = 0;
-	if (!redir)
-		return (0);
-	if (redir->orig_fdin != -1)
-	{
-		if (dup2(redir->orig_fdin, STDIN_FILENO) == -1)
+	if (dup2(orig_fd[0], STDIN_FILENO) == -1)
 			ret = -1;
-		close (redir->orig_fdin);
-		redir->orig_fdin = -1;
-	}
-	if (redir->orig_fdout != -1)
-	{
-		if (dup2(redir->orig_fdout, STDOUT_FILENO) == -1)
-			ret = -1;
-		close (redir->orig_fdout);
-		redir->orig_fdout = -1;
-	}
+		close (orig_fd[0]);
+	if (dup2(orig_fd[1], STDOUT_FILENO) == -1)
+		ret = -1;
+	close (orig_fd[1]);
 	return (ret);
 }
 
-void	close_fds(t_exec *exe, int reset)
+void	close_fds(t_exec *exe)
 {
 	t_redir	*redir;
 
@@ -57,12 +47,10 @@ void	close_fds(t_exec *exe, int reset)
 			close (redir->fd_in);
 		if (redir->fd_out != -1)
 			close (redir->fd_out);
-		if (reset == YES)
-			reset_fds(redir);
 	}
 }
 
-void	close_all(t_shell *arg)
+void	close_all(t_shell *arg, int pos)
 {
 	size_t	i;
 	t_exec	*exe;
@@ -74,18 +62,9 @@ void	close_all(t_shell *arg)
 		{
 			exe = arg->exe[i];
 			if (exe)
-				close_fds(exe, NO);
-			if (i == 0)
-				reset_fds(&exe->redir);
-			else
-			{
-				close (exe->redir.orig_fdin);
-				exe->redir.orig_fdin = -1;
-				close (exe->redir.orig_fdout);
-				exe->redir.orig_fdout = -1;
-			}
+				close_fds(exe);
 			i++;
 		}
-		close_other_pipe_fds(arg, -5);
+		close_other_pipe_fds(arg, pos);
 	}
 }

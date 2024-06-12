@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/07 15:44:19 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/11 23:49:34 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
-int	g_signal;
 
 static char	*get_hdfile_name(char *str, int i)
 {
@@ -66,7 +64,7 @@ static int	heredoc_loop(t_redir *redir, int fd, t_shell *arg)
 		if (g_signal == 2)
 		{
 			close(fd);
-			reset_fds(redir);
+			reset_fds(arg->orig_fd);
 			return (EXIT_FAILURE);
 		}
 		if (validate_line(&buf, redir->hd_lim, arg) < 0)

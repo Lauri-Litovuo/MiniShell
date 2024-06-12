@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/07 15:41:36 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/11 12:25:39 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@
 # define VECPUSH "la_shell: vec_push error\n"
 # define VECNEW "la_shell: vec_new error\n"
 # define UNMATCH "la_shell: unexpected EOF while looking for matching "
-
 
 extern int	g_signal;
 

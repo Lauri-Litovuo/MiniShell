@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 14:34:48 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:40:41 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	g_signal;
 
 int	init_redir(t_redir *redir)
 {
@@ -20,12 +19,6 @@ int	init_redir(t_redir *redir)
 	redir->fd_out = -1;
 	redir->hd_pos = -42;
 	redir->re_pos = -42;
-	redir->orig_fdin = dup(STDIN_FILENO);
-	if (redir->orig_fdin == -1)
-		return (perror("dup to in failed"), -1);
-	redir->orig_fdout = dup(STDOUT_FILENO);
-	if (redir->orig_fdout == -1)
-		return (perror("dup to out failed"), -1);
 	redir->pipe_out = NO;
 	redir->pipe_in = NO;
 	redir->file_in = NO;
@@ -83,24 +76,39 @@ int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 	return (0);
 }
 
+void init_exec(t_exec *exe)
+{
+	exe->cmd_argv = NULL;
+	exe->cmd = NULL;
+	exe->path = NULL;
+	exe->ret = 0;
+	exe->pipe_fd = NULL;
+	exe->pos = 0;
+}
+
 int	setup_exe(t_shell *arg)
 {
 	size_t	i;
 	size_t	j;
 	t_exec	**exe;
-	t_exec	*sub_exe;
 
 	i = 0;
-	exe = malloc ((arg->count + 1) * sizeof(t_exec *));
+	exe = (t_exec **) malloc ((arg->count + 1) * sizeof(t_exec *));
+	if (!exe)
+		return (-1);
 	while (i < arg->count)
 	{
-		sub_exe = malloc (sizeof(t_exec));
-		exe[i] = sub_exe;
+		exe[i] = (t_exec *)malloc (sizeof(t_exec));
+		if (!exe[i])
+			return (-1);
+		init_exec(exe[i]);
 		exe[i]->pos = i;
 		j = 0;
 		if (arg->split_flag == 1)
 			split_vec(exe[i], arg, 0, 0);
 		exe[i]->cmd_argv = malloc ((arg[i].cmd.len + 1) * sizeof(char *));
+		if (!exe[i]->cmd_argv)
+			return (-1);
 		while (j < arg[i].cmd.len)
 		{
 			exe[i]->cmd_argv[j] = ft_strdup(*(char **)vec_get(&arg[i].cmd, j));
@@ -123,10 +131,10 @@ int	setup_exe(t_shell *arg)
 		}
 		if (g_signal == 2)
 			arg->exit_code = 1;
-		if (sub_exe->pos > 0 && sub_exe->redir.file_in == NO && sub_exe->redir.hd_in == NO)
-			sub_exe->redir.pipe_in = 1;
-		if (sub_exe->redir.file_out == NO && arg->count > 1 && sub_exe->pos != arg->count - 1)
-			sub_exe->redir.pipe_out = 1;
+		if (exe[i]->pos > 0 && exe[i]->redir.file_in == NO && exe[i]->redir.hd_in == NO)
+			exe[i]->redir.pipe_in = 1;
+		if (exe[i]->redir.file_out == NO && arg->count > 1 && exe[i]->pos != arg->count - 1)
+			exe[i]->redir.pipe_out = 1;
 		i++;
 	}
 	exe[i] = NULL;

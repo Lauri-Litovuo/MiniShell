@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 09:33:51 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 14:28:33 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/12 13:39:35 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_exec(t_exec *exe)
 {
 	if (exe->cmd_argv)
 		free_2d_array(exe->cmd_argv);
-	if (exe->pipe_fd)
+	if (exe->redir.pipe_out == YES)
 		free(exe->pipe_fd);
 	if (exe->path)
 		free(exe->path);
@@ -66,7 +66,7 @@ void	close_fds_exit(t_shell *arg, int ret)
 		{
 			exe = arg->exe[i];
 			if (exe)
-				close_fds(exe, YES);
+				close_fds(exe);
 			i++;
 		}
 		close_other_pipe_fds(arg, -5);
