@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 11:44:27 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:46:14 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,32 @@ int	execute_cmd(t_exec *exe, t_shell *arg)
 	return (-1);
 }
 
+void	handle_child_assignments(t_exec *exe, t_shell *arg)
+{
+	size_t	i;
+
+	i = 0;
+	set_pipe_fds(exe, arg);
+	set_fds(&exe->redir);
+	while (i < arg->count && i != exe->pos)
+	{
+		close_fds(arg->exe[i]);
+		i++;
+	}
+	close (arg->orig_fd[0]);
+	close (arg->orig_fd[1]);
+}
+
 int	run_command(t_shell *arg, t_exec *exe)
 {
 	int	ret;
 
-	ret = 0;
-	if (!exe || !exe->cmd || !exe->cmd_argv)
+	if (!exe || !exe->cmd || !exe->cmd_argv
+		|| check_files_and_fd(&exe->redir) == ERRO)
 		exit(1);
-	if (check_files_and_fd(&exe->redir) == ERRO)
-		exit (1);
 	if (exe->cmd[0] == '\0')
 		exit (0);
-	set_pipe_fds(exe, arg);
-	set_fds(&exe->redir);
-	while ((size_t)ret < arg->count && (size_t)ret != exe->pos)
-	{
-		close_fds(arg->exe[ret]);
-		ret++;
-	}
-	close (arg->orig_fd[0]);
-	close (arg->orig_fd[1]);
+	handle_child_assignments(exe, arg);
 	ret = 0;
 	if (isit_builtin(exe->cmd, exe->pos) == INT_MIN)
 	{

@@ -6,28 +6,33 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 14:24:42 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:09:27 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	wait_children(t_shell *arg)
+void	close_for_waitpid(t_shell *arg)
 {
-	int		status;
-	int		temp;
-	pid_t	wait_pid;
 	size_t	i;
 
 	i = 0;
-	wait_pid = 0;
-	temp = 0;
 	close_other_pipe_fds(arg, -5);
 	while (i < arg->count)
 	{
 		close_fds(arg->exe[i]);
 		i++;
 	}
+}
+
+static int	wait_children(t_shell *arg)
+{
+	int		status;
+	pid_t	wait_pid;
+	size_t	i;
+
+	wait_pid = 0;
+	close_for_waitpid(arg);
 	i = 0;
 	while (arg->pids[i] != -1)
 	{
@@ -46,7 +51,6 @@ static int	wait_children(t_shell *arg)
 		printf("\n");
 	if (arg->exit_code == 131)
 		printf("Quit: 3\n");
-	signals_default();
 	return (arg->exit_code);
 }
 
@@ -113,15 +117,12 @@ int	execute(t_shell *arg)
 			return (0);
 		else if (isit_builtin(arg->exe[0]->cmd, 0) == INT_MIN)
 		{
-			set_fds(&arg->exe[0]->redir);
-			ret = launch_builtin(&arg->env, arg->exe[0], arg);
-			close_fds(arg->exe[0]);
-			reset_fds(arg->orig_fd);
-			arg->exit_code = ret;
+			ret = execute_single_builtin(arg);
 			return (ret);
 		}
 	}
 	ret = piping(arg);
+	signals_default();
 	reset_fds(arg->orig_fd);
 	arg->exit_code = ret;
 	return (ret);

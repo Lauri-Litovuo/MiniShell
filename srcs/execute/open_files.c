@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 11:51:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 17:19:15 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:36:55 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,8 @@ static int	open_infiles(t_vec *rdrct, t_redir *redir, size_t pos)
 				file_error(filename, strerror(errno), redir, 0);
 		}
 	}
-	redir->infile = filename;
-	if (redir->re_pos > redir->hd_pos)
-		redir->fd_in = fd;
-	redir->file_in = ERRO;
-	if (fd == ERRO)
+	if (assign_redir_values(redir, fd, filename) < 0)
 		return (-1);
-	redir->file_in = YES;
 	return (redir->file_in);
 }
 

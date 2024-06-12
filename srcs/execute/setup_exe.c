@@ -6,86 +6,121 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 13:40:41 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:11:43 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-
-int	init_redir(t_redir *redir)
+int	cleanup_exe(t_exec **exe, size_t count)
 {
-	redir->fd_in = -1;
-	redir->fd_out = -1;
-	redir->hd_pos = -42;
-	redir->re_pos = -42;
-	redir->pipe_out = NO;
-	redir->pipe_in = NO;
-	redir->file_in = NO;
-	redir->file_out = NO;
-	redir->hd_in = NO;
-	redir->infile = NULL;
-	redir->outfile = NULL;
-	redir->hd_lim = NULL;
-	redir->hd_file = NULL;
-	redir->i = -42;
-	return (0);
-}
+	size_t	i;
 
-int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
-{
-	size_t	holder;
-	char	**temp;
-	size_t	count;
-	char	*str;
-
-	holder = arg[exe->pos].cmd.len;
-	temp = NULL;
-	while (i < holder)
+	i = 0;
+	while (i < count)
 	{
-		j = 0;
-		count = 0;
-		if ((*(char **)vec_get(&arg[exe->pos].cmd, i))[0] == '\0')
+		if (exe[i])
 		{
-			vec_remove_str(&arg[exe->pos].cmd, i);
-			i++;
-		}
-		else if (ft_strchr(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ') == 0)
-			i++;
-		else
-		{
-			temp = ft_split(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ');
-			if (!temp)
-				return (-1);
-			while (temp[count])
-				count++;
-			while (j < count)
+			if (exe[i]->cmd_argv)
 			{
-				str = ft_strdup(temp[j]);
-				if (j == 0)
-					vec_replace_str(&arg[exe->pos].cmd, str, i);
-				else
-					vec_insert(&arg[exe->pos].cmd, &str, i + j);
-				j++;
+				free_2d_array(exe[i]->cmd_argv);
 			}
-			i++;
+			free(exe[i]);
 		}
-		holder = arg[exe->pos].cmd.len;
+		i++;
 	}
-	free_2d_array(temp);
+	free(exe);
+	return (-1);
+}
+
+void	setup_redirection(t_exec *exe, t_shell *arg, size_t i)
+{
+	init_redir(&exe->redir);
+
+	if (arg[i].rdrct.len != 0)
+	{
+		if (open_files(&arg[i].rdrct, exe, arg) < 0)
+		{
+			cleanup_exe(arg->exe, arg->count);
+			exit(-1);
+		}
+	}
+	if (g_signal == 2)
+		arg->exit_code = 1;
+	if (exe->pos > 0 && exe->redir.file_in == NO && exe->redir.hd_in == NO)
+		exe->redir.pipe_in = 1;
+	if (exe->redir.file_out == NO && arg->count > 1
+		&& exe->pos != arg->count - 1)
+		exe->redir.pipe_out = 1;
+}
+
+int	setup_cmd_path(t_exec *exe, t_shell *arg, size_t i)
+{
+	if (arg[i].cmd.len != 0)
+	{
+		exe->cmd = exe->cmd_argv[0];
+		exe->path = get_exec_path(exe->cmd, &arg->env);
+		if (exe->path == NULL)
+			return (-1);
+	}
+	exe->ret = 0;
 	return (0);
 }
 
-void init_exec(t_exec *exe)
+int	setup_cmd_argv(t_exec *exe, t_shell *arg)
 {
-	exe->cmd_argv = NULL;
-	exe->cmd = NULL;
-	exe->path = NULL;
-	exe->ret = 0;
-	exe->pipe_fd = NULL;
-	exe->pos = 0;
+	size_t	j;
+
+	exe->cmd_argv = (char **)malloc((arg->cmd.len + 1) * sizeof(char *));
+	if (!exe->cmd_argv)
+		return (-1);
+
+	j = 0;
+	while (j < arg->cmd.len)
+	{
+		exe->cmd_argv[j] = ft_strdup(*(char **)vec_get(&arg->cmd, j));
+		if (!exe->cmd_argv[j])
+		{
+			free_2d_array(exe->cmd_argv);
+			return (-1);
+		}
+		j++;
+	}
+	exe->cmd_argv[j] = NULL;
+	return (0);
 }
 
+
+int	setup_exe(t_shell *arg)
+{
+	size_t	i;
+	t_exec	**exe;
+
+	exe = (t_exec **)malloc((arg->count + 1) * sizeof(t_exec *));
+	if (!exe)
+		return (cleanup_exe(NULL, 0));
+	i = 0;
+	while (i < arg->count)
+	{
+		exe[i] = (t_exec *)malloc(sizeof(t_exec));
+		if (!exe[i] || init_exec(exe[i]) != 0)
+			return (cleanup_exe(exe, i));
+		exe[i]->pos = i;
+		if (arg->split_flag == 1 && split_vec(exe[i], arg, 0, 0) == -1)
+			return (cleanup_exe(exe, i + 1));
+		if (setup_cmd_argv(exe[i], &arg[i]) == -1)
+			return (cleanup_exe(exe, i + 1));
+		if (setup_cmd_path(exe[i], arg, i) == -1)
+			return (cleanup_exe(exe, i + 1));
+		setup_redirection(exe[i], arg, i);
+		i++;
+	}
+	exe[i] = NULL;
+	arg->exe = exe;
+	return (0);
+}
+
+/*
 int	setup_exe(t_shell *arg)
 {
 	size_t	i;
@@ -131,9 +166,11 @@ int	setup_exe(t_shell *arg)
 		}
 		if (g_signal == 2)
 			arg->exit_code = 1;
-		if (exe[i]->pos > 0 && exe[i]->redir.file_in == NO && exe[i]->redir.hd_in == NO)
+		if (exe[i]->pos > 0 && exe[i]->redir.file_in == NO
+			&& exe[i]->redir.hd_in == NO)
 			exe[i]->redir.pipe_in = 1;
-		if (exe[i]->redir.file_out == NO && arg->count > 1 && exe[i]->pos != arg->count - 1)
+		if (exe[i]->redir.file_out == NO && arg->count > 1
+			&& exe[i]->pos != arg->count - 1)
 			exe[i]->redir.pipe_out = 1;
 		i++;
 	}
@@ -141,3 +178,4 @@ int	setup_exe(t_shell *arg)
 	arg->exe = exe;
 	return (0);
 }
+*/
