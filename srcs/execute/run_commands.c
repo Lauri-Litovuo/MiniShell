@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 00:36:50 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:44:27 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	run_command(t_shell *arg, t_exec *exe)
 		exit (0);
 	set_pipe_fds(exe, arg);
 	set_fds(&exe->redir);
-	while (ret < arg->count && ret != exe->pos)
+	while ((size_t)ret < arg->count && (size_t)ret != exe->pos)
 	{
 		close_fds(arg->exe[ret]);
 		ret++;

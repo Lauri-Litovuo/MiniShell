@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:45:16 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 00:41:00 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:53:01 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,18 @@ static int	wait_children(t_shell *arg)
 	int		status;
 	int		temp;
 	pid_t	wait_pid;
-	t_exec	*exe;
 	size_t	i;
 
 	i = 0;
 	wait_pid = 0;
 	temp = 0;
 	close_other_pipe_fds(arg, -5);
-	while(i < arg->count)
+	while (i < arg->count)
 	{
 		close_fds(arg->exe[i]);
 		i++;
 	}
 	i = 0;
-	signal(SIGINT, SIG_IGN);
 	while (wait_pid != -1 || errno != ECHILD)
 	{
 		wait_pid = waitpid(-1, &status, 0);
@@ -52,9 +50,9 @@ static int	wait_children(t_shell *arg)
 	else
 		arg->exit_code = temp;
 	if (arg->exit_code == 130)
-			printf("\n");
+		printf("\n");
 	if (arg->exit_code == 131)
-			printf("Quit: 3\n");
+		printf("Quit: 3\n");
 	signals_default();
 	return (arg->exit_code);
 }
@@ -76,6 +74,7 @@ static int	piping(t_shell *arg)
 			signals_child();
 			run_command(arg, arg->exe[i]);
 		}
+		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 		i++;
 	}
@@ -92,14 +91,13 @@ static int	create_pipes(size_t pipe_count, t_shell *arg)
 	while (i < pipe_count)
 	{
 		exe = arg->exe[i];
-		fd = malloc(sizeof(fd) * 2);
+		fd = malloc(sizeof(int) * 2);
 		if (!fd || pipe(fd) < 0)
 		{
 			free_arg(arg, NO);
 			return (-1);
 		}
 		exe->pipe_fd = fd;
-		printf("opened pipe fds for exe[%zu]: fd_in:%d fd_out: %d\n", i, fd[0], fd[1]);
 		i++;
 	}
 	return (0);

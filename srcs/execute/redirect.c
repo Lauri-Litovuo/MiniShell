@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:15:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 00:57:19 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:38:44 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	set_pipe_fds(t_exec *exe, t_shell *arg)
 	{
 		pre = arg->exe[exe->pos - 1];
 	}
-	else
+	else if (arg->pipe_count != 0)
 		close (exe->pipe_fd[0]);
 	if (exe->redir.pipe_in == YES)
 	{
