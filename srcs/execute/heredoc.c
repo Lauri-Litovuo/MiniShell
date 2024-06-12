@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 23:49:34 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:17:47 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,15 @@ static int	heredoc_loop(t_redir *redir, int fd, t_shell *arg)
 	return (0);
 }
 
-
-static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_shell *arg)
+static int	handle_heredoc(t_vec *rdrct, \
+t_redir *redir, size_t pos, t_shell *arg)
 {
 	int		fd;
 	int		ret;
 
 	ret = 0;
+	redir->hd_pos = pos;
+	redir->hd_in = YES;
 	while (pos < rdrct->len)
 	{
 		if (ft_strncmp(*(char **)vec_get(rdrct, pos), "<<", 3) == 0)
@@ -106,7 +108,8 @@ static int	handle_heredoc(t_vec *rdrct, t_redir *redir, size_t pos, t_shell *arg
 	return (ret);
 }
 
-int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_shell *arg, size_t count)
+int	check_for_heredoc(t_vec *rdrct, t_redir *redir, \
+t_shell *arg, size_t count)
 {
 	size_t	i;
 
@@ -116,12 +119,9 @@ int	check_for_heredoc(t_vec *rdrct, t_redir *redir, t_shell *arg, size_t count)
 		if (ft_strncmp(*(char **)vec_get(rdrct, i), "<<", 3) == 0
 			&& redir->hd_in == NO)
 		{
-			redir->hd_pos = i;
-			redir->hd_in = YES;
 			if (handle_heredoc(rdrct, redir, i, arg) < 0)
 			{
 				redir->hd_in = ERRO;
-				//free(redir);
 				return (-1);
 			}
 		}

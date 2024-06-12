@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:05:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 23:30:56 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:38:14 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	reset_fds(int orig_fd[2])
 
 	ret = 0;
 	if (dup2(orig_fd[0], STDIN_FILENO) == -1)
-			ret = -1;
-		close (orig_fd[0]);
+		ret = -1;
+	close (orig_fd[0]);
 	if (dup2(orig_fd[1], STDOUT_FILENO) == -1)
 		ret = -1;
 	close (orig_fd[1]);

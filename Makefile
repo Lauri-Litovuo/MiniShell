@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/12 13:41:31 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/06/12 19:14:37 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,11 +59,14 @@ SOURCES = \
 			srcs/utils/free.c \
 			srcs/signals/signals.c \
 			srcs/signals/termios.c \
-			srcs/errors/cleanup.c
+			srcs/errors/cleanup.c \
+			srcs/execute/execute_utils.c \
+			srcs/execute/open_files_utils.c \
+			srcs/execute/setup_exe_utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS =  -g -Wall -Wextra -Werror -I$(RLHEAD)
+CFLAGS =  -Wall -Wextra -Werror -g -I$(RLHEAD)
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 
