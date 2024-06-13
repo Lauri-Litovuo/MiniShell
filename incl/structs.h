@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 13:27:00 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:31:24 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct s_expd
 	char	*new;
 	char	*join;
 	int		ret;
-	int		flag;
 	size_t	var_len;
 	size_t	exp_len;
 	size_t	pre_len;

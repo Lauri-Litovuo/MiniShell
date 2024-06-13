@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 17:58:26 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 19:26:50 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	init_expd_struct(t_expd *s);
 int			expand_string(t_shell *arg, t_expd *s, t_vec *vec, int index);
 int			check_if_exists(t_shell *arg, t_expd *s);
-static void	check_extra_expand(t_expd *s, char *str);
 
 int	expand_variables(t_shell *arg, t_vec *vec, int index)
 {
@@ -94,19 +93,6 @@ int	expand_string(t_shell *arg, t_expd *s, t_vec *vec, int index)
 	return (0);
 }
 
-static void	check_extra_expand(t_expd *s, char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			s->flag = 1;
-		i++;
-	}
-}
-
 int	check_if_exists(t_shell *arg, t_expd *s)
 {
 	s->i = s->ds + 1;
@@ -114,7 +100,6 @@ int	check_if_exists(t_shell *arg, t_expd *s)
 	s->str[s->i] != '$' && s->str[s->i] != ' ' && \
 	(ft_isalnum(s->str[s->i]) != 0 || s->str[s->i] == '_' ))
 		s->i++;
-	check_extra_expand(s, &s->str[s->i]);
 	s->var_len = s->i - s->ds - 1;
 	s->env_var = ft_substr(s->str, s->ds + 1, s->var_len);
 	if (!s->env_var)
