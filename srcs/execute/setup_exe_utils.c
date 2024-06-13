@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:50:50 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 19:16:27 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:51:45 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 {
 	size_t	holder;
 	size_t	count;
-	char	*str;
 
 	holder = arg[exe->pos].cmd.len;
 	while (i < holder)

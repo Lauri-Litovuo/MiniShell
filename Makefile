@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/12 19:14:37 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/06/13 10:52:31 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,10 +56,10 @@ SOURCES = \
 			srcs/builtins/ft_cd.c \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
-			srcs/utils/free.c \
 			srcs/signals/signals.c \
 			srcs/signals/termios.c \
 			srcs/errors/cleanup.c \
+			srcs/errors/free.c \
 			srcs/execute/execute_utils.c \
 			srcs/execute/open_files_utils.c \
 			srcs/execute/setup_exe_utils.c

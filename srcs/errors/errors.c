@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:59:39 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/10 17:23:20 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 10:48:12 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,6 @@ int	error_triple_msg(int flag, char *first, char *sec, char *third)
 		ft_putstr_fd(first, 2);
 		return (0);
 	}
-	return (-1);
-}
-
-int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
-{
-	if (flag == 2)
-	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(specifier, 2);
-	}
-	if (flag == 1)
-	{
-		ft_putstr_fd(str, 2);
-	}
-	if (vec)
-		vec_free(vec);
 	return (-1);
 }
 
