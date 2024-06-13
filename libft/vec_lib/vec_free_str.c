@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_free_str.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:03:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/05/29 15:02:05 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:45:14 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,5 @@ void	vec_free_str(t_vec *src)
 		free(str_ptr);
 		i++;
 	}
-	src->memory = NULL;
-	src->len = 0;
-	src->elem_size = 0;
-	src->alloc_size = 0;
+	vec_free(src);
 }

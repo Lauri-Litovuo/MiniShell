@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 17:46:14 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:32:01 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
