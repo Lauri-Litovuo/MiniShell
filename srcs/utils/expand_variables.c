@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 19:26:50 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:51:22 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 	if (*(ptr + 1) == '\0' || *(ptr + 1) == ' ')
 		return (0);
 	s.total_len = ft_strlen(s.str);
+	ptr = NULL;
 	while (s.str[s.ds + 1] != '\0')
 	{
 		s.str = *(char **)vec_get(vec, index);
@@ -42,13 +43,9 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 				s.ret = expand_string(arg, &s, vec, index);
 		}
 		if (s.ret < 0)
-		{
-			free(ptr);
 			return (-1);
-		}
 		s.ds++;
 	}
-	free(ptr);
 	return (0);
 }
 
