@@ -6,13 +6,12 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 17:07:48 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:17:41 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-static int	check_export_syntax(char *arg);
 static int	export_variable(t_vec *env, char *arg);
 static int	export_env_var(char *env_var, char *arg, t_vec *env);
 void		write_export_error(char *str, char *err_msg);
@@ -70,7 +69,7 @@ static int	export_variable(t_vec *env, char *arg)
 	return (0);
 }
 
-static int	check_export_syntax(char *arg)
+int	check_export_syntax(char *arg)
 {
 	int	i;
 
