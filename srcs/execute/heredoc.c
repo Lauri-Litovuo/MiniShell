@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 19:17:47 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:51:51 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ static int	heredoc_loop(t_redir *redir, int fd, t_shell *arg)
 	{
 		signals_heredoc();
 		buf = readline("> ");
-		signals_default();
 		if (g_signal == 2)
 		{
 			close(fd);
 			reset_fds(arg->orig_fd);
-			return (EXIT_FAILURE);
+			return (-1);
 		}
+		signals_default();
 		if (validate_line(&buf, redir->hd_lim, arg) < 0)
 			break ;
 		ft_putstr_fd(buf, fd);
@@ -95,13 +95,21 @@ t_redir *redir, size_t pos, t_shell *arg)
 			pos++;
 			if (redir->hd_file)
 				unlink (redir->hd_file);
+			if (redir->hd_file)
+				free (redir->hd_file);
 			redir->hd_lim = *(char **)vec_get(rdrct, pos);
 			redir->hd_file = get_hdfile_name(redir->hd_lim, (int)pos);
 			fd = open (redir->hd_file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 			if (fd < 0)
 				return (unlink (redir->hd_file), -1);
-			if (heredoc_loop(redir, fd, arg) == 1)
-				return (unlink (redir->hd_file), -1);
+			if (heredoc_loop(redir, fd, arg) < 0)
+			{
+				close (fd);
+				unlink (redir->hd_file);
+				free(redir->hd_file);
+				redir->hd_file = NULL;
+				return (-1);
+			}
 		}
 		pos++;
 	}
