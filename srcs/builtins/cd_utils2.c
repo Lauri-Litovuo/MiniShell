@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:14:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 10:05:34 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:21:36 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	update_pwd_cd(t_vec *env, t_cd *data)
 {
 	int		index;
 	char	*temp;
+	char	*remove;
 
 	index = find_index_of_env(env, "PWD");
 	if (index < 0)
@@ -60,8 +61,10 @@ int	update_pwd_cd(t_vec *env, t_cd *data)
 	temp = ft_strdup(data->path);
 	if (!temp)
 		return (-1);
+	remove = *(char **)vec_get(env, index);
 	if (vec_replace_str(env, temp, index) < -1)
 		return (-1);
+	free (remove);
 	return (0);
 }
 
@@ -69,8 +72,10 @@ int	update_old_pwd(t_vec *env, t_cd *data)
 {
 	char	*temp;
 	int		index;
+	char	*remove;
 
 	index = 0;
+	remove = NULL;
 	ft_strlcat(data->old_pwd, data->cur_dir, PATH_MAX);
 	temp = ft_strdup(data->old_pwd);
 	index = find_index_of_env(env, "OLDPWD");
@@ -81,8 +86,10 @@ int	update_old_pwd(t_vec *env, t_cd *data)
 	}
 	else
 	{
+		remove = *(char **)vec_get(env, index);
 		if (vec_replace_str(env, temp, index) < 0)
 			return (-1);
+		free (remove);
 	}
 	return (0);
 }
