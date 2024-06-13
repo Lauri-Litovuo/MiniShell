@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/13 14:41:38 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 18:14:07 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ int	init_vectors(char *buf, t_shell *arg, size_t pos, int i)
 *****************************************************************/
 int	split_input(char *buf, t_shell *arg, size_t pos, int i)
 {
-	if (vec_new(&arg[pos].cmd, 1, sizeof(char *)) < 0)
+	if (vec_new(&arg[pos].cmd, 10, sizeof(char *)) < 0)
 		return (-1);
-	if (vec_new(&arg[pos].rdrct, 1, sizeof(char *)) < 0)
+	if (vec_new(&arg[pos].rdrct, 10, sizeof(char *)) < 0)
 		return (-1);
 	if (init_vectors(buf, arg, pos, i) == -1)
 		return (-1);
