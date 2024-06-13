@@ -6,7 +6,7 @@
 #    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/13 10:52:31 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/06/13 11:18:30 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SOURCES = \
 			srcs/execute/add_builtin.c \
 			srcs/utils/expand_variables.c \
 			srcs/utils/expand_variables_utils.c \
+			srcs/utils/utils_main.c \
 			srcs/execute/execute.c \
 			srcs/execute/setup_exe.c \
 			srcs/execute/open_files.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 11:38:02 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:17:22 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	g_signal;
 
 void	init_index(t_shell *arg)
 {
+	arg->temp = NULL;
 	arg->count = 0;
 	arg->pipe_count = 0;
 	arg->gl_count = 0;
@@ -42,8 +43,13 @@ static int	copy_env(t_vec *env, char **envp)
 	while (envp[i])
 	{
 		temp = ft_strdup(envp[i]);
+		if (!temp)
+			free_env(env);
 		if (vec_push(env, &temp) < 0)
-			return (error_msg_free(1, VECPUSH, NULL, env));
+		{
+			free_env(env);
+			return (error_msg(1, VECPUSH, NULL));
+		}
 		i++;
 	}
 	return (0);
@@ -56,14 +62,10 @@ int	miniloop(char *buf, t_shell *arg)
 		init_index(arg);
 		signals_default();
 		buf = readline("✨🐢✨la_shell> ");
-		enabled_termios();//why?
+		enabled_termios();
 		check_signal(arg);
 		if (!buf)
-		{
-			printf("exit\n");//
-			free_arg(arg, YES);
-			exit (arg->exit_code);
-		}
+			handle_buf(arg);
 		if (buf && *buf)
 			add_history(buf);
 		if (*buf == '\0')
@@ -73,6 +75,7 @@ int	miniloop(char *buf, t_shell *arg)
 			if (parse_input(arg, buf) == -1)
 				continue ;
 			execute(arg);
+			// system("leaks minishell");
 		}
 		free(buf);
 		free_arg(arg, NO);
@@ -88,7 +91,6 @@ int	minishell(char **envp)
 
 	g_signal = 0;
 	buf = NULL;
-	arg.exit_code = 0;
 	ft_memset(&arg, 0, sizeof(t_shell));
 	copy_env(&arg.env, envp);
 	miniloop(buf, &arg);

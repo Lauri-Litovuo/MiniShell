@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/13 10:46:57 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:03:56 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	free_arg(t_shell *arg, int del_hist)
 	i = 0;
 	if (!arg || arg->count == 0)
 		return ;
-	free_env(&arg->env);
 	while (i < arg->count)
 	{
 		if (arg[i].cmd.len == 0)
@@ -49,7 +48,10 @@ void	free_arg(t_shell *arg, int del_hist)
 	}
 	free(arg->exe);
 	if (del_hist == YES)
+	{
+		free_env(&arg->env);
 		rl_clear_history();
+	}
 }
 
 void	close_fds_exit(t_shell *arg, int ret)

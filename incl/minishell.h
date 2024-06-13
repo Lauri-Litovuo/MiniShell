@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 10:50:42 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:18:14 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	disabled_termios(void);
 void	enabled_termios(void);
 void	check_signal(t_shell *arg);
 void 	free_env(t_vec *env);
-void	print_vectors(t_shell *arg);	//delete
+int		check_expand_split(t_shell *arg, char *buf, int i);
+void	handle_buf(t_shell *arg);
 
 #endif

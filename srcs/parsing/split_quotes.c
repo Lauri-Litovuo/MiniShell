@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:04:40 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/10 15:14:19 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:09:20 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	exclude_quote(char *buf, t_shell *arg, size_t pos, int i)
 	arg->temp = ft_substr(buf, arg->j + 1, (i - arg->j - 1));
 	if (arg->temp == NULL)
 	{
-		error_msg(1, SUBSTR, NULL); //do I need to free buf? maybe in bigger parse
+		error_msg(1, SUBSTR, NULL);
 		return (-1);
 	}
 	if (vec_push(&arg[pos].cmd, &arg->temp) < 0)

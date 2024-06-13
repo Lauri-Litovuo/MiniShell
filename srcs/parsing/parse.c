@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/10 15:13:53 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:06:28 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,35 +88,7 @@ static int	scan_input(char *buf)
 	return (0);
 }
 
-/*		DELETE		*/
-void	print_vectors(t_shell *arg)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (i < arg->count)
-	{
-		j = 0;
-		while (j < arg[i].cmd.len)
-		{
-			printf("arg[%zu], cmd[%zu]: %s\n", i, j,
-				*(char **)vec_get(&arg[i].cmd, j));
-			j++;
-		}
-		j = 0;
-		while (j < arg[i].rdrct.len)
-		{
-			printf("arg[%zu], rdrct[%zu]: %s\n", i, j,
-				*(char **)vec_get(&arg[i].rdrct, j));
-			j++;
-		}
-		i++;
-	}
-}
-
-int	 split(char *buf, t_shell *arg)
+int	split(char *buf, t_shell *arg)
 {
 	while (arg->i < arg->count)
 	{
@@ -148,6 +120,5 @@ int	parse_input(t_shell *arg, char *buf)
 	init_count(buf, arg);
 	if (split(buf, arg) == -1)
 		return (-1);
-	// print_vectors(arg);
 	return (1);
 }
