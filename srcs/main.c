@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:01:02 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:38:20 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	miniloop(char *buf, t_shell *arg)
 			if (parse_input(arg, buf) == -1)
 				continue ;
 			execute(arg);
-			system("leaks minishell");
+			// system("leaks minishell");
 		}
 		free(buf);
 		free_arg(arg, NO);

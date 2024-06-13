@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 14:58:05 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:29:47 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 	init_expd_struct(&s);
 	s.str = *(char **)vec_get(vec, index);
 	ptr = *(char **)vec_get(vec, index);
+	if (*(ptr + 1) == '\0' || *(ptr + 1) == ' ')
+		return (0);
 	s.total_len = ft_strlen(s.str);
 	while (s.str[s.ds + 1] != '\0')
 	{
@@ -39,7 +41,10 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 				s.ret = expand_string(arg, &s, vec, index);
 		}
 		if (s.ret < 0)
-			return (free(ptr), -1);
+		{
+			free(ptr);
+			return (-1);
+		}
 		s.ds++;
 	}
 	free(ptr);

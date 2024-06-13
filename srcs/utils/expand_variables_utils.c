@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 15:14:08 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:38:01 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	expand_to_empty(t_expd *s, t_vec *vec, int index)
 	dupped = ft_strdup(s->new);
 	if (!dupped)
 		return (-1);
+	free(s->new);
 	vec_replace_str(vec, dupped, index);
 	return (0);
 }
