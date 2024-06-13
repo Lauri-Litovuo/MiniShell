@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 14:14:54 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:53:28 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,7 @@ void	check_signal(t_shell *arg);
 void	delete_histories(t_shell *arg);
 int		check_expand_split(t_shell *arg, char *buf, int i);
 void	handle_buf(t_shell *arg);
+void	reset_flags(t_shell *arg);
+void	init_s(t_vecjoin *s);
 
 #endif
