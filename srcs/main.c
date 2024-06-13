@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 13:39:22 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:17:18 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ static int	copy_env(t_vec *env, char **envp)
 	{
 		temp = ft_strdup(envp[i]);
 		if (!temp)
-			free_env(env);
+			return (-1);
 		if (vec_push(env, &temp) < 0)
 		{
-			free_env(env);
 			return (error_msg(1, VECPUSH, NULL));
 		}
 		i++;
@@ -94,7 +93,8 @@ int	minishell(char **envp)
 	g_signal = 0;
 	buf = NULL;
 	ft_memset(&arg, 0, sizeof(t_shell));
-	copy_env(&arg.env, envp);
+	if (copy_env(&arg.env, envp) < 0)
+		free_arg(&arg, YES);
 	miniloop(buf, &arg);
 	return (0);
 }

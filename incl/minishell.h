@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 13:32:10 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:14:54 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	h_handler(int sig);
 void	disabled_termios(void);
 void	enabled_termios(void);
 void	check_signal(t_shell *arg);
-void	free_env(t_vec *env);
+void	delete_histories(t_shell *arg);
 int		check_expand_split(t_shell *arg, char *buf, int i);
 void	handle_buf(t_shell *arg);
 

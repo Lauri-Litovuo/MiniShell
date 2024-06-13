@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/13 13:38:25 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 14:22:48 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	free_arg(t_shell *arg, int del_hist)
 	i = 0;
 	if (!arg || arg->count == 0)
 		return ;
+	arg->temp = NULL;
 	while (i < arg->count)
 	{
 		if (arg[i].cmd.len == 0)
@@ -47,11 +48,10 @@ void	free_arg(t_shell *arg, int del_hist)
 		i++;
 	}
 	free(arg->exe);
+	if (arg->pids)
+		free(arg->pids);
 	if (del_hist == YES)
-	{
-		free_env(&arg->env);
-		rl_clear_history();
-	}
+		delete_histories(arg);
 }
 
 void	close_fds_exit(t_shell *arg, int ret)
@@ -75,19 +75,20 @@ void	close_fds_exit(t_shell *arg, int ret)
 	exit (ret);
 }
 
-void	free_env(t_vec *env)
+void	delete_histories(t_shell *arg)
 {
 	size_t	i;
 	char	**data;
 
 	i = 0;
-	data = (char **)env->memory;
-	while (i < env->len)
+	data = (char **)arg->env.memory;
+	while (i < arg->env.len)
 	{
 		free(data[i]);
 		i++;
 	}
-	vec_free(env);
+	vec_free(&arg->env);
+	rl_clear_history();
 }
 
 int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
