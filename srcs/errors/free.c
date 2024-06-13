@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/29 09:33:51 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 13:39:35 by llitovuo         ###   ########.fr       */
+/*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
+/*   Updated: 2024/06/13 13:38:25 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_arg(t_shell *arg, int del_hist)
 	free(arg->exe);
 	if (del_hist == YES)
 	{
-		vec_free_str(&arg->env);
+		free_env(&arg->env);
 		rl_clear_history();
 	}
 }
@@ -73,4 +73,35 @@ void	close_fds_exit(t_shell *arg, int ret)
 		free_arg(arg, YES);
 	}
 	exit (ret);
+}
+
+void	free_env(t_vec *env)
+{
+	size_t	i;
+	char	**data;
+
+	i = 0;
+	data = (char **)env->memory;
+	while (i < env->len)
+	{
+		free(data[i]);
+		i++;
+	}
+	vec_free(env);
+}
+
+int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
+{
+	if (flag == 2)
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(specifier, 2);
+	}
+	if (flag == 1)
+	{
+		ft_putstr_fd(str, 2);
+	}
+	if (vec)
+		vec_free(vec);
+	return (-1);
 }

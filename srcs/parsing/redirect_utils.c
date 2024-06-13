@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:47:25 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/09 16:24:29 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:08:26 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,7 @@ int	store_double(char *buf, t_shell *arg, size_t pos, int i)
 int	rdrct_qq(char *buf, t_shell *arg, size_t pos, int i)
 {
 	i++;
-	while (buf[i] && buf[i] != '\"')
-	{
-		if (buf[i] == '$')
-		{
-			arg->split_flag = 1;
-			arg->expandrd_flag = 1;
-		}
-		i++;
-	}
+	i = check_expand_split(arg, buf, i);
 	arg->temp = ft_substr(buf, arg->j + 1, (i - arg->j - 1));
 	if (arg->temp == NULL)
 	{
@@ -115,7 +107,7 @@ int	rdrct_file(char *buf, t_shell *arg, size_t pos, int i)
 		i++;
 	if (buf[i] == '$')
 	{
-		arg->split_flag = 1;	
+		arg->split_flag = 1;
 		i = store_specialrd_cmd(buf, arg, pos, i);
 	}
 	else

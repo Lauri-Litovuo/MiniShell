@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 17:08:35 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/11 23:49:19 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:31:10 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
-
 
 void	h_handler(int sig)
 {
@@ -53,7 +52,7 @@ void	d_handler(int sig)
 	if (sig == SIGINT)
 	{
 		write(2, "\n", 1);
-		rl_replace_line("",0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -62,7 +61,7 @@ void	d_handler(int sig)
 void	signals_default(void)
 {
 	struct sigaction	action;
-	
+
 	disabled_termios();
 	ft_memset(&action, 0, sizeof(action));
 	sigemptyset(&action.sa_mask);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_alpha_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:32:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/04/26 14:11:15 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:35:13 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,3 @@ static void	swap_bits(unsigned char *start, unsigned char *end)
 	*end ^= *start;
 	*start ^= *end;
 }
-

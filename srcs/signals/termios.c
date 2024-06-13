@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 15:54:58 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/07 15:26:55 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:31:32 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	enabled_termios(void)
 {
 	struct termios	term;
-	
+
 	ft_bzero(&term, sizeof(term));
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag |= ECHOCTL;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
-	
+
 void	disabled_termios(void)
 {
 	struct termios	term;

@@ -6,11 +6,25 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:46:11 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/06/06 17:10:11 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:07:53 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+int	check_expand_split(t_shell *arg, char *buf, int i)
+{
+	while (buf[i] && buf[i] != '\"')
+	{
+		if (buf[i] == '$')
+		{
+			arg->split_flag = 1;
+			arg->expandrd_flag = 1;
+		}
+		i++;
+	}
+	return (i);
+}
 
 /****************************************************************
 *	Stores an expanded value into rdrct vector					*

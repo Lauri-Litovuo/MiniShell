@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:59:39 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/10 17:23:20 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:34:39 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,44 +49,31 @@ int	error_triple_msg(int flag, char *first, char *sec, char *third)
 	return (-1);
 }
 
-int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
+int	set_ret_error(t_exec *exe, int ret)
 {
-	if (flag == 2)
+	if (access(exe->path, F_OK) == -1 || access(exe->path, X_OK) == 0)
 	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(specifier, 2);
+		ret = 127;
+		ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 	}
-	if (flag == 1)
+	else
 	{
-		ft_putstr_fd(str, 2);
+		ret = 126;
+		ft_putstr_fd("Permission denied\n", STDERR_FILENO);
 	}
-	if (vec)
-		vec_free(vec);
-	return (-1);
+	return (ret);
 }
 
 int	execve_error(t_exec *exe, char *err_msg, int ret)
 {
-	//printf("ernno value: %d\n", ret);
 	ft_putstr_fd("la_shell: ", STDERR_FILENO);
 	ft_putstr_fd(exe->cmd, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
-	if ((ret == 2 || ret == 43 || ret == 13)) //&& access(exe->path, F_OK) == -1)//
+	if ((ret == 2 || ret == 43 || ret == 13))
 	{
-		if ((ft_strncmp(exe->cmd_argv[0], "/", 1) == 0) 
+		if ((ft_strncmp(exe->cmd_argv[0], "/", 1) == 0)
 			|| (ft_strncmp(exe->cmd_argv[0], "./", 2) == 0))
-		{
-			if (access(exe->path, F_OK) == -1 || access(exe->path, X_OK) == 0)
-			{
-				ret = 127;
-				ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
-			}
-			else
-			{
-				ret = 126;
-				ft_putstr_fd("Permission denied\n", STDERR_FILENO);
-			}
-		}
+			ret = set_ret_error(exe, ret);
 		else
 		{
 			ret = 127;

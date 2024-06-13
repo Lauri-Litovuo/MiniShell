@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 15:21:29 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 11:31:51 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	init_expd_struct(t_expd *s)
 
 int	expand_string(t_shell *arg, t_expd *s, t_vec *vec, int index)
 {
-	if (s->str[s->ds] == '\0' || s->str[s->ds + 1] == '$' 
+	if (s->str[s->ds] == '\0' || s->str[s->ds + 1] == '$'
 		|| s->str[s->ds + 1] == ' ')
 		return (0);
 	s->ret = check_if_exists(arg, s);
