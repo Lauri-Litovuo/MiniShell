@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 17:07:48 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:29:06 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,5 @@ void	write_export_error(char *str, char *err_msg)
 	ft_putstr_fd("': ", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	write(STDERR_FILENO, "\n", 1);
+	free(str);
 }

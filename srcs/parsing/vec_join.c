@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:03:03 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/05/29 15:47:56 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:27:17 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,22 @@ void	init_s(t_vecjoin *s)
 int	join_rdrct_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 {
 	int	i;
+	int	flag;
 
+	flag = 0;
 	s->index = arg->joinrd_flag;
 	i = s->index + 1;
 	s->base = *(char **)vec_get(&arg[pos].rdrct, arg->joinrd_flag);
 	arg->joinrd_flag++;
 	while (arg->joinrd_flag < arg->endrd_flag)
 	{
+		flag++;
+		if (s->fin)
+			free(s->fin);
 		s->fin = ft_strjoin(s->base, \
 			*(char **)vec_get(&arg[pos].rdrct, arg->joinrd_flag));
+		if (flag > 1)
+			free(s->base);
 		s->base = ft_strdup(s->fin);
 		if (s->base == NULL)
 			return (-1);
@@ -60,15 +67,21 @@ int	join_rdrct_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 int	join_cmd_vector(t_shell *arg, size_t pos, t_vecjoin *s)
 {
 	int	i;
+	int	flag;
 
+	flag = 0;
 	s->index = arg->join_flag;
 	i = s->index + 1;
 	s->base = *(char **)vec_get(&arg[pos].cmd, arg->join_flag);
 	arg->join_flag++;
 	while (arg->join_flag < arg->end_flag)
 	{
+		if (s->fin)
+			free(s->fin);
 		s->fin = ft_strjoin(s->base, \
 			*(char **)vec_get(&arg[pos].cmd, arg->join_flag));
+		if (flag > 1)
+			free(s->base);
 		s->base = ft_strdup(s->fin);
 		if (s->base == NULL)
 			return (-1);
