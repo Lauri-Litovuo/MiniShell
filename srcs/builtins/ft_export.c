@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 19:29:06 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:36:00 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,7 @@ static int	export_env_var(char *env_var, char *arg, t_vec *env)
 	if (getenv(env_var) == 0 && find_index_of_env(env, env_var) < 0)
 	{
 		temp = ft_strdup(arg);
-		if (!temp)
-			return (-1);
-		if (vec_push(env, &temp) < 0)
+		if (!(temp) || vec_push(env, &temp) < 0)
 			return (-1);
 		return (0);
 	}

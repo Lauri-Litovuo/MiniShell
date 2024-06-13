@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:16:15 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 10:05:21 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:35:25 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,3 @@ int	expand_home(t_cd *data)
 	ft_strlcat(data->target, "/", PATH_MAX);
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/13 11:30:16 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 13:38:25 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_arg(t_shell *arg, int del_hist)
 	free(arg->exe);
 	if (del_hist == YES)
 	{
-		// free_env(&arg->env);
+		free_env(&arg->env);
 		rl_clear_history();
 	}
 }
@@ -75,19 +75,19 @@ void	close_fds_exit(t_shell *arg, int ret)
 	exit (ret);
 }
 
-void free_env(t_vec *env)
+void	free_env(t_vec *env)
 {
-    size_t i;
-	char 	**data;
+	size_t	i;
+	char	**data;
 
 	i = 0;
-    data = (char **)env->memory;
+	data = (char **)env->memory;
 	while (i < env->len)
 	{
 		free(data[i]);
 		i++;
 	}
-    vec_free(env);
+	vec_free(env);
 }
 
 int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
