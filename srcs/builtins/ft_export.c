@@ -12,7 +12,6 @@
 
 #include "../../incl/minishell.h"
 
-static int	check_export_syntax(char *arg);
 static int	export_variable(t_vec *env, char *arg);
 static int	export_env_var(char *env_var, char *arg, t_vec *env);
 void		write_export_error(char *str, char *err_msg);
@@ -70,7 +69,7 @@ static int	export_variable(t_vec *env, char *arg)
 	return (0);
 }
 
-static int	check_export_syntax(char *arg)
+int	check_export_syntax(char *arg)
 {
 	int	i;
 

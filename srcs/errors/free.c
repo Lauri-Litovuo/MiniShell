@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/13 14:47:40 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:45:29 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_exec(t_exec *exe)
 		free(exe->path);
 	if (exe->redir.hd_in == YES)
 		unlink (exe->redir.hd_file);
+	if (exe->redir.hd_file)
+		free (exe->redir.hd_file);
 	free (exe);
 }
 

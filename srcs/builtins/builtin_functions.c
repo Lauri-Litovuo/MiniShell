@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 14:36:33 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/13 20:17:19 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,26 +55,32 @@ int	ft_pwd(t_vec *env)
 	return (0);
 }
 
+void	write_unset_error(char *str, char *err_msg)
+{
+	ft_putstr_fd("la_shell: unset: `", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd("': ", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
+	write(STDERR_FILENO, "\n", 1);
+}
+
 int	ft_unset(t_vec *env, t_vec *args)
 {
 	int				index;
-	int				i;
-	char			**env_args;
+	size_t			i;
 	char			*env_var;
 
 	index = 0;
 	i = 1;
-	env_args = (char **)args->memory;
-	while ((size_t)i < args->len)
+	while (i < args->len)
 	{
-		env_var = extract_env_var(env_args[i]);
-		if (find_index_of_env(args, env_var) >= 0)
+		env_var = *(char **)vec_get(args, i);
+		if (check_export_syntax(env_var) < 0)
+			write_unset_error(env_var, "not a valid identifier");
+		if (find_index_of_env(env, env_var) >= 0)
 		{
+			env_var = *(char **)vec_get(args, i);
 			index = find_index_of_env(env, env_var);
-			if (index == -1)
-				return (0);
-			free (env_var);
-			env_var = vec_get(env, index);
 			if (vec_remove_str(env, index) < 0)
 				return (1);
 		}
