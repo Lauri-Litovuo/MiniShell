@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 11:16:37 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 19:23:54 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_exec(t_exec *exe)
 {
 	if (exe->cmd_argv)
 		free_2d_array(exe->cmd_argv);
-	if (exe->redir.pipe_out == YES)
+	if (exe->pipe_fd)
 		free(exe->pipe_fd);
 	if (exe->path)
 		free(exe->path);
@@ -50,6 +50,7 @@ void	free_arg(t_shell *arg, int del_hist)
 		i++;
 	}
 	free(arg->exe);
+	arg->exe = NULL;
 	if (arg->pids)
 		free(arg->pids);
 	if (del_hist == YES)
