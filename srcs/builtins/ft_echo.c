@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:05:18 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 13:08:11 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:23:18 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,20 @@ int	ft_echo(t_vec *args)
 	strs = (char **)args->memory;
 	if (args->len == 1)
 	{
-		if (write(1, "\n", 1) < 0)
-			return (-1);
+		write(1, "\n", 1);
 		return (0);
 	}
-	if (ft_strncmp(strs[1], "-n", 2) == 0)
+	while (i < args->len && ft_strncmp(strs[i], "-n", 2) == 0)
 	{
-		if (check_if_only_n(strs[1]) == 1)
+		if (check_if_only_n(strs[i]) == 1)
 		{
 			op_n = 1;
 			i++;
 		}
+		else
+			break ;
 	}
-	if (print_strings(args, i, op_n) < 0)
+	if (i < args->len && print_strings(args, i, op_n) < 0)
 		return (-1);
 	return (0);
 }
@@ -50,6 +51,8 @@ static int	check_if_only_n(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i + 2] == '\0')
+		return (1);
 	while (str[i + 2] != '\0')
 	{
 		if (str[i + 2] == 'n')
