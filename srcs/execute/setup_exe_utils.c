@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:50:50 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 10:51:45 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:14:31 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	split_insert(t_exec *exe, t_shell *arg, size_t i)
 	size_t	count;
 	size_t	j;
 	char	*str;
+	char	*remove;
 
 	temp = NULL;
 	temp = ft_split(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ');
@@ -61,7 +62,11 @@ int	split_insert(t_exec *exe, t_shell *arg, size_t i)
 	{
 		str = ft_strdup(temp[j]);
 		if (j == 0)
+		{
+			remove = *(char **)vec_get(&arg[exe->pos].cmd, i);
 			vec_replace_str(&arg[exe->pos].cmd, str, i);
+			free(remove);
+		}
 		else
 			vec_insert(&arg[exe->pos].cmd, &str, i + j);
 		j++;

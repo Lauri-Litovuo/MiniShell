@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 17:05:36 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:53:36 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	expand_to_env_var(t_shell *arg, t_expd *s, t_vec *vec, int index)
 		return (-1);
 	s->join = ft_strjoin(s->new, s->expanded);
 	free(s->new);
-	s->new = ft_substr(s->str, (s->ds + s->var_len + 1), ft_strlen(s->str));
 	free(s->expanded);
+	s->new = ft_substr(s->str, (s->ds + s->var_len + 1), ft_strlen(s->str));
 	dupped = ft_strjoin(s->join, s->new);
 	free(s->new);
 	free(s->join);
