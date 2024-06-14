@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_insert.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 12:34:36 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/05/20 17:22:55 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:04:49 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,23 @@
 *	Returns: 1 on success, -1 on failure.							*
 *********************************************************************/
 
-#include <stdio.h>
-
 int	vec_insert(t_vec *dst, void *src, size_t index)
 {
-	if (!dst || !src || index > dst->len)
+	if (!src || !src || index > dst->len)
 		return (-1);
 	else if (index == dst->len)
+	{
 		return (vec_push(dst, src));
-	if (dst->elem_size * dst->len >= dst->alloc_size)
-		if (vec_resize(dst, (dst->alloc_size * 2) / dst->elem_size) < 0)
+	}
+	if (dst->alloc_size <= (dst->len) * dst->elem_size)
+	{
+		if (vec_resize(dst, 2 * dst->alloc_size) <= 0)
 			return (-1);
-	ft_memmove(vec_get(dst, index + 1), vec_get(dst, index),
+	}
+	ft_memmove(&dst->memory[(index + 1) * dst->elem_size],
+		&dst->memory[index * dst->elem_size],
 		(dst->len - index) * dst->elem_size);
 	ft_memcpy(vec_get(dst, index), src, dst->elem_size);
 	dst->len++;
-	return (1);
+	return (dst->len);
 }
