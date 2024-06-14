@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 15:11:30 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 16:52:20 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,43 @@ static void	init_expd_struct(t_expd *s);
 int			expand_string(t_shell *arg, t_expd *s, t_vec *vec, int index);
 int			check_if_exists(t_shell *arg, t_expd *s);
 
+// int	expand_variables(t_shell *arg, t_vec *vec, int index)
+// {
+// 	t_expd	s;
+
+// 	init_expd_struct(&s);
+// 	s.str = *(char **)vec_get(vec, index);
+// 	if (*(s.str + 1) == '\0' || *(s.str + 1) == ' ')
+// 		return (0);
+// 	s.total_len = ft_strlen(s.str);
+// 	while (s.str[s.ds + 1] != '\0')
+// 	{
+// 		s.str = *(char **)vec_get(vec, index);
+// 		s.total_len = ft_strlen(s.str);
+// 		if (s.str[s.ds] == '$')
+// 		{
+// 			s.pre_len = s.ds;
+// 			if (s.str[s.ds] == '$' && s.str[s.ds + 1] == '?')
+// 				s.ret = expand_to_exit_status(arg, &s, vec, index);
+// 			else
+// 				s.ret = expand_string(arg, &s, vec, index);
+// 		}
+// 		if (s.ret < 0)
+// 			return (-1);
+// 		s.ds++;
+// 	}
+// 	return (0);
+// }
+
 int	expand_variables(t_shell *arg, t_vec *vec, int index)
 {
 	t_expd	s;
+	char	*ptr;
 
 	init_expd_struct(&s);
 	s.str = *(char **)vec_get(vec, index);
-	if (*(s.str + 1) == '\0' || *(s.str + 1) == ' ')
+	ptr = ft_strdup(s.str);
+	if (*(ptr + 1) == '\0' || *(ptr + 1) == ' ')
 		return (0);
 	s.total_len = ft_strlen(s.str);
 	while (s.str[s.ds + 1] != '\0')
@@ -38,9 +68,13 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 				s.ret = expand_string(arg, &s, vec, index);
 		}
 		if (s.ret < 0)
+		{
+			free(ptr);
 			return (-1);
+		}
 		s.ds++;
 	}
+	free(ptr);
 	return (0);
 }
 
