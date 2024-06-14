@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 11:07:28 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 14:32:01 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:44:50 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	run_command(t_shell *arg, t_exec *exe)
 	}
 	ret = execute_cmd(exe, arg);
 	if (ret == DIRECTORY)
-		ret = execve_error(exe, "is a directory", 126);
+		ret = execve_error(exe, "is a directory\n", 126);
 	close_fds_exit(arg, ret);
 	return (ret);
 }
