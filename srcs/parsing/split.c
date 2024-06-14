@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/13 18:14:07 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 11:04:58 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	init_vectors(char *buf, t_shell *arg, size_t pos, int i)
 	}
 	if (i < 0)
 		return (-1);
+	if (i >= PATH_MAX) 
+        return (-1);
 	return (0);
 }
 
