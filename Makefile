@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
+#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/13 11:18:30 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/06/14 10:31:57 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,8 @@ SOURCES = \
 			srcs/errors/free.c \
 			srcs/execute/execute_utils.c \
 			srcs/execute/open_files_utils.c \
-			srcs/execute/setup_exe_utils.c
+			srcs/execute/setup_exe_utils.c \
+			srcs/execute/heredoc_utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

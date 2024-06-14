@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:14:43 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 17:45:56 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:26:27 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,63 +114,3 @@ int	setup_exe(t_shell *arg)
 	arg->exe = exe;
 	return (0);
 }
-
-/*
-int	setup_exe(t_shell *arg)
-{
-	size_t	i;
-	size_t	j;
-	t_exec	**exe;
-
-	i = 0;
-	exe = (t_exec **) malloc ((arg->count + 1) * sizeof(t_exec *));
-	if (!exe)
-		return (-1);
-	while (i < arg->count)
-	{
-		exe[i] = (t_exec *)malloc (sizeof(t_exec));
-		if (!exe[i])
-			return (-1);
-		init_exec(exe[i]);
-		exe[i]->pos = i;
-		j = 0;
-		if (arg->split_flag == 1)
-			split_vec(exe[i], arg, 0, 0);
-		exe[i]->cmd_argv = malloc ((arg[i].cmd.len + 1) * sizeof(char *));
-		if (!exe[i]->cmd_argv)
-			return (-1);
-		while (j < arg[i].cmd.len)
-		{
-			exe[i]->cmd_argv[j] = ft_strdup(*(char **)vec_get(&arg[i].cmd, j));
-			j++;
-		}
-		exe[i]->cmd_argv[j] = NULL;
-		if (arg[i].cmd.len != 0)
-		{
-			exe[i]->cmd = exe[i]->cmd_argv[0];
-			exe[i]->path = get_exec_path(exe[i]->cmd, &arg->env);
-			if (exe[i]->path == NULL)
-				return (-1);
-		}
-		exe[i]->ret = 0;
-		init_redir(&exe[i]->redir);
-		if (arg[i].rdrct.len != 0)
-		{
-			if (open_files(&arg[i].rdrct, exe[i], arg) < 0)
-				return (-1);
-		}
-		if (g_signal == 2)
-			arg->exit_code = 1;
-		if (exe[i]->pos > 0 && exe[i]->redir.file_in == NO
-			&& exe[i]->redir.hd_in == NO)
-			exe[i]->redir.pipe_in = 1;
-		if (exe[i]->redir.file_out == NO && arg->count > 1
-			&& exe[i]->pos != arg->count - 1)
-			exe[i]->redir.pipe_out = 1;
-		i++;
-	}
-	exe[i] = NULL;
-	arg->exe = exe;
-	return (0);
-}*/
-

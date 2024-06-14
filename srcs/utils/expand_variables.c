@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 20:51:22 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:35:57 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,15 @@ int			check_if_exists(t_shell *arg, t_expd *s);
 int	expand_variables(t_shell *arg, t_vec *vec, int index)
 {
 	t_expd	s;
-	char	*ptr;
-	char	*temp_ptr;
 
 	init_expd_struct(&s);
 	s.str = *(char **)vec_get(vec, index);
-	ptr = *(char **)vec_get(vec, index);
-	if (*(ptr + 1) == '\0' || *(ptr + 1) == ' ')
+	if (*(s.str + 1) == '\0' || *(s.str + 1) == ' ')
 		return (0);
 	s.total_len = ft_strlen(s.str);
-	ptr = NULL;
 	while (s.str[s.ds + 1] != '\0')
 	{
 		s.str = *(char **)vec_get(vec, index);
-		temp_ptr = *(char **)vec_get(vec, index);
 		s.total_len = ft_strlen(s.str);
 		if (s.str[s.ds] == '$')
 		{

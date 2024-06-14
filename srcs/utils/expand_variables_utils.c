@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 20:56:32 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:34:35 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,7 @@ int	expand_to_exit_status(t_shell *arg, t_expd *s, t_vec *vec, int index)
 	s->exp_len = ft_strlen(s->expanded);
 	s->new = ft_substr(s->str, 0, s->pre_len);
 	if (!s->new)
-	{
-		free(s->expanded);
-		return (-1);
-	}
+		return (free(s->expanded), -1);
 	s->join = ft_strjoin(s->new, s->expanded);
 	free(s->new);
 	free(s->expanded);
@@ -87,6 +84,8 @@ int	expand_to_exit_status(t_shell *arg, t_expd *s, t_vec *vec, int index)
 	free(s->new);
 	free(s->join);
 	remove = *(char **)vec_get(vec, index);
+	if (!dupped || !remove)
+		return (-1);
 	vec_replace_str(vec, dupped, index);
 	free (remove);
 	return (0);

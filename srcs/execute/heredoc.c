@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 17:51:51 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:32:33 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ static int	handle_heredoc(t_vec *rdrct, \
 t_redir *redir, size_t pos, t_shell *arg)
 {
 	int		fd;
-	int		ret;
 
-	ret = 0;
 	redir->hd_pos = pos;
 	redir->hd_in = YES;
 	while (pos < rdrct->len)
@@ -103,17 +101,11 @@ t_redir *redir, size_t pos, t_shell *arg)
 			if (fd < 0)
 				return (unlink (redir->hd_file), -1);
 			if (heredoc_loop(redir, fd, arg) < 0)
-			{
-				close (fd);
-				unlink (redir->hd_file);
-				free(redir->hd_file);
-				redir->hd_file = NULL;
-				return (-1);
-			}
+				return (heredoc_fails(redir, fd));
 		}
 		pos++;
 	}
-	return (ret);
+	return (0);
 }
 
 int	check_for_heredoc(t_vec *rdrct, t_redir *redir, \
