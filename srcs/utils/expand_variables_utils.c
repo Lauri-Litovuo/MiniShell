@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 16:35:53 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 17:05:36 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	expand_to_env_var(t_shell *arg, t_expd *s, t_vec *vec, int index)
 	free(s->join);
 	remove = *(char **)vec_get(vec, index);
 	vec_replace_str(vec, dupped, index);
-	free (remove);
+	free(remove);
 	return (0);
 }
 
@@ -58,7 +58,7 @@ int	expand_to_empty(t_expd *s, t_vec *vec, int index)
 	free(s->new);
 	remove = *(char **)vec_get(vec, index);
 	vec_replace_str(vec, dupped, index);
-	free (remove);
+	free(remove);
 	return (0);
 }
 
@@ -87,6 +87,6 @@ int	expand_to_exit_status(t_shell *arg, t_expd *s, t_vec *vec, int index)
 	if (!dupped || !remove)
 		return (-1);
 	vec_replace_str(vec, dupped, index);
-	free (remove);
+	free(remove);
 	return (0);
 }
