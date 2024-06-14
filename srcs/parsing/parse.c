@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 21:42:39 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:54:58 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,13 +117,13 @@ int	init_input(t_shell *arg)
 	pos = 0;
 	while (pos < arg->count)
 	{
-		arg->in[pos] = malloc (sizeof(t_input *));
+		arg->in[pos] = malloc (sizeof(t_input));
 		if (!arg->in[pos])
 			return (-1);
-		arg->in[pos]->cmd = malloc (sizeof(t_vec *) * 1);
+		arg->in[pos]->cmd = malloc (sizeof(t_vec) * 1);
 		if (!arg->in[pos]->cmd)
 			return (-1);
-		arg->in[pos]->rdrct = malloc (sizeof(t_vec *) * 1);
+		arg->in[pos]->rdrct = malloc (sizeof(t_vec) * 1);
 		if (!arg->in[pos]->rdrct)
 			return (-1);
 		pos++;
