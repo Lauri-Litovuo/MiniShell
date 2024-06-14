@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 18:16:10 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:36:21 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
 		check_join(buf, arg, pos, i);
 	}
 	i = push_expand_vector(buf, arg, pos, i);
-	if (expand_variables(arg, &arg[pos].cmd, \
-		arg[pos].cmd.len - 1) < 0)
+	if (expand_variables(arg, arg->in[pos]->cmd, \
+		arg->in[pos]->cmd->len - 1) < 0)
 		return (-1);
 	check_join(buf, arg, pos, i);
 	return (i);
@@ -63,7 +63,7 @@ int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 			error_msg(1, SUBSTR, NULL);
 			return (-1);
 		}
-		if (vec_push(&arg[pos].cmd, &arg->temp) < 0)
+		if (vec_push(arg->in[pos]->cmd, &arg->temp) < 0)
 			return (-1);
 		check_join(buf, arg, pos, i);
 	}
@@ -104,9 +104,9 @@ int	init_vectors(char *buf, t_shell *arg, size_t pos, int i)
 *****************************************************************/
 int	split_input(char *buf, t_shell *arg, size_t pos, int i)
 {
-	if (vec_new(&arg[pos].cmd, 10, sizeof(char *)) < 0)
+	if (vec_new(arg->in[pos]->cmd, 10, sizeof(char *)) < 0)
 		return (-1);
-	if (vec_new(&arg[pos].rdrct, 10, sizeof(char *)) < 0)
+	if (vec_new(arg->in[pos]->rdrct, 10, sizeof(char *)) < 0)
 		return (-1);
 	if (init_vectors(buf, arg, pos, i) == -1)
 		return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:50:50 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 18:14:31 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:33:58 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	split_insert(t_exec *exe, t_shell *arg, size_t i)
 	char	*remove;
 
 	temp = NULL;
-	temp = ft_split(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ');
+	temp = ft_split(*(char **)vec_get(arg->in[exe->pos]->cmd, i), ' ');
 	if (!temp)
 		return (-1);
 	count = 0;
@@ -63,12 +63,12 @@ int	split_insert(t_exec *exe, t_shell *arg, size_t i)
 		str = ft_strdup(temp[j]);
 		if (j == 0)
 		{
-			remove = *(char **)vec_get(&arg[exe->pos].cmd, i);
-			vec_replace_str(&arg[exe->pos].cmd, str, i);
+			remove = *(char **)vec_get(arg->in[exe->pos]->cmd, i);
+			vec_replace_str(arg->in[exe->pos]->cmd, str, i);
 			free(remove);
 		}
 		else
-			vec_insert(&arg[exe->pos].cmd, &str, i + j);
+			vec_insert(arg->in[exe->pos]->cmd, &str, i + j);
 		j++;
 	}
 	free_2d_array(temp);
@@ -80,17 +80,18 @@ int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 	size_t	holder;
 	size_t	count;
 
-	holder = arg[exe->pos].cmd.len;
+	holder = arg->in[exe->pos]->cmd->len;
 	while (i < holder)
 	{
 		j = 0;
 		count = 0;
-		if ((*(char **)vec_get(&arg[exe->pos].cmd, i))[0] == '\0')
+		if ((*(char **)vec_get(arg->in[exe->pos]->cmd, i))[0] == '\0')
 		{
-			vec_remove_str(&arg[exe->pos].cmd, i);
+			vec_remove_str(arg->in[exe->pos]->cmd, i);
 			i++;
 		}
-		else if (ft_strchr(*(char **)vec_get(&arg[exe->pos].cmd, i), ' ') == 0)
+		else if
+			(ft_strchr(*(char **)vec_get(arg->in[exe->pos]->cmd, i), ' ') == 0)
 			i++;
 		else
 		{
@@ -98,7 +99,7 @@ int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 				return (-1);
 			i++;
 		}
-		holder = arg[exe->pos].cmd.len;
+		holder = arg->in[exe->pos]->cmd->len;
 	}
 	return (0);
 }

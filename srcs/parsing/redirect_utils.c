@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:47:25 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/13 11:08:26 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:28:21 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	store_single(char *buf, t_shell *arg, size_t pos, int i)
 		error_msg(1, SUBSTR, NULL);
 		return (-1);
 	}
-	if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
+	if (vec_push(arg->in[pos]->rdrct, &arg->temp) < 0)
 		return (-1);
 	return (i + 1);
 }
@@ -41,7 +41,7 @@ int	store_double(char *buf, t_shell *arg, size_t pos, int i)
 		error_msg(1, SUBSTR, NULL);
 		return (-1);
 	}
-	if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
+	if (vec_push(arg->in[pos]->rdrct, &arg->temp) < 0)
 		return (-1);
 	return (i + 2);
 }
@@ -60,12 +60,12 @@ int	rdrct_qq(char *buf, t_shell *arg, size_t pos, int i)
 		error_msg(1, SUBSTR, NULL);
 		return (-1);
 	}
-	if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
+	if (vec_push(arg->in[pos]->rdrct, &arg->temp) < 0)
 		return (-1);
 	if (arg->expandrd_flag > 0)
 	{
-		if (expand_variables(arg, &arg[pos].rdrct, \
-			arg[pos].rdrct.len - 1) < 0)
+		if (expand_variables(arg, arg->in[pos]->rdrct, \
+			arg->in[pos]->rdrct->len - 1) < 0)
 			return (-1);
 	}
 	i++;
@@ -88,7 +88,7 @@ int	rdrct_q(char *buf, t_shell *arg, size_t pos, int i)
 		error_msg(1, SUBSTR, NULL);
 		return (-1);
 	}
-	if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
+	if (vec_push(arg->in[pos]->rdrct, &arg->temp) < 0)
 		return (-1);
 	i++;
 	check_joinrd(buf, arg, pos, i);
@@ -118,7 +118,7 @@ int	rdrct_file(char *buf, t_shell *arg, size_t pos, int i)
 			error_msg(1, SUBSTR, NULL);
 			return (-1);
 		}
-		if (vec_push(&arg[pos].rdrct, &arg->temp) < 0)
+		if (vec_push(arg->in[pos]->rdrct, &arg->temp) < 0)
 			return (-1);
 		check_joinrd(buf, arg, pos, i);
 	}

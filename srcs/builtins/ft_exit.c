@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 20:08:49 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:32:55 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 	int	count;
 
 	ret = 0;
-	count = arg[exe->pos].cmd.len;
+	count = arg->in[exe->pos]->cmd->len;
 	printf("exit\n");
 	if (count == 1)
 	{
@@ -72,13 +72,13 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 		arg->exit_code = 1;
 		return (ft_putendl_fd("la_shell: exit: too many arguments", 2), 1);
 	}
-	ret = check_if_numeric(&arg[exe->pos].cmd);
+	ret = check_if_numeric(arg->in[exe->pos]->cmd);
 	if (ret != 0)
 	{
 		ret = 255;
 		close_fds_exit(arg, ret);
 	}
-	ret = get_exit_nbr(&arg[exe->pos].cmd);
+	ret = get_exit_nbr(arg->in[exe->pos]->cmd);
 	close_fds_exit(arg, ret);
 	return (ret);
 }

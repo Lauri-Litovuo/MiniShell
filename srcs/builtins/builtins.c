@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:31:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 14:24:26 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:32:31 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	launch_builtin(t_vec *env, t_exec *exe, t_shell *arg)
 	else if (ft_strncmp(exe->cmd, "pwd", 4) == 0)
 		ret = ft_pwd(env);
 	else if (ft_strncmp(exe->cmd, "unset", 6) == 0)
-		ret = ft_unset(env, &arg[exe->pos].cmd);
+		ret = ft_unset(env, arg->in[exe->pos]->cmd);
 	else if (ft_strncmp(exe->cmd, "export", 7) == 0)
-		ret = ft_export(env, &arg[exe->pos].cmd);
+		ret = ft_export(env, arg->in[exe->pos]->cmd);
 	else if (ft_strncmp(exe->cmd, "echo", 5) == 0)
-		ret = ft_echo(&arg[exe->pos].cmd);
+		ret = ft_echo(arg->in[exe->pos]->cmd);
 	else if (ft_strncmp(exe->cmd, "cd", 3) == 0)
-		ret = ft_cd(env, &arg[exe->pos].cmd);
+		ret = ft_cd(env, arg->in[exe->pos]->cmd);
 	else if (ft_strncmp(exe->cmd, "exit", 5) == 0)
 		ret = ft_exit(exe, arg);
 	return (ret);
