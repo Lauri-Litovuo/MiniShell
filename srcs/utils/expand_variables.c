@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 16:58:49 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 20:24:24 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 		}
 		if (s.ret < 0)
 			return (-1);
+		s.str = *(char **)vec_get(vec, index);
 		s.ds++;
 	}
 	return (0);
