@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:03:03 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/06/13 20:54:14 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:26:00 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	join_vec_strs(t_shell *arg, size_t pos, t_vecjoin *s)
 	arg->join_flag++;
 	while (arg->join_flag < arg->end_flag)
 	{
+		flag++;
 		if (s->fin)
 			free(s->fin);
 		s->fin = ft_strjoin(s->base, \
