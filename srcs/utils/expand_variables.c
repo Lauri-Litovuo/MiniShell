@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 19:26:50 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:35:57 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,15 @@ int			check_if_exists(t_shell *arg, t_expd *s);
 int	expand_variables(t_shell *arg, t_vec *vec, int index)
 {
 	t_expd	s;
-	char	*ptr;
-	char	*temp_ptr;
 
 	init_expd_struct(&s);
 	s.str = *(char **)vec_get(vec, index);
-	ptr = *(char **)vec_get(vec, index);
-	if (*(ptr + 1) == '\0' || *(ptr + 1) == ' ')
+	if (*(s.str + 1) == '\0' || *(s.str + 1) == ' ')
 		return (0);
 	s.total_len = ft_strlen(s.str);
 	while (s.str[s.ds + 1] != '\0')
 	{
 		s.str = *(char **)vec_get(vec, index);
-		temp_ptr = *(char **)vec_get(vec, index);
 		s.total_len = ft_strlen(s.str);
 		if (s.str[s.ds] == '$')
 		{
@@ -42,13 +38,9 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 				s.ret = expand_string(arg, &s, vec, index);
 		}
 		if (s.ret < 0)
-		{
-			free(ptr);
 			return (-1);
-		}
 		s.ds++;
 	}
-	free(ptr);
 	return (0);
 }
 

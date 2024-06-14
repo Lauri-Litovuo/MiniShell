@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 20:29:06 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:25:25 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 static int	export_variable(t_vec *env, char *arg);
-static int	export_env_var(char *env_var, char *arg, t_vec *env);
+static int	export_env_var(char *env_var, char *arg, t_vec *env, int index);
 void		write_export_error(char *str, char *err_msg);
 
 int	ft_export(t_vec *env, t_vec *args)
@@ -59,7 +59,7 @@ static int	export_variable(t_vec *env, char *arg)
 	if (check_export_syntax(env_var) < 0)
 		return (write_export_error(env_var, "not a valid identifier"), -1);
 	else if (ft_strchr(arg, '=') != NULL
-		&& export_env_var(env_var, arg, env) < 0)
+		&& export_env_var(env_var, arg, env, 0) < 0)
 	{
 		ft_putendl_fd("la_shell: export: failed", STDERR_FILENO);
 		return (-1);
@@ -87,13 +87,11 @@ int	check_export_syntax(char *arg)
 	return (0);
 }
 
-static int	export_env_var(char *env_var, char *arg, t_vec *env)
+static int	export_env_var(char *env_var, char *arg, t_vec *env, int index)
 {
-	int			index;
 	char		*temp;
 	char		*remove;
 
-	index = 0;
 	remove = NULL;
 	if (!arg || !env_var)
 		return (-1);
@@ -110,10 +108,8 @@ static int	export_env_var(char *env_var, char *arg, t_vec *env)
 		if (index < 0)
 			return (-1);
 		temp = ft_strdup(arg);
-		if (!temp)
-			return (-1);
 		remove = *(char **)vec_get(env, index);
-		if (vec_replace_str(env, temp, index) < 0)
+		if (!temp || !remove || vec_replace_str(env, temp, index) < 0)
 			return (-1);
 		free (remove);
 	}

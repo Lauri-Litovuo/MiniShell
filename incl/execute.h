@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 19:02:27 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 10:31:13 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int		init_redir(t_redir *redir);
 int		init_exec(t_exec *exe);
 int		split_insert(t_exec *exe, t_shell *arg, size_t i);
 int		split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j);
+int		heredoc_fails(t_redir *redir, int fd);
 
 #endif
