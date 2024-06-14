@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 11:04:58 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 15:01:56 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
 *****************************************************************/
 int	store_norm(char *buf, t_shell *arg, size_t pos, int i)
 {
+	if (!buf[i])
+        return (i);
 	arg->j = i;
 	while (buf[i] && buf[i] != ' ' && buf[i] != '$' && buf[i] != '<'
 		&& buf[i] != '>' && buf[i] != '|' && buf[i] != '\'' && buf[i] != '\"'
