@@ -69,7 +69,7 @@ OBJECTS = $(SOURCES:.c=.o)
 
 B_OBJECTS = $(B_SOURCES:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror 
 
 CC = @cc
 

@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/14 10:31:57 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/06/14 11:52:59 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ SOURCES = \
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror -g -I$(RLHEAD)
+CFLAGS =  -Wall -Wextra -Werror -I$(RLHEAD)
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 
