@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 09:38:03 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 14:50:47 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:28:16 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	ft_exit(t_exec *exe, t_shell *arg)
 
 	ret = 0;
 	count = arg[exe->pos].cmd.len;
-	printf("exit\n");
+	ft_putstr_fd("exit\n", exe->redir.fd_out);
 	if (count == 1)
 	{
-		close_fds_exit(arg, 0);
+		close_fds_exit(arg, arg->exit_code);
 		return (0);
 	}
 	if (count > 2)

@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/10 19:32:01 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 14:41:39 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	update_pwd_env(t_vec *env, char *dir)
 {
 	char	*temp;
 	int		index;
+	char	*remove;
 
 	index = find_index_of_env(env, "PWD");
 	if (index < 0)
@@ -70,8 +71,15 @@ int	update_pwd_env(t_vec *env, char *dir)
 	temp = ft_strdup(dir);
 	if (temp == NULL)
 		return (-1);
-	if (vec_replace_str(env, temp, index) < 0)
+	remove = *(char **)vec_get(env, index);
+	if (!remove)
 		return (-1);
+	if (vec_replace_str(env, temp, index) < 0)
+	{
+		free (remove);
+		return (-1);
+	}
+	free (remove);
 	return (0);
 }
 
