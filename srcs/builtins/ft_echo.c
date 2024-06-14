@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 10:05:18 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/11 09:55:09 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/14 13:08:11 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	print_strings(t_vec *args, size_t i, int op_n);
 static int	check_for_quotes(char *str);
 static int	write_without_quotes(char *str, int *check, int quote);
+static int	check_if_only_n(char *str);
 
 int	ft_echo(t_vec *args)
 {
@@ -31,14 +32,32 @@ int	ft_echo(t_vec *args)
 			return (-1);
 		return (0);
 	}
-	if (ft_strncmp(strs[1], "-n", 3) == 0)
+	if (ft_strncmp(strs[1], "-n", 2) == 0)
 	{
-		op_n = 1;
-		i++;
+		if (check_if_only_n(strs[1]) == 1)
+		{
+			op_n = 1;
+			i++;
+		}
 	}
 	if (print_strings(args, i, op_n) < 0)
 		return (-1);
 	return (0);
+}
+
+static int	check_if_only_n(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i + 2] != '\0')
+	{
+		if (str[i + 2] == 'n')
+			i++;
+		else
+			return (-1);
+	}
+	return (1);
 }
 
 static int	print_strings(t_vec *args, size_t i, int op_n)
