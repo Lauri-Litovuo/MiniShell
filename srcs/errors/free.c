@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 19:23:54 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:33:25 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	free_arg(t_shell *arg, int del_hist)
 	arg->temp = NULL;
 	while (i < arg->count)
 	{
-		if (arg[i].cmd.len == 0)
-			vec_free(&arg[i].cmd);
-		else if (arg[i].cmd.len != 0)
-			vec_free_str(&arg[i].cmd);
-		if (arg[i].rdrct.len == 0)
-			vec_free(&arg[i].rdrct);
-		else if (arg[i].rdrct.len != 0)
-			vec_free_str(&arg[i].rdrct);
+		if (arg->in[i]->cmd->len == 0)
+			vec_free(arg->in[i]->cmd);
+		else if (arg->in[i]->cmd->len != 0)
+			vec_free_str(arg->in[i]->cmd);
+		if (arg->in[i]->rdrct->len == 0)
+			vec_free(arg->in[i]->rdrct);
+		else if (arg->in[i]->rdrct->len != 0)
+			vec_free_str(arg->in[i]->rdrct);
 		if (arg->exe && arg->exe[i])
 			free_exec(arg->exe[i]);
 		i++;

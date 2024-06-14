@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:10:11 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 12:22:55 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/14 21:54:58 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,28 @@ int	split(char *buf, t_shell *arg)
 	return (0);
 }
 
+int	init_input(t_shell *arg)
+{
+	size_t	pos;
+
+	pos = 0;
+	while (pos < arg->count)
+	{
+		arg->in[pos] = malloc (sizeof(t_input));
+		if (!arg->in[pos])
+			return (-1);
+		arg->in[pos]->cmd = malloc (sizeof(t_vec) * 1);
+		if (!arg->in[pos]->cmd)
+			return (-1);
+		arg->in[pos]->rdrct = malloc (sizeof(t_vec) * 1);
+		if (!arg->in[pos]->rdrct)
+			return (-1);
+		pos++;
+	}
+	return (0);
+}
+
+
 int	parse_input(t_shell *arg, char *buf)
 {
 	if (scan_input(buf) == -1)
@@ -118,6 +140,11 @@ int	parse_input(t_shell *arg, char *buf)
 		return (-1);
 	}
 	init_count(buf, arg);
+	arg->in = (t_input **) malloc (arg->count * sizeof(t_input *));
+	if (!arg->in)
+		return (-1);
+	if (init_input(arg) < 0)
+		return (-1);
 	if (split(buf, arg) == -1)
 		return (-1);
 	return (1);
