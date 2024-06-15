@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 12:35:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 16:59:35 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:59:35 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_exports(t_vec *env)
 	int		index;
 
 	if (env->len == 0)
-		return;
+		return ;
 	vec_new(&temp, env->len, env->elem_size);
 	if (vec_copy_len(&temp, env) < 0)
 		return ;
