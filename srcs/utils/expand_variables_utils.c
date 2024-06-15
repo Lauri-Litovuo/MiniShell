@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 17:53:36 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:02:19 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,22 @@ int	expand_to_empty(t_expd *s, t_vec *vec, int index)
 	char	*dupped;
 	char	*remove;
 
-	s->new = ft_substr(s->str, 0, s->pre_len);
-	ft_strlcat(s->new, s->str + (s->ds + s->var_len), \
-	(s->total_len - s->var_len + s->exp_len));
-	if (!s->new)
-		return (-1);
-	dupped = ft_strdup(s->new);
-	if (!dupped)
+	if (s->pre_len != 0 && s->total_len - s->var_len != 0)
 	{
-		free(s->new);
-		return (-1);
+		s->new = ft_substr(s->str, 0, s->pre_len);
+		if (!s->new)
+			return (-1);
+		ft_strlcat(s->new, s->str + (s->ds + s->var_len), \
+		(s->total_len - s->var_len));
+		if (!s->new)
+			return (-1);
+		dupped = ft_strdup(s->new);
+		free (s->new);
 	}
-	free(s->new);
+	else
+		dupped = ft_strdup("\0");
+	if (!dupped)
+		return (-1);
 	remove = *(char **)vec_get(vec, index);
 	vec_replace_str(vec, dupped, index);
 	free(remove);

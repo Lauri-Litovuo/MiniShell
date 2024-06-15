@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 17:59:43 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/15 19:02:53 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
 static void	init_expd_struct(t_expd *s);
 int			expand_string(t_shell *arg, t_expd *s, t_vec *vec, int index);
 int			check_if_exists(t_shell *arg, t_expd *s);
+int			check_empty(t_expd *s, t_vec *vec, int index);
 
 int	expand_variables(t_shell *arg, t_vec *vec, int index)
 {
 	t_expd	s;
 
 	init_expd_struct(&s);
-	s.str = *(char **)vec_get(vec, index);
-	if (*(s.str + 1) == '\0' || *(s.str + 1) == ' ')
+	if (check_empty(&s, vec, index) < 0)
 		return (0);
-	s.total_len = ft_strlen(s.str);
-	while (s.str[s.ds + 1] != '\0')
+	while (s.str[s.ds] != '\0' && s.str[s.ds + 1] != '\0')
 	{
 		s.str = *(char **)vec_get(vec, index);
 		s.total_len = ft_strlen(s.str);
@@ -41,7 +40,7 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 			return (-1);
 		s.str = *(char **)vec_get(vec, index);
 		if (s.str[0] == '\0')
-			break;
+			break ;
 		s.ds++;
 	}
 	return (0);
@@ -60,6 +59,15 @@ static void	init_expd_struct(t_expd *s)
 	s->ret = 0;
 	s->index = 0;
 	s->ds = 0;
+}
+
+int	check_empty(t_expd *s, t_vec *vec, int index)
+{
+	s->str = *(char **)vec_get(vec, index);
+	if (*(s->str + 1) == '\0' || *(s->str + 1) == ' ')
+		return (-1);
+	s->total_len = ft_strlen(s->str);
+	return (0);
 }
 
 int	expand_string(t_shell *arg, t_expd *s, t_vec *vec, int index)
