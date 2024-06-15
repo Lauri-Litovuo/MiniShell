@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 20:24:24 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/15 17:59:43 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 		if (s.ret < 0)
 			return (-1);
 		s.str = *(char **)vec_get(vec, index);
+		if (s.str[0] == '\0')
+			break;
 		s.ds++;
 	}
 	return (0);
