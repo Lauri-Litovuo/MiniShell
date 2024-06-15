@@ -3,36 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 08:53:19 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 21:36:21 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:53:29 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-/************************************************************
-*	Stores expandable content of buf string, possibly		*
-*	following normal characters, into single vector.		*
-*	Returns: placement of i within the buf string.			*
-*************************************************************/
-int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
+int	split(char *buf, t_shell *arg)
 {
-	if (i > arg->j)
+	while (arg->i < arg->count)
 	{
-		i = push_to_vector(buf, arg, pos, i);
-		if (i < 0)
-			return (-1);
-		arg->j = i;
-		check_join(buf, arg, pos, i);
+		if (arg->i == 0)
+		{
+			if (split_input(buf, arg, 0, 0) < 0)
+				return (-1);
+		}
+		else
+		{
+			if (split_rest(buf, arg, arg->i) < 0)
+				return (-1);
+		}
+		if (arg->end_flag > 0 || arg->endrd_flag > 0)
+			if (vec_join(arg, arg->i) < 0)
+				return (-1);
+		arg->i++;
 	}
-	i = push_expand_vector(buf, arg, pos, i);
-	if (expand_variables(arg, arg->in[pos]->cmd, \
-		arg->in[pos]->cmd->len - 1) < 0)
-		return (-1);
-	check_join(buf, arg, pos, i);
-	return (i);
+	return (0);
 }
 
 /****************************************************************
