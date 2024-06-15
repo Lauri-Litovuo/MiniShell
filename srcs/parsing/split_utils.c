@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 14:17:08 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/06/14 21:27:03 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/15 16:53:13 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
+/************************************************************
+*	Stores expandable content of buf string, possibly		*
+*	following normal characters, into single vector.		*
+*	Returns: placement of i within the buf string.			*
+*************************************************************/
+int	store_special_cmd(char *buf, t_shell *arg, size_t pos, int i)
+{
+	if (i > arg->j)
+	{
+		i = push_to_vector(buf, arg, pos, i);
+		if (i < 0)
+			return (-1);
+		arg->j = i;
+		check_join(buf, arg, pos, i);
+	}
+	i = push_expand_vector(buf, arg, pos, i);
+	if (expand_variables(arg, arg->in[pos]->cmd, \
+		arg->in[pos]->cmd->len - 1) < 0)
+		return (-1);
+	check_join(buf, arg, pos, i);
+	return (i);
+}
 
 void	check_join(char *buf, t_shell *arg, size_t pos, int i)
 {
