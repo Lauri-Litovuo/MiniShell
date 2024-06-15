@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 21:59:30 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:42:10 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_index(t_shell *arg)
 	arg->pids = NULL;
 }
 
-static int	copy_env(t_vec *env, char **envp)
+static int	copy_env(t_vec *env, char **envp, t_shell *arg)
 {
 	char	*temp;
 	int		i;
@@ -53,6 +53,8 @@ static int	copy_env(t_vec *env, char **envp)
 		}
 		i++;
 	}
+	if (copy_home(arg) < 0)
+		return (-1);
 	return (0);
 }
 
@@ -93,7 +95,10 @@ int	minishell(char **envp)
 	g_signal = 0;
 	buf = NULL;
 	ft_memset(&arg, 0, sizeof(t_shell));
-	if (copy_env(&arg.env, envp) < 0)
+	if (copy_env(&arg.env, envp, &arg) < 0)
+		free_arg(&arg, YES);
+	ft_bzero(&arg.pwd, PATH_MAX);
+	if (getcwd(arg.pwd, PATH_MAX) == NULL)
 		free_arg(&arg, YES);
 	miniloop(buf, &arg);
 	return (0);

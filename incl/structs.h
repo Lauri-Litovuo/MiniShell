@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 12:26:14 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 21:00:21 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:04:43 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ typedef struct s_input
 typedef struct s_shell
 {
 	t_input	**in;
-	//t_vec	**cmd;
-	//t_vec	**rdrct;
 	t_vec	env;
 	char	*temp;
 	size_t	count;
@@ -62,6 +60,8 @@ typedef struct s_shell
 	int		j;
 	pid_t	*pids;
 	t_exec	**exe;
+	char	pwd[PATH_MAX];
+	char	home[PATH_MAX];
 	int		orig_fd[2];
 	int		join_flag;
 	int		end_flag;

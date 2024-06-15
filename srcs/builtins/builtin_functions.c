@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 20:17:19 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/15 21:21:54 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,9 @@ int	ft_env(t_vec *env, t_exec *exe)
 	return (0);
 }
 
-int	ft_pwd(t_vec *env)
+int	ft_pwd(t_shell *arg)
 {
-	int		index;
-	char	*cur_dir;
-	char	cwd[PATH_MAX];
-
-	index = 0;
-	cur_dir = NULL;
-	index = find_index_of_env(env, "PWD");
-	if (index >= 0)
-		cur_dir = *(char **)vec_get(env, index);
-	else
-	{
-		if (getcwd(cwd, PATH_MAX) == NULL)
-		{
-			perror("pwd: ");
-			return (-1);
-		}
-	}
-	if (cur_dir)
-		printf("%s\n", cur_dir + 4);
-	else
-		printf("%s\n", cwd);
+	printf("%s\n",arg->pwd);
 	return (0);
 }
 

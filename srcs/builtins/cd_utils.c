@@ -3,46 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:16:15 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/13 13:35:25 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/15 23:38:42 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	copy_homedir(t_vec *env, t_cd *data)
+int	copy_homedir(t_vec *env, t_cd *data, t_shell *arg)
 {
 	int		index;
 
 	index = find_index_of_env(env, "HOME");
 	if (index < 0)
-		return (-1);
+	{
+		ft_bzero(data->home, PATH_MAX);
+		ft_strlcpy(data->home, arg->home, PATH_MAX);
+		return (0);
+	}
 	ft_strlcpy(data->home, (*(char **)vec_get(env, index) + 5), PATH_MAX);
 	return (0);
 }
 
-int	goto_home(t_vec *env, t_cd *data)
+int	goto_home(t_vec *env, t_cd *data, t_shell *arg, int squiqly)
 {
-	ft_strlcat(data->path, data->home, PATH_MAX);
+	if (squiqly == 1)
+	{
+		ft_bzero(data->home, PATH_MAX);
+		ft_strlcpy(data->home, arg->home, PATH_MAX);
+	}
+	else if (squiqly == 0 && find_index_of_env(env, "HOME=") < 0)
+	{
+		ft_putstr_fd("la_shell: cd: HOME not set\n", STDERR_FILENO);
+		return (-1);
+	}
+	else
+		ft_strlcat(data->path, data->home, PATH_MAX);
 	if (access(data->home, F_OK) == 0)
 	{
 		if (chdir(data->home) != 0)
-		{
-			perror ("cd to ~ failed");
-			return (-1);
-		}
-		if (update_pwd_cd(env, data) < 0)
+			return (perror ("cd to ~ failed"), -1);
+		ft_strlcpy(data->target, data->home, PATH_MAX);
+		if (update_pwd_cd(env, data, arg) < 0)
 			return (-1);
 	}
 	else
-		return (-1);
+		return (home_error(data, 2), -1);
 	return (0);
 }
 
-int	goto_root(t_vec *env)
+int	goto_root(t_vec *env, t_cd *data, t_shell *arg)
 {
+	ft_strlcpy(data->target, "/", PATH_MAX);
 	if (access("/", F_OK) == 0)
 	{
 		if (chdir("/") != 0)
@@ -50,7 +64,7 @@ int	goto_root(t_vec *env)
 			perror ("cd to / failed");
 			return (-1);
 		}
-		if (update_pwd_env(env, "PWD=/") < 0)
+		if (update_pwd_cd(env, data, arg) < 0)
 			return (-1);
 	}
 	return (0);
@@ -85,8 +99,13 @@ int	get_parent(t_cd *data, int parent_nbr)
 	return (0);
 }
 
-int	expand_home(t_cd *data)
+int	expand_home(t_cd *data, t_vec *env)
 {
+	if (find_index_of_env(env, "HOME=") < 0)
+	{
+		ft_putstr_fd("la_shell: cd: HOME not set\n", STDERR_FILENO);
+		return (-1);
+	}
 	ft_bzero(data->target, PATH_MAX);
 	ft_strlcpy(data->target, data->home, PATH_MAX);
 	ft_strlcat(data->target, "/", PATH_MAX);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
+#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/14 21:59:43 by aneitenb         ###   ########.fr        #
+#    Updated: 2024/06/15 23:43:01 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SOURCES = \
 			srcs/builtins/ft_cd.c \
 			srcs/builtins/cd_utils.c \
 			srcs/builtins/cd_utils2.c \
+			srcs/builtins/cd_utils3.c \
 			srcs/signals/signals.c \
 			srcs/signals/termios.c \
 			srcs/errors/cleanup.c \
@@ -64,11 +65,11 @@ SOURCES = \
 			srcs/execute/execute_utils.c \
 			srcs/execute/open_files_utils.c \
 			srcs/execute/setup_exe_utils.c \
-			srcs/execute/heredoc_utils.c
+			srcs/execute/heredoc_utils.c 
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS =  -fsanitize=address -g -Wall -Wextra -Werror -I$(RLHEAD)
+CFLAGS =  -Wall -Wextra -Werror -I$(RLHEAD)
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 

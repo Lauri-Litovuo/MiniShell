@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:10 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 19:32:59 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/15 22:46:55 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,6 @@ int		check_expand_split(t_shell *arg, char *buf, int i);
 void	handle_buf(t_shell *arg);
 void	reset_flags(t_shell *arg);
 void	init_s(t_vecjoin *s);
+int		copy_home(t_shell *arg);
 
 #endif
