@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/15 23:43:01 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/06/16 12:03:44 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,7 @@ SOURCES = \
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CFLAGS =  -Wall -Wextra -Werror -I$(RLHEAD)
+CFLAGS = -Wall -Wextra -Werror -I$(RLHEAD)
 RLFLAGS = -lreadline -L$(RLLIB) 
 CC = cc
 

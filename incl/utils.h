@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 09:28:32 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/06 17:08:50 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:08:40 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int		expand_string(t_shell *arg, t_expd *s, t_vec *vec, int index);
 int		expand_to_env_var(t_shell *arg, t_expd *s, t_vec *vec, int index);
 int		expand_to_exit_status(t_shell *arg, t_expd *s, t_vec *vec, int index);
 int		expand_to_empty(t_expd *s, t_vec *vec, int index);
-void	free_expd(t_expd *s);
+void	get_count(t_vec *vec, int index, t_expd *s);
 
 #endif

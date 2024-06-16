@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables_utils.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 19:02:19 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:08:20 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,19 @@ int	expand_to_exit_status(t_shell *arg, t_expd *s, t_vec *vec, int index)
 	vec_replace_str(vec, dupped, index);
 	free(remove);
 	return (0);
+}
+
+void	get_count(t_vec *vec, int index, t_expd *s)
+{
+	size_t	i;
+	char	*str;
+
+	i = 0;
+	str = *(char **)vec_get(vec, index);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '$')
+			s->count++;
+		i++;
+	}
 }

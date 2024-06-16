@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 10:22:38 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 22:42:10 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:05:57 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	miniloop(char *buf, t_shell *arg)
 			if (parse_input(arg, buf) == -1)
 				continue ;
 			execute(arg);
-			// system("leaks -q minishell");
 		}
 		free(buf);
 		free_arg(arg, NO);
