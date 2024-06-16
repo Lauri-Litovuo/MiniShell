@@ -6,7 +6,7 @@
 #    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/16 12:18:16 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/06/16 12:24:11 by llitovuo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,6 @@ SOURCES = \
 			srcs/execute/redirect_utils.c \
 			srcs/execute/redirect.c \
 			srcs/execute/run_commands.c \
-			srcs/errors/ft_fprintf.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
