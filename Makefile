@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/16 10:22:20 by llitovuo          #+#    #+#              #
-#    Updated: 2024/06/16 12:18:16 by llitovuo         ###   ########.fr        #
+#    Updated: 2024/06/16 12:56:37 by aneitenb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

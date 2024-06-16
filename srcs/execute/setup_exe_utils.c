@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:50:50 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/14 21:33:58 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:59:15 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,22 @@ int	init_exec(t_exec *exe)
 	return (0);
 }
 
-int	split_insert(t_exec *exe, t_shell *arg, size_t i)
+int	insert_split_strings(t_exec *exe, t_shell *arg, char **temp, size_t i)
 {
-	char	**temp;
 	size_t	count;
 	size_t	j;
 	char	*str;
 	char	*remove;
 
-	temp = NULL;
-	temp = ft_split(*(char **)vec_get(arg->in[exe->pos]->cmd, i), ' ');
-	if (!temp)
-		return (-1);
 	count = 0;
+	j = 0;
 	while (temp[count])
 		count++;
-	j = 0;
 	while (j < count)
 	{
 		str = ft_strdup(temp[j]);
+		if (!str)
+			return (-1);
 		if (j == 0)
 		{
 			remove = *(char **)vec_get(arg->in[exe->pos]->cmd, i);
@@ -70,6 +67,21 @@ int	split_insert(t_exec *exe, t_shell *arg, size_t i)
 		else
 			vec_insert(arg->in[exe->pos]->cmd, &str, i + j);
 		j++;
+	}
+	return (0);
+}
+
+int	split_insert(t_exec *exe, t_shell *arg, size_t i)
+{
+	char	**temp;
+
+	temp = ft_split(*(char **)vec_get(arg->in[exe->pos]->cmd, i), ' ');
+	if (!temp)
+		return (-1);
+	if (insert_split_strings(exe, arg, temp, i) == -1)
+	{
+		free_2d_array(temp);
+		return (-1);
 	}
 	free_2d_array(temp);
 	return (0);

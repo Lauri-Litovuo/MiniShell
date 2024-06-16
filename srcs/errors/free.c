@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 21:33:25 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:36:43 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	free_arg(t_shell *arg, int del_hist)
 {
 	size_t	i;
 
-	i = 0;
+	i = -1;
 	if (!arg || arg->count == 0)
 		return ;
 	arg->temp = NULL;
-	while (i < arg->count)
+	while (++i < arg->count)
 	{
 		if (arg->in[i]->cmd->len == 0)
 			vec_free(arg->in[i]->cmd);
@@ -47,7 +47,6 @@ void	free_arg(t_shell *arg, int del_hist)
 			vec_free_str(arg->in[i]->rdrct);
 		if (arg->exe && arg->exe[i])
 			free_exec(arg->exe[i]);
-		i++;
 	}
 	free(arg->exe);
 	arg->exe = NULL;
