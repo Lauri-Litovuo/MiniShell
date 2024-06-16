@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 16:51:31 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:16:51 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,6 @@ char	*extract_env_var(char *arg)
 	if (env == NULL)
 		return (NULL);
 	return (env);
-}
-
-int	update_pwd_env(t_vec *env, char *dir)
-{
-	char	*temp;
-	int		index;
-	char	*remove;
-
-	index = find_index_of_env(env, "PWD");
-	if (index < 0)
-		return (-1);
-	temp = ft_strdup(dir);
-	if (temp == NULL)
-		return (-1);
-	remove = *(char **)vec_get(env, index);
-	if (!remove)
-		return (-1);
-	if (vec_replace_str(env, temp, index) < 0)
-	{
-		free (remove);
-		return (-1);
-	}
-	free (remove);
-	return (0);
 }
 
 void	free_2d_array(char **arr)
