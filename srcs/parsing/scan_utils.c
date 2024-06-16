@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 21:00:48 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/07 15:41:18 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/16 11:07:51 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,20 @@ int	handle_start(char *buf, int i)
 		free(buf);
 		error_msg(2, SYNTX, "`|'\n");
 		return (-1);
+	}
+	else if ((buf[i] == '\'' && buf[i + 1] == '\'')
+		|| (buf[i] == '\"' && buf[i + 1] == '\"'))
+	{
+		i += 2;
+		i = skip_spaces(buf, i);
+		if (buf[i])
+			return (i);
+		else
+		{
+			free(buf);
+			error_msg(1, CMD, NULL);
+			return (-1);
+		}	
 	}
 	return (i);
 }

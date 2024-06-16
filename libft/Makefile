@@ -67,8 +67,6 @@ SOURCES =  libft/ft_isdigit.c \
 		  	 
 OBJECTS = $(SOURCES:.c=.o)
 
-B_OBJECTS = $(B_SOURCES:.c=.o)
-
 CFLAGS = -Wall -Wextra -Werror 
 
 CC = @cc
@@ -79,7 +77,7 @@ $(NAME): $(OBJECTS)
 	@ar -cr $(NAME) $(OBJECTS)
 
 clean:
-	@rm -f $(OBJECTS) $(B_OBJECTS)
+	@rm -f $(OBJECTS)
 
 fclean: clean
 	@rm -f $(NAME)
