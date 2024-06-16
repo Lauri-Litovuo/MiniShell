@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:08:56 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 23:28:10 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:27:57 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,9 @@ typedef enum e_pipe
 }	t_pipe;
 
 int		isit_builtin(char *cmd, int pos);
-int		add_builtin(t_vec *paths, char *cmd);
 int		execute(t_shell *arg);
 int		check_for_heredoc(t_vec *rdrct, \
 		t_redir *redir, t_shell *arg, size_t count);
-void	print_exec(t_exec **exe);
-int		ft_fprintf(int fd, const char *fmt, ...);
 int		setup_exe(t_shell *arg);
 char	*get_exec_path(char *cmd, t_vec *env);
 int		open_files(t_vec *rdrct, t_exec *exe, t_shell *arg);
@@ -44,7 +41,6 @@ int		reset_fds(int orig_fd[2]);
 void	free_arg(t_shell *arg, int del_hist);
 void	close_fds(t_exec *exe);
 void	close_fds_exit(t_shell *arg, int ret);
-void	close_all(t_shell *arg, int pos);
 int		execve_error(t_exec *exe, char *err_msg, int ret);
 void	file_error(char *filename, char *err_msg, t_redir *redir, int flag);
 int		execute_single_builtin(t_shell *arg);

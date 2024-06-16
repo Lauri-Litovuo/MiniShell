@@ -92,19 +92,3 @@ void	delete_histories(t_shell *arg)
 	vec_free(&arg->env);
 	rl_clear_history();
 }
-
-int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
-{
-	if (flag == 2)
-	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(specifier, 2);
-	}
-	if (flag == 1)
-	{
-		ft_putstr_fd(str, 2);
-	}
-	if (vec)
-		vec_free(vec);
-	return (-1);
-}

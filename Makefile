@@ -45,7 +45,6 @@ SOURCES = \
 			srcs/execute/redirect_utils.c \
 			srcs/execute/redirect.c \
 			srcs/execute/run_commands.c \
-			srcs/errors/ft_fprintf.c \
 			srcs/builtins/builtin_functions.c \
 			srcs/builtins/builtins.c \
 			srcs/builtins/ft_export.c \
