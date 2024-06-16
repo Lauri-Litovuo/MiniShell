@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 09:05:20 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/16 09:51:08 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/16 10:55:46 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ static int	heredoc_loop(t_redir *redir, int fd, t_shell *arg)
 	{
 		signals_heredoc();
 		buf = readline("> ");
+		signals_default();
 		if (g_signal == 2)
 		{
 			close(fd);
 			reset_fds(arg->orig_fd);
 			return (-1);
 		}
-		signals_default();
 		if (validate_line(&buf, redir->hd_lim, arg) < 0)
 			break ;
 		ft_putstr_fd(buf, fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 19:02:53 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:08:13 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 	init_expd_struct(&s);
 	if (check_empty(&s, vec, index) < 0)
 		return (0);
-	while (s.str[s.ds] != '\0' && s.str[s.ds + 1] != '\0')
+	get_count(vec, index, &s);
+	while (s.str[s.ds] != '\0' && s.str[s.ds + 1] != '\0' && s.count > 0)
 	{
 		s.str = *(char **)vec_get(vec, index);
 		s.total_len = ft_strlen(s.str);
 		if (s.str[s.ds] == '$')
 		{
+			s.count--;
 			s.pre_len = s.ds;
 			if (s.str[s.ds] == '$' && s.str[s.ds + 1] == '?')
 				s.ret = expand_to_exit_status(arg, &s, vec, index);
@@ -59,6 +61,7 @@ static void	init_expd_struct(t_expd *s)
 	s->ret = 0;
 	s->index = 0;
 	s->ds = 0;
+	s->count = 0;
 }
 
 int	check_empty(t_expd *s, t_vec *vec, int index)

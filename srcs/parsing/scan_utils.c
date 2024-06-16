@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 21:00:48 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/16 11:07:51 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:07:00 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	handle_start(char *buf, int i)
 			free(buf);
 			error_msg(1, CMD, NULL);
 			return (-1);
-		}	
+		}
 	}
 	return (i);
 }
