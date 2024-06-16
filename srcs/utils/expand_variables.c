@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 09:44:24 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/16 12:08:13 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:27:30 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,7 @@ int	expand_variables(t_shell *arg, t_vec *vec, int index)
 		s.str = *(char **)vec_get(vec, index);
 		s.total_len = ft_strlen(s.str);
 		if (s.str[s.ds] == '$')
-		{
-			s.count--;
-			s.pre_len = s.ds;
-			if (s.str[s.ds] == '$' && s.str[s.ds + 1] == '?')
-				s.ret = expand_to_exit_status(arg, &s, vec, index);
-			else
-				s.ret = expand_string(arg, &s, vec, index);
-		}
+			handle_expand(arg, &s, vec, index);
 		if (s.ret < 0)
 			return (-1);
 		s.str = *(char **)vec_get(vec, index);

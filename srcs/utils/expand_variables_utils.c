@@ -6,7 +6,7 @@
 /*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/12 15:01:04 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/16 12:08:20 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:28:00 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,14 @@ void	get_count(t_vec *vec, int index, t_expd *s)
 			s->count++;
 		i++;
 	}
+}
+
+void	handle_expand(t_shell *arg, t_expd *s, t_vec *vec, int index)
+{
+	s->count--;
+	s->pre_len = s->ds;
+	if (s->str[s->ds] == '$' && s->str[s->ds + 1] == '?')
+		s->ret = expand_to_exit_status(arg, s, vec, index);
+	else
+		s->ret = expand_string(arg, s, vec, index);
 }
