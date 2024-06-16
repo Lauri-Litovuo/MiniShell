@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:05:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/12 17:38:14 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:27:47 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,5 @@ void	close_fds(t_exec *exe)
 			close (redir->fd_in);
 		if (redir->fd_out != -1)
 			close (redir->fd_out);
-	}
-}
-
-void	close_all(t_shell *arg, int pos)
-{
-	size_t	i;
-	t_exec	*exe;
-
-	i = 0;
-	if (arg)
-	{
-		while (i < arg->count)
-		{
-			exe = arg->exe[i];
-			if (exe)
-				close_fds(exe);
-			i++;
-		}
-		close_other_pipe_fds(arg, pos);
 	}
 }

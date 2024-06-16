@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 10:46:28 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 21:33:25 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:30:46 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,4 @@ void	delete_histories(t_shell *arg)
 	}
 	vec_free(&arg->env);
 	rl_clear_history();
-}
-
-int	error_msg_free(int flag, char *str, char *specifier, t_vec *vec)
-{
-	if (flag == 2)
-	{
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(specifier, 2);
-	}
-	if (flag == 1)
-	{
-		ft_putstr_fd(str, 2);
-	}
-	if (vec)
-		vec_free(vec);
-	return (-1);
 }

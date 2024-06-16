@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 12:00:55 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/04 13:09:44 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 12:21:28 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,4 @@ int	isit_builtin(char *cmd, int pos)
 		return (INT_MIN);
 	else
 		return (pos);
-}
-
-int	add_builtin(t_vec *paths, char *cmd)
-{
-	char	*temp;
-
-	if (cmd)
-	{
-		temp = ft_strdup(cmd);
-		if (vec_push(paths, &temp) < 0)
-			exit (1);
-		return (0);
-	}
-	return (-1);
 }
