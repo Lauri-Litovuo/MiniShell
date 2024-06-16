@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 11:17:37 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/15 23:23:21 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 09:56:40 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	handle_buf(t_shell *arg)
 	free_arg(arg, YES);
 	exit (arg->exit_code);
 }
-
 
 int	copy_home(t_shell *arg)
 {

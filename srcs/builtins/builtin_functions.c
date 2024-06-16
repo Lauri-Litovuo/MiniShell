@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_functions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:32:59 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 21:21:54 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/06/16 09:55:42 by aneitenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_env(t_vec *env, t_exec *exe)
 
 int	ft_pwd(t_shell *arg)
 {
-	printf("%s\n",arg->pwd);
+	printf("%s\n", arg->pwd);
 	return (0);
 }
 
