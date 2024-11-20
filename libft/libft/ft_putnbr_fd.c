@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:48:18 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/16 16:51:33 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:01:26 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd(new / 10, fd);
 		new = new % 10;
 	}
-	if (new >= 0 && new <= 9)
+	if (new <= 9)
 		ft_putchar_fd((new + 48), fd);
 }

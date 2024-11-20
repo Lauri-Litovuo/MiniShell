@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 18:47:25 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/14 21:28:21 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:11:30 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	rdrct_file(char *buf, t_shell *arg, size_t pos, int i)
 {
 	while (buf[i] && buf[i] != ' ' && buf[i] != '\t' && buf[i] != '\n'
 		&& buf[i] != '|' && buf[i] != '>' && buf[i] != '<' && buf[i] != '$'
-		& buf[i] != '\'' & buf[i] != '\"')
+		&& buf[i] != '\'' && buf[i] != '\"')
 		i++;
 	if (buf[i] == '$')
 	{

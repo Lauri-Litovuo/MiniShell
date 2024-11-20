@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scan_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 16:39:34 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/06/07 15:42:26 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:10:21 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,6 @@ static int	handle_great(char *buf, int i)
 
 int	handle_lessgreat(char *buf, int i)
 {
-	int	count;
-
-	count = i;
 	if (buf[i] == '>')
 		return (handle_great(buf, i));
 	if (buf[i] == '<')

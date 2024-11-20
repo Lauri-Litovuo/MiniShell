@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:19:02 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/16 16:08:35 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:02:53 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_strrchr(const char *s, int c)
 	size_t	i;
 
 	i = ft_strlen((char *)s);
-	while (i >= 0)
+	while (i)
 	{
 		if (s[i] == (char)c)
 			return ((char *)&s[i]);

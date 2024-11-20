@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 15:03:03 by aidaneitenb       #+#    #+#             */
-/*   Updated: 2024/06/14 21:30:14 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:13:42 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	vec_join(t_shell *arg, size_t pos)
 	int			ret;
 
 	init_s(&s);
+	(void) ret;
 	if (arg->join_flag > -1)
 	{
 		ret = join_cmd_vector(arg, pos, &s);

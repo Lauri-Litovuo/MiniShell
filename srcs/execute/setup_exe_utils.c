@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_exe_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 17:50:50 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/16 12:59:15 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:18:17 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,12 @@ int	split_insert(t_exec *exe, t_shell *arg, size_t i)
 int	split_vec(t_exec *exe, t_shell *arg, size_t i, size_t j)
 {
 	size_t	holder;
-	size_t	count;
 
 	holder = arg->in[exe->pos]->cmd->len;
+	(void)j;
 	while (i < holder)
 	{
 		j = 0;
-		count = 0;
 		if ((*(char **)vec_get(arg->in[exe->pos]->cmd, i))[0] == '\0')
 		{
 			vec_remove_str(arg->in[exe->pos]->cmd, i);

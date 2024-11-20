@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putun.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:42:32 by aneitenb          #+#    #+#             */
-/*   Updated: 2024/04/16 15:01:33 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:04:35 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_putun(unsigned int num, int *check)
 		count += ft_putnbr((num / 10), check);
 		num = num % 10;
 	}
-	if (num >= 0 && num <= 9)
+	if (num <= 9)
 		count += ft_putchar((num + 48), check);
 	return (count);
 }

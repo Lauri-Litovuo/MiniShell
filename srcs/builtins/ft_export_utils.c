@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 12:35:40 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 17:59:35 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:14:45 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ static void	print_strings(t_vec *temp)
 {
 	size_t	i;
 	char	*var_name;
-	char	**vec_ptr;
 
 	i = 0;
-	vec_ptr = (char **)temp;
 	while (i < temp->len)
 	{
 		printf("declare -x ");

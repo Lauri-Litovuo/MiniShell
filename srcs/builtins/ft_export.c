@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 10:22:49 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/15 16:51:07 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:14:10 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ void		write_export_error(char *str, char *err_msg);
 int	ft_export(t_vec *env, t_vec *args)
 {
 	size_t		i;
-	size_t		j;
 	char		**arg_strs;
 
 	i = 0;
-	j = 0;
 	arg_strs = (char **)args->memory;
 	if (args->len == 1)
 	{

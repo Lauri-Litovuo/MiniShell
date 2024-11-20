@@ -6,7 +6,7 @@
 /*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:40:30 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/16 12:16:51 by llitovuo         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:15:11 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ char	*extract_env_var(char *arg)
 {
 	char	*env;
 	size_t	len;
-	int		i;
 
-	i = 0;
 	len = 0;
 	if (!arg)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aneitenb <aneitenb@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: llitovuo <llitovuo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/15 23:34:18 by llitovuo          #+#    #+#             */
-/*   Updated: 2024/06/16 09:56:04 by aneitenb         ###   ########.fr       */
+/*   Updated: 2024/11/20 14:16:23 by llitovuo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	add_to_target(t_cd *data, int i)
 {
 	if (data->target[ft_strlen(data->target) - 1] != '/')
 		ft_strlcat(data->target, "/", PATH_MAX);
-	if (ft_strlcat(data->target, data->split_path[i], PATH_MAX) < 0)
+	if ((int)ft_strlcat(data->target, data->split_path[i], PATH_MAX) < 0)
 		return (-1);
 	ft_strlcat(data->target, "/", PATH_MAX);
 	return (0);
